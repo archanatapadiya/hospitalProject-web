@@ -1,0 +1,41 @@
+
+
+.tabs {
+    background: #ffffff !important;
+    padding-left: 0 !important;
+}
+
+ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+}
+
+li {
+    padding: 15px !important;
+}
+
+a {
+    color: #1b62ab !important;
+    padding-bottom: 5px !important;
+}
+
+
+ 
+  .table {
+    border: 1px solid #ddd;
+  }
+ 
+    .theader,
+    .tbody {
+      width: fit-content;
+    }
+ 
+    .th,
+    .td {
+      padding: 5px;
+      border-bottom: 1px solid #ddd;
+      border-right: 1px solid #ddd;
+      background-color: #fff;
+      overflow: hidden;
+    }
