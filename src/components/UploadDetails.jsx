@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import FormikMaterialTextField from "./FormikMaterialTextField";
 import * as handlers from "./handlers";
-import { Route, Switch, NavLink } from 'react-router-dom';
-import styles from './styles.css';
+import { Route, Switch, NavLink } from "react-router-dom";
+import styles from "./styles.css";
 import {
   Col,
   Container,
@@ -14,75 +14,88 @@ import {
   Button,
 } from "reactstrap";
 import { uploadUserReports } from "./utils/api";
-import FetchUserReports from './FetchUserReports';
+import FetchUserReports from "./FetchUserReports";
+import FetchUserUpdates from "./FetchUserUpdates";
+import FetchUserBilling from "./FetchUserBilling";
+import UploadUserReports from "./UploadUserReports";
+import UploadUserUpdates from "./UploadUserUpdates";
+import UploadUserBilling from "./UploadUserBilling";
 
 function UploadData() {
   let id = 9;
   return (
-    // <div>
-    //   <h2 style={{ textDecoration: "underline" }}>Upload details for user</h2>
-    //   <br />
-
-    //   <div>
-    //     <a href="/upload-user-reports">Upload Reports</a>
-    //   </div>
-
-    //   <br />
-
-    //   <div>
-    //     <a href="/upload-user-health">Upload Health Details</a>
-    //   </div>
-    //   <br />
-    //   <div>
-    //     <a href="/upload-user-billing">Upload Billings</a>
-    //   </div>
-    // </div>
-
     <React.Fragment>
       <div className="account-profile-wrapper">
-        <div style={styles.tabs} >
+        <div style={styles.tabs}>
           <ul>
-           
             <li>
               <NavLink to={`/fetch-user-reports`}>Fetch Reports</NavLink>
             </li>
 
+            <React.Fragment>
+              <li>
+                <NavLink to={`/fetch-user-health`}>
+                  Fetch Health Details
+                </NavLink>
+              </li>
+            </React.Fragment>
+
+            <React.Fragment>
+              <li>
+                <NavLink to={`/fetch-user-billing`}>Fetch Billings</NavLink>
+              </li>
+            </React.Fragment>
+          </ul>
+        </div>
+
+        <div style={styles.tabs}>
+          <ul>
             <li>
               <NavLink to={`/upload-user-reports`}>Upload Reports</NavLink>
             </li>
-          
-              <React.Fragment>
-                <li>
-                  <NavLink to={`/upload-user-health`}>Upload Health Details</NavLink>
-                </li>
-              </React.Fragment>
-          
-           
-              <React.Fragment>
-                <li>
-                  <NavLink to={`/upload-user-billing`}>Upload Billings</NavLink>
-                </li>
-              </React.Fragment>
-          
+
+            <React.Fragment>
+              <li>
+                <NavLink to={`/upload-user-health`}>
+                  Upload Health Details
+                </NavLink>
+              </li>
+            </React.Fragment>
+
+            <React.Fragment>
+              <li>
+                <NavLink to={`/upload-user-billing`}>Upload Billings</NavLink>
+              </li>
+            </React.Fragment>
           </ul>
         </div>
         <Switch>
           <Route path={`/fetch-user-reports`}>
-            <FetchUserReports id={id} />
+            <FetchUserReports />
+          </Route>
+
+          <Route path={`/fetch-user-health`}>
+            <FetchUserUpdates />
+          </Route>
+
+          <Route exact path={`/fetch-user-billing`}>
+            <FetchUserBilling />
+          </Route>
+
+          <Route path={`/upload-user-reports`}>
+            <UploadUserReports />
           </Route>
 
           <Route path={`/upload-user-health`}>
-            <FetchUserReports id={id} />
+            <UploadUserUpdates />
           </Route>
 
-        
           <Route exact path={`/upload-user-billing`}>
-            <FetchUserReports id={id} />
+            <UploadUserBilling />
           </Route>
         </Switch>
       </div>
     </React.Fragment>
-
   );
 }
 

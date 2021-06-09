@@ -16,9 +16,9 @@ function UploadReportData() {
   return (
     <React.Fragment>
     <Formik
-      initialValues={{ name: "jared" }}
+      initialValues={{ }}
       onSubmit={async (values, formikBag) => {
-        let success = await handlers.searchUser(
+        let success = await handlers.registerUser(
           values,
           formikBag
         );
@@ -79,11 +79,47 @@ function UploadReportData() {
                 </div>
 
                 <div className="col">
-                  <h3 className="form-group-label">Email</h3>
+                  <h3 className="form-group-label">Password</h3>
 
                   <div className="form-group-field custom-input with-extention">
                     <Field
-                      name="email"
+                      name="password"
+                      component={FormikMaterialTextField}
+                  
+                    />
+                  </div>
+                </div>
+
+                <div className="col">
+                  <h3 className="form-group-label">Phone Number</h3>
+
+                  <div className="form-group-field custom-input with-extention">
+                    <Field
+                      name="phone_number"
+                      component={FormikMaterialTextField}
+                  
+                    />
+                  </div>
+                </div>
+
+                <div className="col">
+                  <h3 className="form-group-label">Address</h3>
+
+                  <div className="form-group-field custom-input with-extention">
+                    <Field
+                      name="address"
+                      component={FormikMaterialTextField}
+                  
+                    />
+                  </div>
+                </div>
+
+                <div className="col">
+                  <h3 className="form-group-label">Zip Code</h3>
+
+                  <div className="form-group-field custom-input with-extention">
+                    <Field
+                      name="zip_code"
                       component={FormikMaterialTextField}
                   
                     />

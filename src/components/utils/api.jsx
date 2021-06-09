@@ -13,6 +13,25 @@ export const searchUser = async (params) => {
 }
 }
 
+export const registerUser = async (params) => {
+  try{
+  const response = await protectedAxios.post('/user_register/', {
+    "username": params.username, 
+    "email": params.email,
+    "firstname":params.first_name,
+    "lastname": params.last_name,
+    "password": params.password,
+    "address":params.address,
+    "phone_number": params.phone_number,
+    "zip_code": params.zip_code
+  })
+  return response.data;
+}catch(error){
+  console.log('error in api'+ error);
+}
+}
+
+
 export const uploadUserReports = async (params) => {
   try{
   const response = await protectedAxios.post('/upload_report/', {

@@ -19,6 +19,25 @@ export const searchUser = async (values, formikBag) => {
   }
 };
 
+export const registerUser = async (values, formikBag) => {
+  try {
+    const res = await api.registerUser(values);
+
+    // const res = {
+    //   is_success: true,
+    //   response_message: "Success",
+    //   data: { username: "9898989898", user_id: 9, firstname: "John" },
+    //   response_code: 200,
+    // };
+
+    return res;
+  } catch (err) {
+    console.log("handleSearch--->error---->");
+
+    throw err;
+  }
+};
+
 export const uploadUserReport = async (values, formikBag) => {
   try {
     const res = await api.uploadUserReports(values);
