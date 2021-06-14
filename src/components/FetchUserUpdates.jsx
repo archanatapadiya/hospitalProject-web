@@ -5,6 +5,7 @@ import * as handlers from "./handlers";
 import UploadDocument from "./UploadDocument";
 import Table from "react-bootstrap/Table";
 import _ from "lodash";
+import { Link, useParams } from 'react-router-dom';
 
 import {
   Col,
@@ -30,7 +31,7 @@ const renderTableRows = (userReportList) => {
     rows.push(
       <tr key="0">
         <td colSpan="7" className="">
-          You haven't added any member
+          User doesn't have any health updates
         </td>
       </tr>
     );
@@ -43,7 +44,7 @@ function UploadReportData() {
   const [userReportList, setUserReportList] = useState([]);
 
   const userReportsData = async (params) => {
-    const userReports = await handlers.fetchUserReport(params);
+    const userReports = await handlers.fetchUserUpdates(params);
     let reportsData = userReports?.data?.history;
 
     setUserReportList(reportsData);
@@ -62,7 +63,9 @@ function UploadReportData() {
     <div>
       <div>
         <h2>Uploaded reports for the user</h2>
-        <button>Add new report</button>
+
+        <Link to="/upload-user-health" className="btn btn-primary">Add new health update</Link>
+
       </div>
     <table
       style={{

@@ -23,6 +23,7 @@ function UploadReportData() {
       <Formik
         initialValues={{  }}
         onSubmit={async (values, formikBag) => {
+          console.log('values123', values)
           let success = await handlers.uploadUserReport(values, formikBag);
 
           // setSearchUser(success.data);
@@ -40,7 +41,7 @@ function UploadReportData() {
           } = formikBag;
 
           return (
-            <Form className="formik-form">
+            <Form className="formik-form" enctype="multipart/form-data">
               <div className="col">
                 <h3 className="form-group-label">File Name</h3>
 
@@ -64,7 +65,8 @@ function UploadReportData() {
                 <h3 className="form-group-label">Upload File</h3>
 
                 <div className="form-group-field custom-input with-extention">
-                  <Field name="file" component={UploadDocument} />
+                <input type="file" id="file" name="file" />
+                  {/* <Field name="file" component={UploadDocument} /> */}
                 </div>
               </div>
 

@@ -35,22 +35,22 @@ export default function BasicExample() {
           <Route exact path="/upload-details/:id(\d*)">
             <UploadDetails />
           </Route>
-          <Route exact path="/upload-user-reports">
+          <Route exact path="/upload-user-reports/:id(\d*)">
             <UploadUserReports />
           </Route>
-          <Route exact path="/fetch-user-reports">
+          <Route exact path="/fetch-user-reports/:id(\d*)">
             <FetchUserReports />
           </Route>
-          <Route exact path="/upload-user-health">
+          <Route exact path="/upload-user-health/:id(\d*)">
             <UploadUserUpdates />
           </Route>
-          <Route exact path="/fetch-user-health">
+          <Route exact path="/fetch-user-health/:id(\d*)">
             <FetchUserUpdates />
           </Route>
-          <Route exact path="/upload-user-billing">
+          <Route exact path="/upload-user-billing/:id(\d*)">
             <UploadUserBilling />
           </Route>
-          <Route exact path="/fetch-user-billing">
+          <Route exact path="/fetch-user-billing/:id(\d*)">
             <FetchUserBilling />
           </Route>
           <Route exact path="/add-new-user">

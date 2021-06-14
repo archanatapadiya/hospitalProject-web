@@ -29,7 +29,7 @@ function UploadData() {
 
     <React.Fragment>
       <Formik
-        initialValues={{ name: "jared" }}
+        initialValues={{  }}
         onSubmit={async (values, formikBag) => {
           let success = await handlers.searchUser(
             values,
