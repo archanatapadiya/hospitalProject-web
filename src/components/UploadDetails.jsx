@@ -15,7 +15,7 @@ import {
   ButtonToolbar,
   Button,
 } from "reactstrap";
-import { uploadUserReports } from "./utils/api";
+// import { uploadUserReports } from "./utils/api";
 import FetchUserReports from "./FetchUserReports";
 import FetchUserUpdates from "./FetchUserUpdates";
 import FetchUserBilling from "./FetchUserBilling";
@@ -28,7 +28,6 @@ function UploadData() {
   
   const { id } = useParams();
 
-  console.log('userId', id)
   
   return (
     <React.Fragment>

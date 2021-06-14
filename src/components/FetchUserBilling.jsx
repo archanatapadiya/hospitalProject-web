@@ -21,8 +21,12 @@ const renderTableRows = (userReportList) => {
   let rows = _.map(userReportList, (userReportDetails, file_url) => {
     return (
       <tr key={file_url}>
-        <td>{userReportDetails.file_name}</td>
-        <td>{userReportDetails.event_time}</td>
+         <td><a target="_blank" href={userReportDetails.file_url}>
+        {userReportDetails.bill_file_name}
+      </a>
+     </td>
+        <td>{userReportDetails.amount}</td>
+        <td>{userReportDetails.billing_time}</td>
       </tr>
     );
   });
@@ -41,9 +45,17 @@ const renderTableRows = (userReportList) => {
 };
 
 function UploadReportData() {
+  const { id } = useParams();
+
+  const userData = localStorage.getItem('user_data');
+  const userData_parsed = JSON.parse(userData);
+
+  const hospitalId = localStorage.getItem('hospital_id');
+
   const [userReportList, setUserReportList] = useState([]);
 
   const userReportsData = async (params) => {
+    
     const userReports = await handlers.fetchUserBilling(params);
     let reportsData = userReports?.data?.history;
 
@@ -53,8 +65,8 @@ function UploadReportData() {
 
   useEffect(() => {
     let params = {
-      user_id: 9,
-      hospital_id: 1,
+     user_id: userData_parsed.user_id,
+      hospital_id: hospitalId 
     };
     const userReports = userReportsData(params);
   }, []);
@@ -64,7 +76,7 @@ function UploadReportData() {
       <div>
         <h2>Uploaded billings for the user</h2>
 
-        <Link to="/upload-user-billing" className="btn btn-primary">Add new bill</Link>
+        <Link to={`/upload-user-billing/${id}`} className="btn btn-primary">Add new bill</Link>
 
       </div>
     <table
@@ -81,6 +93,7 @@ function UploadReportData() {
       <thead>
         <tr>
           <th class="th-sm">File Name</th>
+          <th class="th-sm">Amount</th>
           <th class="th-sm">Upload Date</th>
         </tr>
       </thead>

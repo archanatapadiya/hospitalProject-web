@@ -15,8 +15,10 @@ import {
 } from "reactstrap";
 
 function UploadData() {
+  
+    const [searchUser, setSearchUser] = useState('');
 
-    const [searchUser, setSearchUser] = useState();
+    console.log('searchUser1212', searchUser)
   const[userId, setUserId] = useState(0);
 
   return (
@@ -24,8 +26,14 @@ function UploadData() {
       <h2>Welcome to Hospital Data Upload System</h2>
 
       <a href={`/upload-details/${userId}`}> 
-      {searchUser}
+      {searchUser} 
       </a>
+
+      
+
+      {searchUser === undefined && (
+        <p>No record found, please register</p>
+      )}
 
     <React.Fragment>
       <Formik

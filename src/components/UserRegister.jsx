@@ -11,6 +11,8 @@ import {
   ButtonToolbar,
   Button,
 } from "reactstrap";
+import history from './lib/history';
+
 
 function UploadReportData() {
   return (
@@ -22,6 +24,12 @@ function UploadReportData() {
           values,
           formikBag
         );
+
+        if(success.is_success == true){
+          history.push(`/`);
+          window.location.reload();
+        }
+        console.log('success111', success)
 
         // setSearchUser(success.data);
 

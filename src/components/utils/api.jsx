@@ -3,7 +3,10 @@ import { unProtectedAxios as unprotectedAxios } from './helpers'
 import axios from 'axios'
 
 const localToken = localStorage.getItem('token');
+const userData = localStorage.getItem('user_data');
+const userData_parsed = JSON.parse(userData);
 
+const hospitalId = localStorage.getItem('hospital_id');
 const  baseUrl  = "http://65.2.26.144:8000";
 
 export const searchUser = async (params) => {
@@ -21,8 +24,8 @@ export const searchUser = async (params) => {
        
 
 export const registerUser = async (params) => {
-  try{
-  const response = await protectedAxios.post('/user_register/', {
+
+  let bodyparams = {
     "username": params.username, 
     "email": params.email,
     "firstname":params.first_name,
@@ -31,49 +34,23 @@ export const registerUser = async (params) => {
     "address":params.address,
     "phone_number": params.phone_number,
     "zip_code": params.zip_code
-  })
-  return response.data;
-}catch(error){
-  console.log('error in api'+ error);
-}
-}
+  }
+    return fetch(`${baseUrl}/user_register/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localToken,
+      },
+      body: JSON.stringify(bodyparams)
+    })
+      .then(data => data.json())
 
 
-export const uploadUserReports = async (params) => {
-//   try{
-//   const response = await protectedAxios.post('/report_upload/', {
-//     "hospital_id": 11, 
-//     "user_id": params.user_id ,
-//     "lab_id": 1,
-//     "description": params.description ,
-//     "file_name": params.file_name,
-//     "file": params.file 
-//   })
-//   return response.data;
-// }catch(error){
-//   console.log('error in api'+ error);
-// }
-
-let bodyparams = {
-  "hospital_id": 1, 
-      "user_id": 9 ,
-      "lab_id": 1,
-      "description": params.description ,
-      "file_name": params.file_name,
-      "file": params.file 
-}
-
-return fetch(`${baseUrl}/report_upload/`, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    Authorization: localToken,
-  },
-  body: JSON.stringify(bodyparams)
-})
-  .then(data => data.json())
 
 }
+
+
+
 
 export const uploadUserUpdates = async (params) => {
   try{
@@ -108,41 +85,53 @@ export const uploadUserBilling = async (params) => {
 }
 
 export const fetchUserReport = async (params) => {
-  try{
-  const response = await protectedAxios.post('/report_fetch/', {
-    "hospital_id": 1, 
-    "user_id": 9 ,
-  })
-  return response.data;
-}catch(error){
-  console.log('error in api'+ error);
+let bodyparams = {
+  "hospital_id": hospitalId, 
+      "user_id": userData_parsed.user_id ,
 }
+  return fetch(`${baseUrl}/report_fetch/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: localToken,
+    },
+    body: JSON.stringify(bodyparams)
+  })
+    .then(data => data.json())
 }
 
 
 export const fetchUserUpdates = async (params) => {
-  try{
-  const response = await protectedAxios.post('/fetch_user_health_update/', {
-    "hospital_id": 1, 
-    "user_id": 9 ,
-  })
-  return response.data;
-}catch(error){
-  console.log('error in api'+ error);
-}
+  let bodyparams = {
+    "hospital_id": hospitalId, 
+        "user_id": userData_parsed.user_id ,
+  }
+    return fetch(`${baseUrl}/fetch_user_health_update/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localToken,
+      },
+      body: JSON.stringify(bodyparams)
+    })
+      .then(data => data.json())
 }
 
 
 export const fetchUserBilling = async (params) => {
-  try{
-  const response = await protectedAxios.post('/bill_fetch/', {
-    "hospital_id": 1, 
-    "user_id": 9 ,
-  })
-  return response.data;
-}catch(error){
-  console.log('error in api'+ error);
-}
+  let bodyparams = {
+    "hospital_id": hospitalId, 
+        "user_id": userData_parsed.user_id ,
+  }
+    return fetch(`${baseUrl}/bill_fetch/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localToken,
+      },
+      body: JSON.stringify(bodyparams)
+    })
+      .then(data => data.json())
 }
 
 

@@ -39,17 +39,6 @@ export const registerUser = async (values, formikBag) => {
   }
 };
 
-export const uploadUserReport = async (values, formikBag) => {
-  try {
-    const res = await api.uploadUserReports(values);
-
-    return res;
-  } catch (err) {
-    console.log("handleSearch--->error---->");
-
-    throw err;
-  }
-};
 
 export const uploadUserUpdates = async (values, formikBag) => {
   try {
@@ -77,9 +66,9 @@ export const uploadUserBilling = async (values, formikBag) => {
 
 export const fetchUserReport = async (params) => {
   try {
-    // const res = await api.fetchUserReport(params);
+    const res = await api.fetchUserReport(params);
 
-    const res = {"is_success": true, "response_message": "Success", "data": {"current": [], "history": [{"description": "", "lab_id__name": "abc lab", "file_name": "CT Scan", "file_url": "https://hospital-api-reports.s3.amazonaws.com/CT Scan-08 Jun 2021 07:26 PM.jpg", "event_time": "09 Jun 2021"}, {"description": "", "lab_id__name": "abc lab", "file_name": "CT Scan", "file_url": "https://hospital-api-reports.s3.amazonaws.com/CT Scan-08 Jun 2021 07:26 PM.jpg", "event_time": "09 Jun 2021"}]}, "response_code": 200}
+    // const res = {"is_success": true, "response_message": "Success", "data": {"current": [], "history": [{"description": "", "lab_id__name": "abc lab", "file_name": "CT Scan", "file_url": "https://hospital-api-reports.s3.amazonaws.com/CT Scan-08 Jun 2021 07:26 PM.jpg", "event_time": "09 Jun 2021"}, {"description": "", "lab_id__name": "abc lab", "file_name": "CT Scan", "file_url": "https://hospital-api-reports.s3.amazonaws.com/CT Scan-08 Jun 2021 07:26 PM.jpg", "event_time": "09 Jun 2021"}]}, "response_code": 200}
     return res;
   } catch (err) {
     console.log("handleSearch--->error---->");
@@ -90,9 +79,9 @@ export const fetchUserReport = async (params) => {
 
 export const fetchUserUpdates = async (params) => {
   try {
-    // const res = await api.fetchUserUpdates(params);
+    const res = await api.fetchUserUpdates(params);
 
-    const res = {"is_success": true, "response_message": "Success", "data": {"current": [], "history": [{"description": "", "lab_id__name": "abc lab", "file_name": "CT Scan", "file_url": "https://hospital-api-reports.s3.amazonaws.com/CT Scan-08 Jun 2021 07:26 PM.jpg", "event_time": "09 Jun 2021"}, {"description": "", "lab_id__name": "abc lab", "file_name": "CT Scan", "file_url": "https://hospital-api-reports.s3.amazonaws.com/CT Scan-08 Jun 2021 07:26 PM.jpg", "event_time": "09 Jun 2021"}]}, "response_code": 200}
+    // const res = {"is_success": true, "response_message": "Success", "data": {"current": [], "history": [{"description": "", "lab_id__name": "abc lab", "file_name": "CT Scan", "file_url": "https://hospital-api-reports.s3.amazonaws.com/CT Scan-08 Jun 2021 07:26 PM.jpg", "event_time": "09 Jun 2021"}, {"description": "", "lab_id__name": "abc lab", "file_name": "CT Scan", "file_url": "https://hospital-api-reports.s3.amazonaws.com/CT Scan-08 Jun 2021 07:26 PM.jpg", "event_time": "09 Jun 2021"}]}, "response_code": 200}
     return res;
   } catch (err) {
     console.log("handleSearch--->error---->");
@@ -104,9 +93,9 @@ export const fetchUserUpdates = async (params) => {
 
 export const fetchUserBilling = async (params) => {
   try {
-    // const res = await api.fetchUserBilling(params);
+    const res = await api.fetchUserBilling(params);
 
-    const res = {"is_success": true, "response_message": "Success", "data": {"current": [], "history": [{"description": "", "lab_id__name": "abc lab", "file_name": "CT Scan", "file_url": "https://hospital-api-reports.s3.amazonaws.com/CT Scan-08 Jun 2021 07:26 PM.jpg", "event_time": "09 Jun 2021"}, {"description": "", "lab_id__name": "abc lab", "file_name": "CT Scan", "file_url": "https://hospital-api-reports.s3.amazonaws.com/CT Scan-08 Jun 2021 07:26 PM.jpg", "event_time": "09 Jun 2021"}]}, "response_code": 200}
+    // const res = {"is_success": true, "response_message": "Success", "data": {"current": [], "history": [{"description": "", "lab_id__name": "abc lab", "file_name": "CT Scan", "file_url": "https://hospital-api-reports.s3.amazonaws.com/CT Scan-08 Jun 2021 07:26 PM.jpg", "event_time": "09 Jun 2021"}, {"description": "", "lab_id__name": "abc lab", "file_name": "CT Scan", "file_url": "https://hospital-api-reports.s3.amazonaws.com/CT Scan-08 Jun 2021 07:26 PM.jpg", "event_time": "09 Jun 2021"}]}, "response_code": 200}
     return res;
   } catch (err) {
     console.log("handleSearch--->error---->");

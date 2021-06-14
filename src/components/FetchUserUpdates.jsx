@@ -21,8 +21,8 @@ const renderTableRows = (userReportList) => {
   let rows = _.map(userReportList, (userReportDetails, file_url) => {
     return (
       <tr key={file_url}>
-        <td>{userReportDetails.file_name}</td>
-        <td>{userReportDetails.event_time}</td>
+        <td>{userReportDetails.health_update}</td>
+        <td>{userReportDetails.update_time}</td>
       </tr>
     );
   });
@@ -41,6 +41,11 @@ const renderTableRows = (userReportList) => {
 };
 
 function UploadReportData() {
+  const { id } = useParams();
+  const userData = localStorage.getItem('user_data');
+  const userData_parsed = JSON.parse(userData);
+
+  const hospitalId = localStorage.getItem('hospital_id');
   const [userReportList, setUserReportList] = useState([]);
 
   const userReportsData = async (params) => {
@@ -53,8 +58,8 @@ function UploadReportData() {
 
   useEffect(() => {
     let params = {
-      user_id: 9,
-      hospital_id: 1,
+      user_id: userData_parsed.user_id,
+      hospital_id: hospitalId 
     };
     const userReports = userReportsData(params);
   }, []);
@@ -64,7 +69,7 @@ function UploadReportData() {
       <div>
         <h2>Uploaded reports for the user</h2>
 
-        <Link to="/upload-user-health" className="btn btn-primary">Add new health update</Link>
+        <Link to={`/upload-user-health/${id}`} className="btn btn-primary">Add new health update</Link>
 
       </div>
     <table
@@ -80,7 +85,7 @@ function UploadReportData() {
     >
       <thead>
         <tr>
-          <th class="th-sm">File Name</th>
+          <th class="th-sm">Health Update</th>
           <th class="th-sm">Upload Date</th>
         </tr>
       </thead>

@@ -1,86 +1,76 @@
-import React, { useState, useEffect } from "react";
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import FormikMaterialTextField from "./FormikMaterialTextField";
-import * as handlers from "./handlers";
-import UploadDocument from "./UploadDocument";
+import React, { Component } from 'react';
+import axios from 'axios';
+import history from './lib/history';
+import { Link, useParams } from 'react-router-dom';
 
-import {
-  Col,
-  Container,
-  Row,
-  Card,
-  CardBody,
-  ButtonToolbar,
-  Button,
-} from "reactstrap";
+class App extends Component {
 
-function UploadReportData() {
+  state = {
+    health_update: '',
+    
+  };
 
- 
+  handleChange = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value
+    })
+  };
 
-  return (
-    <React.Fragment>
-      <Formik
-        initialValues={{  }}
-        onSubmit={async (values, formikBag) => {
-          let success = await handlers.uploadUserReport(values, formikBag);
 
-          // setSearchUser(success.data);
-        }}
-      >
-        {(formikBag) => {
-          const {
-            isSubmitting,
-            errors,
-            values,
-            touched,
-            setErrors,
-            setFieldValue,
-            handleSubmit,
-          } = formikBag;
 
-          return (
-            <Form className="formik-form">
-              <div className="col">
-                <h3 className="form-group-label">File Name</h3>
+  handleSubmit = (e) => {
+    
+    e.preventDefault();
+    console.log(this.state);
+    const localToken = localStorage.getItem('token');
 
-                <div className="form-group-field custom-input with-extention">
-                  <Field name="file_name" component={FormikMaterialTextField} />
-                </div>
-              </div>
+   
+    const userData = localStorage.getItem('user_data');
+    const userData_parsed = JSON.parse(userData);
 
-              <div className="col">
-                <h3 className="form-group-label">Description</h3>
+    const hospitalId = localStorage.getItem('hospital_id');
 
-                <div className="form-group-field custom-input with-extention">
-                  <Field
-                    name="description"
-                    component={FormikMaterialTextField}
-                  />
-                </div>
-              </div>
 
-              <div className="col">
-                <h3 className="form-group-label">Upload File</h3>
+    let form_data = new FormData();
+  
+    form_data.append('health_update', this.state.health_update);
+    form_data.append('user_id', userData_parsed.user_id);
+    form_data.append('hospital_id', hospitalId);
 
-                <div className="form-group-field custom-input with-extention">
-                  <Field name="file" component={UploadDocument} />
-                </div>
-              </div>
+    let url = 'http://65.2.26.144:8000/user_health_update/';
+    axios.post(url, form_data, {
+      headers: {
+        'content-type': 'multipart/form-data',
+        Authorization: localToken,
+      }
+    })
+        .then(res => {
+          history.push(`/fetch-user-health/${userData_parsed.user_id}`);
+          window.location.reload();
+          console.log(res.data);
+        })
+        .catch(err => console.log(err))
+  };
 
-              <br />
+  render() {
+    return (
+      <div className="App">
+        <form onSubmit={this.handleSubmit}>
+      
 
-              <div className="btn-wrapper">
-                <Button color="primary" type="submit" disabled={isSubmitting}>
-                  Submit
-                </Button>
-              </div>
-            </Form>
-          );
-        }}
-      </Formik>
-    </React.Fragment>
-  );
+          <div className="col">
+                <h3 className="form-group-label">Health Update</h3>
+
+          <p>
+            <input type="healthUpdate"  id='health_update' value={this.state.health_update} onChange={this.handleChange} required/>
+          </p>
+          </div>
+        
+          <input type="submit"/>
+        </form>
+      </div>
+    );
+  }
 }
 
-export default UploadReportData;
+export default App;

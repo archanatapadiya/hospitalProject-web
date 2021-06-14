@@ -1,88 +1,100 @@
-import React, { useState, useEffect } from "react";
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import FormikMaterialTextField from "./FormikMaterialTextField";
-import * as handlers from "./handlers";
-import UploadDocument from "./UploadDocument";
+import React, { Component } from 'react';
+import axios from 'axios';
+import history from './lib/history';
+import { Link, useParams } from 'react-router-dom';
 
-import {
-  Col,
-  Container,
-  Row,
-  Card,
-  CardBody,
-  ButtonToolbar,
-  Button,
-} from "reactstrap";
+class App extends Component {
 
-function UploadReportData() {
+  state = {
+    file_name: '',
+    description: '',
+    file: null
+  };
 
- 
+  handleChange = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value
+    })
+  };
 
-  return (
-    <React.Fragment>
-      <Formik
-        initialValues={{  }}
-        onSubmit={async (values, formikBag) => {
-          console.log('values123', values)
-          let success = await handlers.uploadUserReport(values, formikBag);
+  handleImageChange = (e) => {
+    this.setState({
+      file: e.target.files[0]
+    })
+  };
 
-          // setSearchUser(success.data);
-        }}
-      >
-        {(formikBag) => {
-          const {
-            isSubmitting,
-            errors,
-            values,
-            touched,
-            setErrors,
-            setFieldValue,
-            handleSubmit,
-          } = formikBag;
 
-          return (
-            <Form className="formik-form" enctype="multipart/form-data">
-              <div className="col">
+
+  handleSubmit = (e) => {
+    
+    e.preventDefault();
+    console.log(this.state);
+    const localToken = localStorage.getItem('token');
+
+   
+    const userData = localStorage.getItem('user_data');
+    const userData_parsed = JSON.parse(userData);
+
+    const hospitalId = localStorage.getItem('hospital_id');
+
+
+    let form_data = new FormData();
+    form_data.append('file', this.state.file, this.state.file.name);
+    form_data.append('file_name', this.state.file_name);
+    form_data.append('description', this.state.description);
+    form_data.append('user_id', userData_parsed.user_id);
+    form_data.append('hospital_id', hospitalId);
+
+    let url = 'http://65.2.26.144:8000/report_upload/';
+    axios.post(url, form_data, {
+      headers: {
+        'content-type': 'multipart/form-data',
+        Authorization: localToken,
+      }
+    })
+        .then(res => {
+          history.push(`/fetch-user-reports/${userData_parsed.user_id}`);
+          window.location.reload();
+          console.log(res.data);
+        })
+        .catch(err => console.log(err))
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <form onSubmit={this.handleSubmit}>
+        <div className="col">
                 <h3 className="form-group-label">File Name</h3>
 
-                <div className="form-group-field custom-input with-extention">
-                  <Field name="file_name" component={FormikMaterialTextField} />
-                </div>
-              </div>
+          <p>
+            <input type="file_name"  id='file_name' value={this.state.file_name} onChange={this.handleChange} required/>
+          </p>
+          </div>
 
-              <div className="col">
+          <div className="col">
                 <h3 className="form-group-label">Description</h3>
 
-                <div className="form-group-field custom-input with-extention">
-                  <Field
-                    name="description"
-                    component={FormikMaterialTextField}
-                  />
-                </div>
-              </div>
+          <p>
+            <input type="description"  id='description' value={this.state.description} onChange={this.handleChange} required/>
+          </p>
+          </div>
 
-              <div className="col">
-                <h3 className="form-group-label">Upload File</h3>
+          <div className="col">
+                <h3 className="form-group-label">Upload file</h3>
 
-                <div className="form-group-field custom-input with-extention">
-                <input type="file" id="file" name="file" />
-                  {/* <Field name="file" component={UploadDocument} /> */}
-                </div>
-              </div>
-
-              <br />
-
-              <div className="btn-wrapper">
-                <Button color="primary" type="submit" disabled={isSubmitting}>
-                  Submit
-                </Button>
-              </div>
-            </Form>
-          );
-        }}
-      </Formik>
-    </React.Fragment>
-  );
+        
+          <p>
+            <input type="file"
+                   id="file"
+                   accept="image/png, image/jpeg"  onChange={this.handleImageChange} required/>
+          </p>
+          </div>
+          <input type="submit"/>
+        </form>
+      </div>
+    );
+  }
 }
 
-export default UploadReportData;
+export default App;
