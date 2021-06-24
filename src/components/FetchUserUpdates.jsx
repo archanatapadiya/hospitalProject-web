@@ -22,7 +22,7 @@ const renderTableRows = (userReportList) => {
     return (
       <tr key={file_url}>
         <td>{userReportDetails.health_update}</td>
-        <td>{userReportDetails.update_time}</td>
+        <td>{userReportDetails.datetime}</td>
       </tr>
     );
   });
@@ -47,12 +47,15 @@ function UploadReportData() {
 
   const hospitalId = localStorage.getItem('hospital_id');
   const [userReportList, setUserReportList] = useState([]);
+  const [userReportListCurrent, setUserReportListCurrent] = useState([]);
 
   const userReportsData = async (params) => {
     const userReports = await handlers.fetchUserUpdates(params);
     let reportsData = userReports?.data?.history;
+    let reportsDataCurrent = userReports?.data?.current;
 
     setUserReportList(reportsData);
+    setUserReportListCurrent(reportsDataCurrent);
     return reportsData;
   };
 
@@ -64,6 +67,23 @@ function UploadReportData() {
     const userReports = userReportsData(params);
   }, []);
 
+  const [userDetails, setUserDetails] = useState([]);
+
+  const fetchUserData = async (params) => {
+    const userReports = await handlers.fetchUserDetails(params);
+    let reportsData = userReports?.data;
+
+    setUserDetails(reportsData);
+    return reportsData;
+  };
+
+  useEffect(() => {
+    let params = {
+      user_id: id,
+    };
+    const userDetail = fetchUserData(params);
+  }, []);
+
   return (
     <div>
       <div>
@@ -72,11 +92,39 @@ function UploadReportData() {
         <Link to={`/upload-user-health/${id}`} className="btn btn-primary">Add new health update</Link>
 
       </div>
+
+      {userDetails.is_admit && (
+<div>
+      <h3>Current Updates</h3>
     <table
       style={{
         border: "1px solid #1c62ab",
         marginLeft: "30%",
-        marginTop: "50px",
+        marginBottom: "50px",
+      }}
+      id="dtBasicExample"
+      className="table table-farms"
+      cellspacing="10%"
+      width="40%"
+    >
+      <thead>
+        <tr>
+          <th class="th-sm">Health Update</th>
+          <th class="th-sm">Upload Date</th>
+        </tr>
+      </thead>
+
+      <tbody>{renderTableRows(userReportListCurrent)}</tbody>
+    </table>
+    </div>
+
+      )}
+    <h3>History Updates</h3>
+    <table
+      style={{
+        border: "1px solid #1c62ab",
+        marginLeft: "30%",
+        // marginBottom: "50px",
       }}
       id="dtBasicExample"
       className="table table-farms"

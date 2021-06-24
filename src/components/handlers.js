@@ -20,6 +20,33 @@ export const searchUser = async (values, formikBag) => {
   }
 };
 
+export const admitUser = async (params) => {
+  try {
+    
+    const res = await api.admitUser(params);
+    // window.location.reload();
+    return res;
+  } catch (err) {
+    console.log("handleSearch--->error---->");
+
+    throw err;
+  }
+};
+
+export const fetchUserDetails = async (params) => {
+  try {
+    
+    const res = await api.fetchUserDetails(params);
+
+    return res;
+  } catch (err) {
+    console.log("handleSearch--->error---->");
+
+    throw err;
+  }
+};
+
+
 export const registerUser = async (values, formikBag) => {
   try {
     const res = await api.registerUser(values);

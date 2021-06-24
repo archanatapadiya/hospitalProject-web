@@ -55,12 +55,16 @@ function UploadReportData() {
 
 
   const [userReportList, setUserReportList] = useState([]);
+  const [userReportListCurrent, setUserReportListCurrent] = useState([]);
 
   const userReportsData = async (params) => {
     const userReports = await handlers.fetchUserReport(params);
     let reportsData = userReports?.data?.history;
+    let reportsDataCurrent = userReports?.data?.current;
+
 
     setUserReportList(reportsData);
+    setUserReportListCurrent(reportsDataCurrent);
     return reportsData;
   };
 
@@ -72,6 +76,23 @@ function UploadReportData() {
     const userReports = userReportsData(params);
   }, []);
 
+  const [userDetails, setUserDetails] = useState([]);
+
+  const fetchUserData = async (params) => {
+    const userReports = await handlers.fetchUserDetails(params);
+    let reportsData = userReports?.data;
+
+    setUserDetails(reportsData);
+    return reportsData;
+  };
+
+  useEffect(() => {
+    let params = {
+      user_id: id,
+    };
+    const userDetail = fetchUserData(params);
+  }, []);
+
   return (
     <div>
       <div>
@@ -79,11 +100,42 @@ function UploadReportData() {
 
         <Link to={`/upload-user-reports/${id}`} className="btn btn-primary">Add new report</Link>
       </div>
+
+{userDetails.is_admit && (
+  <div>
+      <h3>Current Reports</h3>
+
+      <table
+      style={{
+        border: "1px solid #1c62ab",
+        marginLeft: "30%",
+        marginBottom: "50px",
+      }}
+      id="dtBasicExample"
+      className="table table-farms"
+      cellspacing="10%"
+      width="40%"
+    >
+      <thead>
+        <tr>
+          <th class="th-sm">File Name</th>
+          <th class="th-sm">Description</th>
+          <th class="th-sm">Upload Date</th>
+        </tr>
+      </thead>
+
+      <tbody>{renderTableRows(userReportListCurrent)}</tbody>
+    </table>
+    </div>
+    )}
+
+    <h3>History Reports</h3>
+
     <table
       style={{
         border: "1px solid #1c62ab",
         marginLeft: "30%",
-        marginTop: "50px",
+        // marginTop: "50px",
       }}
       id="dtBasicExample"
       className="table table-farms"
@@ -100,6 +152,8 @@ function UploadReportData() {
 
       <tbody>{renderTableRows(userReportList)}</tbody>
     </table>
+
+
     </div>
   );
 }

@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import axios from 'axios';
 import history from './lib/history';
 import { Link, useParams } from 'react-router-dom';
-
+import DatePicker from "react-datepicker";
 class App extends Component {
 
   state = {
     health_update: '',
+    datetime: '',
     
   };
 
@@ -30,10 +31,14 @@ class App extends Component {
 
     const hospitalId = localStorage.getItem('hospital_id');
 
+    // const [datetime, setDatetime] = useState(new Date());
+
+
 
     let form_data = new FormData();
   
     form_data.append('health_update', this.state.health_update);
+    form_data.append('datetime', this.state.datetime);
     form_data.append('user_id', userData_parsed.user_id);
     form_data.append('hospital_id', hospitalId);
 
@@ -52,9 +57,13 @@ class App extends Component {
         .catch(err => console.log(err))
   };
 
+
   render() {
     return (
-      <div className="App">
+      <div>
+         <h2>Upload Patient Health Details</h2>
+     
+      <div className="App" style={{width: '30%', border: '2px solid grey', marginLeft: '33%', marginTop: '20px', padding: '20px'}}>
         <form onSubmit={this.handleSubmit}>
       
 
@@ -65,9 +74,22 @@ class App extends Component {
             <input type="healthUpdate"  id='health_update' value={this.state.health_update} onChange={this.handleChange} required/>
           </p>
           </div>
+
+           <div className="col">
+                <h3 className="form-group-label">Date/Time</h3>
+
+          <p>
+          <input type="datetime-local" id="datetime" name="datetime"  value={this.state.datetime}  onChange={this.handleChange} />
+            {/* <input type="datetime"  id='datetime' value={this.state.datetime} onChange={this.handleChange} required/> */}
+          </p>
+          </div> 
+
+      {/* <DatePicker selected={datetime} onChange={(date) => datetime(date)} /> */}
+
         
           <input type="submit"/>
         </form>
+      </div>
       </div>
     );
   }

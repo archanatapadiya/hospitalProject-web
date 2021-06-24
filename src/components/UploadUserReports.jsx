@@ -62,8 +62,12 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <form onSubmit={this.handleSubmit}>
+      <div>
+         <h2>Upload Patient Report</h2>
+      <div className="App" style={{width: '30%', border: '2px solid grey', marginLeft: '33%', marginTop: '20px', padding: '20px'}} >
+        
+       
+        <form  onSubmit={this.handleSubmit}>
         <div className="col">
                 <h3 className="form-group-label">File Name</h3>
 
@@ -92,6 +96,7 @@ class App extends Component {
           </div>
           <input type="submit"/>
         </form>
+      </div>
       </div>
     );
   }

@@ -22,23 +22,96 @@ import FetchUserBilling from "./FetchUserBilling";
 import UploadUserReports from "./UploadUserReports";
 import UploadUserUpdates from "./UploadUserUpdates";
 import UploadUserBilling from "./UploadUserBilling";
+import Modal from 'react-bootstrap/Modal';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function UploadData() {
-
   
   const { id } = useParams();
+  const hospitalId = localStorage.getItem('hospital_id');
 
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+
+  
+
+  const admitUser = async() => {
+
+    let isAdmit = false;
+    if(!userData.is_admit){
+      isAdmit = true;
+    }
+    let params = {
+      user_id: id,
+      hospital_id: hospitalId,
+      is_admit: isAdmit,
+      room_number: 201,
+    }
+    let success = await handlers.admitUser(params);
+
+  }
+
+  const [userData, setUserData] = useState([]);
+
+  const patientName = userData?.first_name + ' ' + userData?.last_name;
+
+  const fetchUserData = async (params) => {
+    const userReports = await handlers.fetchUserDetails(params);
+    let reportsData = userReports?.data;
+
+    setUserData(reportsData);
+    return reportsData;
+  };
+
+  useEffect(() => {
+    let params = {
+      user_id: id,
+    };
+    const userDetails = fetchUserData(params);
+  }, []);
   
   return (
     <React.Fragment>
       <div className="account-profile-wrapper">
+
+    
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+  
+      <h2 style={{textDecoration: 'underline'}}>Patient Details</h2>
+        <div style={{width: '30%', border: '2px solid grey', marginLeft: '35%', marginTop: '20px'}}>
+          
+          <p><span style={{fontWeight: 'bold'}}>Patient Name:</span> {patientName}</p>
+          <p><span style={{fontWeight: 'bold'}}>Email:</span> {userData?.email}</p>
+          <p><span style={{fontWeight: 'bold'}}>Address: </span>{userData?.address}</p>
+          <p><span style={{fontWeight: 'bold'}}>Phone Number: </span>{userData?.phone_number}</p>
+          {userData.is_admit && (
+          <p><span style={{fontWeight: 'bold'}}>Room No.: </span>{userData?.room_number}</p>
+          )}
+        </div>
+
 
       <div style={styles.tabs}>
           <ul>
            
             <React.Fragment>
               <li>
-                <NavLink to={`/admit-user`}>Admit User</NavLink>
+                <button onClick={handleShow}>{userData?.is_admit ? 'Discharge Patient' : 'Admit Patient'}</button>
               </li>
             </React.Fragment>
           </ul>

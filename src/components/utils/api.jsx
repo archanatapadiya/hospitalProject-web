@@ -22,6 +22,31 @@ export const searchUser = async (params) => {
         .then(data => data.json())
      }
        
+export const admitUser = async (params) => {
+
+return fetch(`${baseUrl}/admit_user/`, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: localToken,
+  },
+  body: JSON.stringify(params)
+})
+  .then(data => data.json())
+}
+
+export const fetchUserDetails = async (params) => {
+
+  return fetch(`${baseUrl}/get_user_details/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: localToken,
+    },
+    body: JSON.stringify(params)
+  })
+    .then(data => data.json())
+  }
 
 export const registerUser = async (params) => {
 

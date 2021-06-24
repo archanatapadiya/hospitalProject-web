@@ -13,6 +13,7 @@ import UploadUserUpdates from './components/UploadUserUpdates';
 import UploadUserBilling from './components/UploadUserBilling';
 
 import Login from './components/Login';
+import Topbar from './components/layout/topbar'
 
 export default function BasicExample() {
 
@@ -24,14 +25,20 @@ export default function BasicExample() {
     return <Login setToken={setToken} />
   }
 
+  const userData = localStorage.getItem('user_data');
+  const userData_parsed = JSON.parse(userData);
+
+  const userId = userData_parsed.user_id;
+
   return (
     <Router>
       <div>
-      
+      <Topbar userId={userId}/>
         <Switch>
           <Route exact path="/">
             <SearchUser />
           </Route>
+         
           <Route exact path="/upload-details/:id(\d*)">
             <UploadDetails />
           </Route>
