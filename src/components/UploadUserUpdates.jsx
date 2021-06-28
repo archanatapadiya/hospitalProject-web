@@ -8,7 +8,7 @@ class App extends Component {
   state = {
     health_update: '',
     datetime: '',
-    
+    dr_name: ''
   };
 
   handleChange = (e) => {
@@ -24,16 +24,9 @@ class App extends Component {
     e.preventDefault();
     console.log(this.state);
     const localToken = localStorage.getItem('token');
-
-   
     const userData = localStorage.getItem('user_data');
     const userData_parsed = JSON.parse(userData);
-
     const hospitalId = localStorage.getItem('hospital_id');
-
-    // const [datetime, setDatetime] = useState(new Date());
-
-
 
     let form_data = new FormData();
   
@@ -41,6 +34,7 @@ class App extends Component {
     form_data.append('datetime', this.state.datetime);
     form_data.append('user_id', userData_parsed.user_id);
     form_data.append('hospital_id', hospitalId);
+    form_data.append('dr_name', this.state.dr_name);
 
     let url = 'http://65.2.26.144:8000/user_health_update/';
     axios.post(url, form_data, {
@@ -66,26 +60,26 @@ class App extends Component {
       <div className="App" style={{width: '30%', border: '2px solid grey', marginLeft: '33%', marginTop: '20px', padding: '20px'}}>
         <form onSubmit={this.handleSubmit}>
       
-
           <div className="col">
                 <h3 className="form-group-label">Health Update</h3>
-
           <p>
             <input type="healthUpdate"  id='health_update' value={this.state.health_update} onChange={this.handleChange} required/>
           </p>
           </div>
 
+          <div className="col">
+                <h3 className="form-group-label">Doctor Name</h3>
+          <p>
+            <input type="dr_name"  id='dr_name' value={this.state.dr_name} onChange={this.handleChange} required/>
+          </p>
+          </div>
+
            <div className="col">
                 <h3 className="form-group-label">Date/Time</h3>
-
           <p>
           <input type="datetime-local" id="datetime" name="datetime"  value={this.state.datetime}  onChange={this.handleChange} />
-            {/* <input type="datetime"  id='datetime' value={this.state.datetime} onChange={this.handleChange} required/> */}
           </p>
           </div> 
-
-      {/* <DatePicker selected={datetime} onChange={(date) => datetime(date)} /> */}
-
         
           <input type="submit"/>
         </form>

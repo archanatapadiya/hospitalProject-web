@@ -4,7 +4,7 @@ import FormikMaterialTextField from "./FormikMaterialTextField";
 import * as handlers from "./handlers";
 import { Route, Switch, NavLink } from "react-router-dom";
 import styles from "./styles.css";
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams } from "react-router-dom";
 
 import {
   Col,
@@ -22,41 +22,50 @@ import FetchUserBilling from "./FetchUserBilling";
 import UploadUserReports from "./UploadUserReports";
 import UploadUserUpdates from "./UploadUserUpdates";
 import UploadUserBilling from "./UploadUserBilling";
-import Modal from 'react-bootstrap/Modal';
-import "bootstrap/dist/css/bootstrap.min.css";
+
+import notifications from './notifications';
 
 function UploadData() {
-  
   const { id } = useParams();
-  const hospitalId = localStorage.getItem('hospital_id');
+  const hospitalId = localStorage.getItem("hospital_id");
 
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-
-  
-
-  const admitUser = async() => {
-
+  const admitUser = async () => {
     let isAdmit = false;
-    if(!userData.is_admit){
+    if (!userData.is_admit) {
       isAdmit = true;
     }
+
+    let roomNumber;
+    if(!userData.is_admit){
+      roomNumber = textInput.current.value
+    }
+    else{
+     roomNumber = userData.room_number;
+    }
+
     let params = {
       user_id: id,
       hospital_id: hospitalId,
       is_admit: isAdmit,
-      room_number: 201,
-    }
+      room_number: roomNumber,
+    };
     let success = await handlers.admitUser(params);
 
-  }
+    notifications.show({
+      type: 'info',
+      message: 'Saving Personal Details...',
+      key: 'req-form',
+    });
+  };
 
   const [userData, setUserData] = useState([]);
 
-  const patientName = userData?.first_name + ' ' + userData?.last_name;
+  const patientName = userData?.first_name + " " + userData?.last_name;
 
   const fetchUserData = async (params) => {
     const userReports = await handlers.fetchUserDetails(params);
@@ -66,58 +75,74 @@ function UploadData() {
     return reportsData;
   };
 
+
   useEffect(() => {
     let params = {
       user_id: id,
     };
     const userDetails = fetchUserData(params);
   }, []);
-  
+
+  let textInput = React.createRef();
+
+
   return (
     <React.Fragment>
       <div className="account-profile-wrapper">
-
-    
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
-  
-      <h2 style={{textDecoration: 'underline'}}>Patient Details</h2>
-        <div style={{width: '30%', border: '2px solid grey', marginLeft: '35%', marginTop: '20px'}}>
-          
-          <p><span style={{fontWeight: 'bold'}}>Patient Name:</span> {patientName}</p>
-          <p><span style={{fontWeight: 'bold'}}>Email:</span> {userData?.email}</p>
-          <p><span style={{fontWeight: 'bold'}}>Address: </span>{userData?.address}</p>
-          <p><span style={{fontWeight: 'bold'}}>Phone Number: </span>{userData?.phone_number}</p>
+        <h2 style={{ textDecoration: "underline" }}>Patient Details</h2>
+        <div
+          style={{
+            width: "30%",
+            border: "2px solid grey",
+            marginLeft: "35%",
+            marginTop: "20px",
+          }}
+        >
+          <p>
+            <span style={{ fontWeight: "bold" }}>Patient Name:</span>{" "}
+            {patientName}
+          </p>
+          <p>
+            <span style={{ fontWeight: "bold" }}>Email:</span> {userData?.email}
+          </p>
+          <p>
+            <span style={{ fontWeight: "bold" }}>Address: </span>
+            {userData?.address}
+          </p>
+          <p>
+            <span style={{ fontWeight: "bold" }}>Phone Number: </span>
+            {userData?.phone_number}
+          </p>
           {userData.is_admit && (
-          <p><span style={{fontWeight: 'bold'}}>Room No.: </span>{userData?.room_number}</p>
+            <p>
+              <span style={{ fontWeight: "bold" }}>Room No.: </span>
+              {userData?.room_number}
+            </p>
           )}
         </div>
 
+{!userData.is_admit && (
+        <div className="col" style={{marginLeft: 40, marginBottom: -10}}>
+          <h3 className="form-group-label" style={{fontSize: 14}}>Enter Room Number</h3>
+          <p>
+            <input ref={textInput} type="room_number" id="room_number"  required />
+          </p>
+        </div>
+        )}
 
-      <div style={styles.tabs}>
+        <div style={styles.tabs}>
           <ul>
-           
             <React.Fragment>
               <li>
-                <button onClick={handleShow}>{userData?.is_admit ? 'Discharge Patient' : 'Admit Patient'}</button>
+                <button onClick={admitUser}>
+                  {userData?.is_admit ? "Discharge Patient" : "Admit Patient"}
+                </button>
               </li>
             </React.Fragment>
           </ul>
         </div>
-        
-        <div style={styles.tabs}>
+
+        <div style={{marginLeft: '20%', marginRight: '20%'}}>
           <ul>
             <li>
               <NavLink to={`/fetch-user-reports/${id}`}>Fetch Reports</NavLink>
@@ -133,16 +158,20 @@ function UploadData() {
 
             <React.Fragment>
               <li>
-                <NavLink to={`/fetch-user-billing/${id}`}>Fetch Billings</NavLink>
+                <NavLink to={`/fetch-user-billing/${id}`}>
+                  Fetch Billings
+                </NavLink>
               </li>
             </React.Fragment>
           </ul>
         </div>
 
-        <div style={styles.tabs}>
+        <div style={{marginLeft: '20%', marginRight: '20%'}}>
           <ul>
             <li>
-              <NavLink to={`/upload-user-reports/${id}`}>Upload Reports</NavLink>
+              <NavLink to={`/upload-user-reports/${id}`}>
+                Upload Reports
+              </NavLink>
             </li>
 
             <React.Fragment>
@@ -155,13 +184,14 @@ function UploadData() {
 
             <React.Fragment>
               <li>
-                <NavLink to={`/upload-user-billing/${id}`}>Upload Billings</NavLink>
+                <NavLink to={`/upload-user-billing/${id}`}>
+                  Upload Billings
+                </NavLink>
               </li>
             </React.Fragment>
           </ul>
         </div>
 
-       
         <Switch>
           <Route path={`/fetch-user-reports/:id(\d*)`}>
             <FetchUserReports />

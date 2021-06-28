@@ -3,6 +3,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import FormikMaterialTextField from "./FormikMaterialTextField";
 import * as handlers from './handlers';
 import { Link, useParams } from 'react-router-dom';
+import history from './lib/history';
 
 import {
   Col,
@@ -18,16 +19,15 @@ function UploadData() {
   
     const [searchUser, setSearchUser] = useState('');
 
-    console.log('searchUser1212', searchUser)
   const[userId, setUserId] = useState(0);
 
   return (
       <div>
       <h2>Welcome to Hospital Data Upload System</h2>
 
-      <a href={`/upload-details/${userId}`}> 
+      {/* <a href={`/upload-details/${userId}`}> 
       {searchUser} 
-      </a>
+      </a> */}
 
       
 
@@ -44,12 +44,18 @@ function UploadData() {
             formikBag
           );
 
+          
+          if(success.data.user_id){
+            history.push(`/upload-details/${success.data.user_id}`);
+            window.location.reload();
+            }
 
           if(success){
           setSearchUser(success.data.username);
           setUserId(success.data.user_id);
           localStorage.setItem('user_data', JSON.stringify(success.data));
           }
+
 
         }}
       >

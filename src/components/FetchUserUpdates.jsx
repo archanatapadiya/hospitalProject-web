@@ -22,6 +22,7 @@ const renderTableRows = (userReportList) => {
     return (
       <tr key={file_url}>
         <td>{userReportDetails.health_update}</td>
+        <td>{userReportDetails.dr_name}</td>
         <td>{userReportDetails.datetime}</td>
       </tr>
     );
@@ -110,6 +111,7 @@ function UploadReportData() {
       <thead>
         <tr>
           <th class="th-sm">Health Update</th>
+          <th class="th-sm">Doctor Name</th>
           <th class="th-sm">Upload Date</th>
         </tr>
       </thead>
@@ -134,6 +136,7 @@ function UploadReportData() {
       <thead>
         <tr>
           <th class="th-sm">Health Update</th>
+          <th class="th-sm">Doctor Name</th>
           <th class="th-sm">Upload Date</th>
         </tr>
       </thead>

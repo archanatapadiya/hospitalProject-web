@@ -1,16 +1,13 @@
 import * as api from "./utils/api";
+import notifications from './notifications';
+import Notification from 'rc-notification';
+
 
 export const searchUser = async (values, formikBag) => {
   try {
     
     const res = await api.searchUser(values);
 
-    // const res = {
-    //   is_success: true,
-    //   response_message: "Success",
-    //   data: { username: "9898989898", user_id: 9, firstname: "John" },
-    //   response_code: 200,
-    // };
 
     return res;
   } catch (err) {
@@ -22,9 +19,23 @@ export const searchUser = async (values, formikBag) => {
 
 export const admitUser = async (params) => {
   try {
+
+  
+
+ if(!params.room_number){
+    Notification.newInstance({}, notification => {
+      notification.notice({
+        content: <span style={{backgroundColor: 'red', top: 65, left: '50%'}}>Please enter room number</span>,
+        closable: true,
+        duration: null,
+      });
+    });
+  }
     
     const res = await api.admitUser(params);
-    // window.location.reload();
+    if(res.is_success == true) {
+    window.location.reload();
+    }
     return res;
   } catch (err) {
     console.log("handleSearch--->error---->");

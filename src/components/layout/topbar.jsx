@@ -1,17 +1,38 @@
 import React, { useState } from "react";
 import { Link, NavLink, useParams } from "react-router-dom";
-
+import axios from 'axios';
+import history from '../lib/history';
 
 const TopbarNavMenu = (props) => {
 
     const user_id  = props.userId;
 
-    console.log('ididid', props.userId)
     let loc = window.location.href;
+    const localToken = localStorage.getItem('token');
+
+    const clickLogout = async (params) => {
+      let url = 'http://65.2.26.144:8000/user_logout/';
+      axios.get(url, {
+        headers: {
+          'content-type': 'multipart/form-data',
+          Authorization: localToken,
+        }
+      })
+          .then(res => {
+            localStorage.removeItem('token');
+            history.push(`/`);
+            window.location.reload();
+            console.log(res.data);
+          })
+          .catch(err => console.log(err))
+    };
 
   return (
-    <div className="topbar" style={{backgroundColor: '#E1E3E2', marginLeft: '30%', marginRight: '30%'}}>
-         {(loc.includes('upload-details') || 
+    <div className="topbar" style={{backgroundColor: '#E1E3E2', paddingLeft: '20%', paddingRight: '20%'}}>
+        
+      <ul className="nav" style={{ display: "flex", flexDirection: "row", listStyleType: "none" }}>
+         
+      {(loc.includes('upload-details') || 
          loc.includes('upload-user-billing') ||
          loc.includes('fetch-user-billing') ||
          loc.includes('upload-user-health') ||
@@ -19,23 +40,35 @@ const TopbarNavMenu = (props) => {
          loc.includes('upload-user-reports') ||
          loc.includes('fetch-user-reports') )
          && (
-      <ul className="nav" style={{ display: "flex", flexDirection: "row", listStyleType: "none" }}>
-         
-        <li style={{marginLeft: '0px'}}>
+        <li >
           <Link className="topbar__link" to="/">
             Search Patient
           </Link>
         </li>
-        
-        <li style={{marginLeft: '-40%'}}>
+         )}
+            {(loc.includes('upload-details') || 
+         loc.includes('upload-user-billing') ||
+         loc.includes('fetch-user-billing') ||
+         loc.includes('upload-user-health') ||
+         loc.includes('fetch-user-health') ||
+         loc.includes('upload-user-reports') ||
+         loc.includes('fetch-user-reports') )
+         && (
+        <li >
           <Link className="topbar__link" to={`/upload-details/${user_id}`}>
             Patient Details
           </Link>
         </li>
+         )}
       
+        <li >
+          <Link className="topbar__link" onClick={clickLogout}>
+            Logout
+          </Link>
+        </li>
         
       </ul>
-      )}
+    
     </div>
   );
 };

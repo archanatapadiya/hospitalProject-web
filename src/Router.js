@@ -28,7 +28,7 @@ export default function BasicExample() {
   const userData = localStorage.getItem('user_data');
   const userData_parsed = JSON.parse(userData);
 
-  const userId = userData_parsed.user_id;
+  const userId = userData_parsed?.user_id;
 
   return (
     <Router>
