@@ -62,12 +62,12 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="login-wrapper">
          <h2>Upload Patient Report</h2>
-      <div className="App" style={{width: '30%', border: '2px solid grey', marginLeft: '33%', marginTop: '20px', padding: '20px'}} >
+      <div>
         
        
-        <form  onSubmit={this.handleSubmit}>
+        <form  onSubmit={this.handleSubmit} style={{backgroundColor: '#F7FBF9',  border: '2px solid grey',  marginTop: '20px', padding: '30px'}}>
         <div className="col">
                 <h3 className="form-group-label">File Name</h3>
 
@@ -88,7 +88,7 @@ class App extends Component {
                 <h3 className="form-group-label">Upload file</h3>
 
         
-          <p>
+          <p style={{marginLeft: '80px'}} >
             <input type="file"
                    id="file"
                    accept="image/png, image/jpeg"  onChange={this.handleImageChange} required/>

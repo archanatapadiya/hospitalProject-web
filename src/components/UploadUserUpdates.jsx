@@ -54,11 +54,11 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="login-wrapper">
          <h2>Upload Patient Health Details</h2>
      
-      <div className="App" style={{width: '30%', border: '2px solid grey', marginLeft: '33%', marginTop: '20px', padding: '20px'}}>
-        <form onSubmit={this.handleSubmit}>
+      <div>
+        <form onSubmit={this.handleSubmit} style={{backgroundColor: '#F7FBF9',  border: '2px solid grey',  marginTop: '20px', padding: '30px'}}>
       
           <div className="col">
                 <h3 className="form-group-label">Health Update</h3>

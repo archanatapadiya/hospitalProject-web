@@ -62,12 +62,15 @@ export const registerUser = async (values, formikBag) => {
   try {
     const res = await api.registerUser(values);
 
-    // const res = {
-    //   is_success: true,
-    //   response_message: "Success",
-    //   data: { username: "9898989898", user_id: 9, firstname: "John" },
-    //   response_code: 200,
-    // };
+    if(!res.is_success){
+      Notification.newInstance({}, notification => {
+        notification.notice({
+          content: <span style={{backgroundColor: 'red', top: 65, left: '50%'}}>{res.response_message}</span>,
+          closable: true,
+          duration: null,
+        });
+      });
+    }
 
     return res;
   } catch (err) {

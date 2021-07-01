@@ -11,11 +11,12 @@ const  baseUrl  = "http://65.2.26.144:8000";
 
 export const searchUser = async (params) => {
 
+  console.log('params123', params)
       return fetch(`${baseUrl}/find_request/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: localToken,
+          Authorization: params['localToken'],
         },
         body: JSON.stringify(params)
       })

@@ -17,19 +17,19 @@ import {
 
 function UploadData() {
   
-    const [searchUser, setSearchUser] = useState('');
+  const [searchUser, setSearchUser] = useState('');
+  const [localToken1, setLocalToken1] = useState('');
 
   const[userId, setUserId] = useState(0);
 
+  useEffect(() => {
+    const localTokenCalled = localStorage.getItem('token');
+    setLocalToken1(localTokenCalled);
+  }, []);
+ 
   return (
       <div>
       <h2>Welcome to Hospital Data Upload System</h2>
-
-      {/* <a href={`/upload-details/${userId}`}> 
-      {searchUser} 
-      </a> */}
-
-      
 
       {searchUser === undefined && (
         <p>No record found, please register</p>
@@ -39,6 +39,8 @@ function UploadData() {
       <Formik
         initialValues={{  }}
         onSubmit={async (values, formikBag) => {
+        
+          values.localToken = localToken1;
           let success = await handlers.searchUser(
             values,
             formikBag
@@ -73,7 +75,7 @@ function UploadData() {
           return (
             <Form className="formik-form">
             
-              
+          
                   <div className="col">
                     <h3 className="form-group-label">Search patient</h3>
 

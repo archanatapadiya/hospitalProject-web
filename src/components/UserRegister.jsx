@@ -12,13 +12,39 @@ import {
   Button,
 } from "reactstrap";
 import history from './lib/history';
+import * as Yup from 'yup';
 
+const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+
+const SignupSchema = Yup.object().shape({
+  
+  first_name: Yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required(),
+    last_name: Yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required(),
+  email: Yup.string().email('Invalid email').required(),
+  password: Yup.string().required(),
+  phone_number: Yup.string().matches(phoneRegExp, 'Phone number is not valid').max(10, 'Phone number is not valid').required(),
+  address: Yup.string().required(),
+  zip_code: Yup.string().required(),
+});
 
 function UploadReportData() {
   return (
     <React.Fragment>
     <Formik
-      initialValues={{ }}
+      initialValues={{ first_name: '',
+      last_name: '',
+      email: '',
+    password: '',
+    phone_number: '',
+  address: '',
+zip_code: '' }}
+      validationSchema={SignupSchema}
       onSubmit={async (values, formikBag) => {
         let success = await handlers.registerUser(
           values,
@@ -29,10 +55,7 @@ function UploadReportData() {
           history.push(`/`);
           window.location.reload();
         }
-        console.log('success111', success)
-
-        // setSearchUser(success.data);
-
+    
       }}
     >
       {(formikBag) => {
@@ -47,7 +70,7 @@ function UploadReportData() {
         } = formikBag;
 
         return (
-          <Form className="formik-form">
+          <Form className="formik-form" style={{backgroundColor: '#F7FBF9' ,width: '30%', border: '2px solid grey', marginLeft: '33%', marginTop: '20px', padding: '20px'}}>
           
             
                 <div className="col">
@@ -57,9 +80,9 @@ function UploadReportData() {
                     <Field
                       name="first_name"
                       component={FormikMaterialTextField}
-                  
                     />
                   </div>
+            
                 </div>
 
                 <div className="col">

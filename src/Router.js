@@ -31,7 +31,7 @@ export default function BasicExample() {
   const userId = userData_parsed?.user_id;
 
   return (
-    <Router>
+    <Router basename="/">
       <div>
       <Topbar userId={userId}/>
         <Switch>

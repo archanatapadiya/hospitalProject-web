@@ -38,6 +38,7 @@ const TopbarNavMenu = (props) => {
          loc.includes('upload-user-health') ||
          loc.includes('fetch-user-health') ||
          loc.includes('upload-user-reports') ||
+         loc.includes('add-new-user') ||
          loc.includes('fetch-user-reports') )
          && (
         <li >
@@ -52,6 +53,7 @@ const TopbarNavMenu = (props) => {
          loc.includes('upload-user-health') ||
          loc.includes('fetch-user-health') ||
          loc.includes('upload-user-reports') ||
+         loc.includes('add-new-user') ||
          loc.includes('fetch-user-reports') )
          && (
         <li >
