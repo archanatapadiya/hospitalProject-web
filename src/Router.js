@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 
@@ -11,6 +11,8 @@ import FetchUserBilling from './components/FetchUserBilling';
 import UploadUserReports from './components/UploadUserReports';
 import UploadUserUpdates from './components/UploadUserUpdates';
 import UploadUserBilling from './components/UploadUserBilling';
+import AddHospital from './components/AddHospital';
+import HospitalList from './components/HospitalList';
 
 import Login from './components/Login';
 import Topbar from './components/layout/topbar'
@@ -20,11 +22,19 @@ export default function BasicExample() {
   const localToken = localStorage.getItem('token');
 
   const [token, setToken] = useState(localToken);
+  const [superUser, setSuperUser] = useState(localToken);
+
+  useEffect(() => {
+    const localUsername = localStorage.getItem('username');
+    setSuperUser(localUsername);
+  }, []);
 
   if(!token) {
     return <Login setToken={setToken} />
   }
 
+
+  // const superUser = localStorage.getItem('username');
   const userData = localStorage.getItem('user_data');
   const userData_parsed = JSON.parse(userData);
 
@@ -32,13 +42,13 @@ export default function BasicExample() {
 
   return (
     <Router basename="/">
+      {superUser != "superuser.hospital@gmail.com" && (
       <div>
       <Topbar userId={userId}/>
         <Switch>
           <Route exact path="/">
             <SearchUser />
           </Route>
-         
           <Route exact path="/upload-details/:id(\d*)">
             <UploadDetails />
           </Route>
@@ -63,12 +73,25 @@ export default function BasicExample() {
           <Route exact path="/add-new-user">
             <UserRegister />
           </Route>
-          
+        </Switch>
+      </div>
+    )}
+
+{superUser == "superuser.hospital@gmail.com" && (
+      <div>
+      <Topbar userId={userId}/>
+        <Switch>
+        <Route exact path="/">
+            <HospitalList />
+          </Route>
+          <Route exact path="/add-hospital">
+            <AddHospital />
+          </Route>
          
         </Switch>
       </div>
+    )}
 
-   
     </Router>
   );
 }

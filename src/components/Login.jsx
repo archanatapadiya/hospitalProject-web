@@ -32,6 +32,7 @@ export default function Login({ setToken }) {
     setToken(token.data.token);
     localStorage.setItem('token', token.data.token);
     localStorage.setItem('hospital_id', token.data.user_id);
+    localStorage.setItem('username', token.data.username);
     }
 
     if(!token.is_success){

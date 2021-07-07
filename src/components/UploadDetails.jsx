@@ -24,6 +24,7 @@ import UploadUserUpdates from "./UploadUserUpdates";
 import UploadUserBilling from "./UploadUserBilling";
 
 import notifications from './notifications';
+import { setSourceMapRange } from "typescript";
 
 function UploadData() {
   const { id } = useParams();
@@ -64,6 +65,7 @@ function UploadData() {
   };
 
   const [userData, setUserData] = useState([]);
+  const [sure1, setSure1] = useState(false);
 
   const patientName = userData?.first_name + " " + userData?.last_name;
 
@@ -134,9 +136,23 @@ function UploadData() {
           <ul>
             <React.Fragment>
               <li>
-                <button onClick={admitUser}>
-                  {userData?.is_admit ? "Discharge Patient" : "Admit Patient"}
+              {userData?.is_admit && (
+                <button onClick= {() => setSure1(true)}>
+                  Discharge Patient
                 </button>
+            )}
+
+{!userData?.is_admit && (
+                <button onClick={admitUser}>
+                 Admit Patient
+                </button>
+)}
+
+{sure1 && (
+          <Link style={{marginLeft: '30px'}} className="topbar__link" onClick={admitUser}>
+            Sure?
+          </Link>
+          )}
               </li>
             </React.Fragment>
           </ul>

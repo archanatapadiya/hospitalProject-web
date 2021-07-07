@@ -3,7 +3,6 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import FormikMaterialTextField from "./FormikMaterialTextField";
 import * as handlers from "./handlers";
 import UploadDocument from "./UploadDocument";
-import Table from "react-bootstrap/Table";
 import _ from "lodash";
 import { Link, useParams } from 'react-router-dom';
 
@@ -17,6 +16,9 @@ import {
   Button,
 } from "reactstrap";
 
+import { Table } from 'antd';
+import PDFView from './PDFView';
+
 const renderTableRows = (userReportList) => {
   let rows = _.map(userReportList, (userReportDetails, file_url) => {
     return (
@@ -24,6 +26,7 @@ const renderTableRows = (userReportList) => {
         <td>{userReportDetails.health_update}</td>
         <td>{userReportDetails.dr_name}</td>
         <td>{userReportDetails.datetime}</td>
+      
       </tr>
     );
   });
@@ -49,6 +52,66 @@ function UploadReportData() {
   const hospitalId = localStorage.getItem('hospital_id');
   const [userReportList, setUserReportList] = useState([]);
   const [userReportListCurrent, setUserReportListCurrent] = useState([]);
+
+  let tableData = userReportList;
+
+  const HEALTH_TABLE_HEADER = [
+    {
+      title: 'Health Update',
+      dataIndex: 'health_update',
+      width: '200px',
+      align: 'center',
+      render: (value, row, index) => {
+        const obj = {
+          children: value,
+          props: {},
+        };
+        if (index == 0) {
+          obj.props.rowSpan = row.rowSpan;
+        } else {
+          obj.props.rowSpan = row.rowSpan;
+        }
+        return obj;
+      }
+    },
+    {
+      title: 'Dr. Name',
+      dataIndex: 'dr_name',
+      width: '200px',
+      align: 'center',
+      render: (value, row, index) => {
+        const obj = {
+          children: value,
+          props: {},
+        };
+        if (index == 0) {
+          obj.props.rowSpan = row.rowSpan;
+        } else {
+          obj.props.rowSpan = row.rowSpan;
+        }
+        return obj;
+      },
+    },
+    {
+      title: 'Upload Date',
+      dataIndex: 'datetime',
+      width: '200px',
+      align: 'center',
+      render: (value, row, index) => {
+        const obj = {
+          children: value,
+          props: {},
+        };
+        if (index == 0) {
+          obj.props.rowSpan = row.rowSpan;
+        } else {
+          obj.props.rowSpan = row.rowSpan;
+        }
+        return obj;
+      },
+    },
+ 
+  ];
 
   const userReportsData = async (params) => {
     const userReports = await handlers.fetchUserUpdates(params);
@@ -86,7 +149,7 @@ function UploadReportData() {
   }, []);
 
   return (
-    <div>
+    <div className="login-wrapper">
       <div>
         <h2>Uploaded reports for the user</h2>
 
@@ -96,17 +159,19 @@ function UploadReportData() {
 
       {userDetails.is_admit && (
 <div>
+
+
       <h3>Current Updates</h3>
     <table
       style={{
         border: "1px solid #1c62ab",
-        marginLeft: "30%",
+        // marginLeft: "30%",
         marginBottom: "50px",
       }}
       id="dtBasicExample"
       className="table table-farms"
       cellspacing="10%"
-      width="40%"
+      // width="40%"
     >
       <thead>
         <tr>
@@ -116,22 +181,49 @@ function UploadReportData() {
         </tr>
       </thead>
 
-      <tbody>{renderTableRows(userReportListCurrent)}</tbody>
+      <tbody>{renderTableRows(userReportListCurrent)}</tbody> 
     </table>
     </div>
 
       )}
-    <h3>History Updates</h3>
-    <table
+    {/* <h3>History Updates</h3> */}
+
+<br />
+    <div className="form-container">
+            <div className="farm-wrapper">
+              <div className="farm-table">
+                <div className="table-farms-wrapper">
+                  <span style={{ color: '#1b62ab', fontSize: '16px', fontWeight: 'bold', marginTop: '10px' }}>
+                   History Updates
+                   <br />
+                  </span>
+                  <br />
+
+
+    <Table
+                    columns={HEALTH_TABLE_HEADER}
+                    dataSource={tableData}
+                    bordered
+                    size="small"
+                    pagination={false}
+                    style={{ whiteSpace: 'pre', border: '1px solid grey' , borderRadius: '10px'}}
+                  />
+
+</div>
+              </div>
+            </div>
+          </div>
+
+    {/* <table
       style={{
         border: "1px solid #1c62ab",
-        marginLeft: "30%",
+        // marginLeft: "30%",
         // marginBottom: "50px",
       }}
       id="dtBasicExample"
       className="table table-farms"
       cellspacing="10%"
-      width="40%"
+      // width="40%"
     >
       <thead>
         <tr>
@@ -142,7 +234,7 @@ function UploadReportData() {
       </thead>
 
       <tbody>{renderTableRows(userReportList)}</tbody>
-    </table>
+    </table> */}
     </div>
   );
 }

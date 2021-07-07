@@ -7,7 +7,7 @@ class App extends Component {
 
   state = {
     bill_file_name: '',
-    amount:'',
+    remark:'',
     file: null
   };
 
@@ -41,7 +41,7 @@ class App extends Component {
     let form_data = new FormData();
     form_data.append('file', this.state.file, this.state.file.name);
     form_data.append('bill_file_name', this.state.bill_file_name);
-    form_data.append('amount', this.state.amount);
+    form_data.append('remark', this.state.remark);
     form_data.append('user_id', userData_parsed.user_id);
     form_data.append('hospital_id', hospitalId);
 
@@ -76,10 +76,10 @@ class App extends Component {
           </div>
 
           <div className="col">
-                <h3 className="form-group-label">Amount</h3>
+                <h3 className="form-group-label">Remark</h3>
 
           <p>
-            <input type="amount"  id='amount' value={this.state.amount} onChange={this.handleChange} required/>
+            <input type="remark"  id='remark' value={this.state.remark} onChange={this.handleChange} required/>
           </p>
           </div>
 

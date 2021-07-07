@@ -3,7 +3,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import FormikMaterialTextField from "./FormikMaterialTextField";
 import * as handlers from "./handlers";
 import UploadDocument from "./UploadDocument";
-import Table from "react-bootstrap/Table";
+// import Table from "react-bootstrap/Table";
 import _ from "lodash";
 import { Link, useParams } from 'react-router-dom';
 
@@ -17,6 +17,11 @@ import {
   Button,
 } from "reactstrap";
 
+
+import { Table } from 'antd';
+import PDFView from './PDFView';
+
+
 const renderTableRows = (userReportList) => {
   let rows = _.map(userReportList, (userReportDetails, file_url) => {
     return (
@@ -25,7 +30,7 @@ const renderTableRows = (userReportList) => {
         {userReportDetails.bill_file_name}
       </a>
      </td>
-        <td>{userReportDetails.amount}</td>
+        <td>{userReportDetails.remark}</td>
         <td>{userReportDetails.billing_time}</td>
       </tr>
     );
@@ -54,6 +59,61 @@ function UploadReportData() {
 
   const [userReportList, setUserReportList] = useState([]);
   const [userReportListCurrent, setUserReportListCurrent] = useState([]);
+
+
+  let tableData = userReportList;
+
+  const BILL_TABLE_HEADER = [
+    {
+      title: 'File Name',
+      dataIndex: 'bill_file_name',
+      width: '200px',
+      align: 'center',
+      render: (text, row) => (
+        <PDFView
+        file_name={row.bill_file_name}
+        file_url={row.file_url}
+        />
+      ),
+    },
+    {
+      title: 'Remarks',
+      dataIndex: 'remark',
+      width: '200px',
+      align: 'center',
+      render: (value, row, index) => {
+        const obj = {
+          children: value,
+          props: {},
+        };
+        if (index == 0) {
+          obj.props.rowSpan = row.rowSpan;
+        } else {
+          obj.props.rowSpan = row.rowSpan;
+        }
+        return obj;
+      },
+    },
+    {
+      title: 'Upload Time',
+      dataIndex: 'billing_time',
+      width: '200px',
+      align: 'center',
+      render: (value, row, index) => {
+        const obj = {
+          children: value,
+          props: {},
+        };
+        if (index == 0) {
+          obj.props.rowSpan = row.rowSpan;
+        } else {
+          obj.props.rowSpan = row.rowSpan;
+        }
+        return obj;
+      },
+    },
+ 
+  ];
 
   const userReportsData = async (params) => {
     
@@ -92,9 +152,9 @@ function UploadReportData() {
   }, []);
 
   return (
-    <div>
+    <div className="login-wrapper">
       <div>
-        <h2>Uploaded billings for the user</h2>
+        <h2>Uploaded bills for the user</h2>
 
         <Link to={`/upload-user-billing/${id}`} className="btn btn-primary">Add new bill</Link>
 
@@ -106,7 +166,7 @@ function UploadReportData() {
       <table
       style={{
         border: "1px solid #1c62ab",
-        marginLeft: "30%",
+        // marginLeft: "30%",
         marginBottom: "50px",
       }}
       id="dtBasicExample"
@@ -117,7 +177,7 @@ function UploadReportData() {
       <thead>
         <tr>
           <th class="th-sm">File Name</th>
-          <th class="th-sm">Amount</th>
+          <th class="th-sm">Remarks</th>
           <th class="th-sm">Upload Date</th>
         </tr>
       </thead>
@@ -127,11 +187,39 @@ function UploadReportData() {
     </div>
       )}
 
-    <h3>History Bills</h3>
-    <table
+    {/* <h3>History Bills</h3> */}
+
+    <br />
+
+    <div className="form-container">
+            <div className="farm-wrapper">
+              <div className="farm-table">
+                <div className="table-farms-wrapper">
+                  <span style={{ color: '#1b62ab', fontSize: '16px', fontWeight: 'bold', marginTop: '10px' }}>
+                   History Bills
+                   <br />
+                  </span>
+                  <br />
+
+
+    <Table
+                    columns={BILL_TABLE_HEADER}
+                    dataSource={tableData}
+                    bordered
+                    size="small"
+                    pagination={false}
+                    style={{ whiteSpace: 'pre', border: '1px solid grey' , borderRadius: '10px'}}
+                  />
+
+</div>
+              </div>
+            </div>
+          </div>
+
+    {/* <table
       style={{
         border: "1px solid #1c62ab",
-        marginLeft: "30%",
+        // marginLeft: "30%",
         // marginTop: "50px",
       }}
       id="dtBasicExample"
@@ -142,13 +230,13 @@ function UploadReportData() {
       <thead>
         <tr>
           <th class="th-sm">File Name</th>
-          <th class="th-sm">Amount</th>
+          <th class="th-sm">Remarks</th>
           <th class="th-sm">Upload Date</th>
         </tr>
       </thead>
 
       <tbody>{renderTableRows(userReportList)}</tbody>
-    </table>
+    </table> */}
     </div>
   );
 }
