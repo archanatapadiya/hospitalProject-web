@@ -48,6 +48,13 @@ a {
       align-items: center;
   }
 
+  .login-logo{
+  /* flex: 1;
+  flexDirection: 'row';
+  justifyContent: 'space-between'; */
+  display: inline-flex !important;
+  }
+
   .table-farms-wrapper {
    
   }
@@ -99,16 +106,3 @@ a {
                   border-radius: 4px;
                   padding: 4px 11px;
                 }
-
-                .btn {
-                  border-radius: 10px;
-                  padding: 5px 25px;
-                  margin-bottom: 20px;
-                  transition: all .4s;
-                  font-size: 14px;
-                  position: relative;
-                  overflow: hidden;
-                  z-index: 0;
-                  /* background-color: #3ea3fc; */
-                  /* color: white; */
-              }

@@ -4,7 +4,8 @@ import FormikMaterialTextField from "./FormikMaterialTextField";
 import * as handlers from "./handlers";
 import UploadDocument from "./UploadDocument";
 import _ from "lodash";
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams } from "react-router-dom";
+import 'antd/dist/antd.css';
 
 import {
   Col,
@@ -13,72 +14,45 @@ import {
   Card,
   CardBody,
   ButtonToolbar,
-  Button,
-} from "reactstrap";
+  } from "reactstrap";
 
-import { Table } from 'antd';
-import PDFView from './PDFView';
+import PDFView from "./PDFView";
+import AntTableActions from './AntTableActions';
+import { Table, Input, Button, Popconfirm } from 'antd';
 
-const renderTableRows = (userReportList) => {
-  let rows = _.map(userReportList, (userReportDetails, file_url) => {
-    return (
-      <tr key={file_url}>
-        <td>{userReportDetails.health_update}</td>
-        <td>{userReportDetails.dr_name}</td>
-        <td>{userReportDetails.datetime}</td>
-      
-      </tr>
-    );
-  });
 
-  if (!rows.length) {
-    rows.push(
-      <tr key="0">
-        <td colSpan="7" className="">
-          User doesn't have any health updates
-        </td>
-      </tr>
-    );
-  }
 
-  return rows;
-};
 
 function UploadReportData() {
   const { id } = useParams();
-  const userData = localStorage.getItem('user_data');
+  const userData = localStorage.getItem("user_data");
   const userData_parsed = JSON.parse(userData);
 
-  const hospitalId = localStorage.getItem('hospital_id');
+  const hospitalId = localStorage.getItem("hospital_id");
   const [userReportList, setUserReportList] = useState([]);
   const [userReportListCurrent, setUserReportListCurrent] = useState([]);
 
   let tableData = userReportList;
 
+  let tableDataCurrent = userReportListCurrent;
+
+
+  const handleDelete = async (id) => {
+    try {
+      let res = await handlers.deleteUserUpdates(id);
+    } catch (err) {
+      console.log('ConfirmDeleteModal-->handleConfirmErr---->', err);
+    }
+  };
+
+ 
+
   const HEALTH_TABLE_HEADER = [
     {
-      title: 'Health Update',
-      dataIndex: 'health_update',
-      width: '200px',
-      align: 'center',
-      render: (value, row, index) => {
-        const obj = {
-          children: value,
-          props: {},
-        };
-        if (index == 0) {
-          obj.props.rowSpan = row.rowSpan;
-        } else {
-          obj.props.rowSpan = row.rowSpan;
-        }
-        return obj;
-      }
-    },
-    {
-      title: 'Dr. Name',
-      dataIndex: 'dr_name',
-      width: '200px',
-      align: 'center',
+      title: "Health Update",
+      dataIndex: "health_update",
+      width: "200px",
+      align: "center",
       render: (value, row, index) => {
         const obj = {
           children: value,
@@ -93,10 +67,10 @@ function UploadReportData() {
       },
     },
     {
-      title: 'Upload Date',
-      dataIndex: 'datetime',
-      width: '200px',
-      align: 'center',
+      title: "Dr. Name",
+      dataIndex: "dr_name",
+      width: "200px",
+      align: "center",
       render: (value, row, index) => {
         const obj = {
           children: value,
@@ -110,7 +84,34 @@ function UploadReportData() {
         return obj;
       },
     },
- 
+    {
+      title: "Upload Date",
+      dataIndex: "datetime",
+      width: "200px",
+      align: "center",
+      render: (value, row, index) => {
+        const obj = {
+          children: value,
+          props: {},
+        };
+        if (index == 0) {
+          obj.props.rowSpan = row.rowSpan;
+        } else {
+          obj.props.rowSpan = row.rowSpan;
+        }
+        return obj;
+      },
+    },
+    {
+      title: 'operation',
+      dataIndex: 'operation',
+      render: (text, record) =>
+
+          <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.id)}>
+            <a>Delete</a>
+          </Popconfirm>
+      
+    },
   ];
 
   const userReportsData = async (params) => {
@@ -126,7 +127,7 @@ function UploadReportData() {
   useEffect(() => {
     let params = {
       user_id: userData_parsed.user_id,
-      hospital_id: hospitalId 
+      hospital_id: hospitalId,
     };
     const userReports = userReportsData(params);
   }, []);
@@ -149,72 +150,101 @@ function UploadReportData() {
   }, []);
 
   return (
-    <div className="login-wrapper">
+    <div className="login-wrapper" style={{   boxShadow: '0px 0px 10px #0000001a',
+    border: '1px solid #c9c9c9',
+    padding: 50,
+    marginLeft: 100,
+    marginRight: 100,
+    marginTop: 50,
+    backgroundColor: '#F7FBF9',
+    opacity: 1}}>
       <div>
-        <h2>Uploaded reports for the user</h2>
+        <h2>Health updates for the user</h2>
 
-        <Link to={`/upload-user-health/${id}`} className="btn btn-primary">Add new health update</Link>
+        <a href={`/upload-user-health/${id}`}  >
+      <button type="button" class="btn btn-success btn-sm"> Add New Health Update</button>
+   </a> 
 
+       
       </div>
 
       {userDetails.is_admit && (
-<div>
+  
+      
+        <div className="form-container">
+        <div className="farm-wrapper">
+          <div className="farm-table">
+            <div className="table-farms-wrapper">
+            <br />
+              <span
+                style={{
+                  color: "#1b62ab",
+                  fontSize: "16px",
+                  fontWeight: "bold",
+                  marginTop: "10px",
+                }}
+              >
+                Current Updates
+                <br />
+              </span>
+              <br />
 
-
-      <h3>Current Updates</h3>
-    <table
-      style={{
-        border: "1px solid #1c62ab",
-        // marginLeft: "30%",
-        marginBottom: "50px",
-      }}
-      id="dtBasicExample"
-      className="table table-farms"
-      cellspacing="10%"
-      // width="40%"
-    >
-      <thead>
-        <tr>
-          <th class="th-sm">Health Update</th>
-          <th class="th-sm">Doctor Name</th>
-          <th class="th-sm">Upload Date</th>
-        </tr>
-      </thead>
-
-      <tbody>{renderTableRows(userReportListCurrent)}</tbody> 
-    </table>
-    </div>
-
-      )}
-    {/* <h3>History Updates</h3> */}
-
-<br />
-    <div className="form-container">
-            <div className="farm-wrapper">
-              <div className="farm-table">
-                <div className="table-farms-wrapper">
-                  <span style={{ color: '#1b62ab', fontSize: '16px', fontWeight: 'bold', marginTop: '10px' }}>
-                   History Updates
-                   <br />
-                  </span>
-                  <br />
-
-
-    <Table
-                    columns={HEALTH_TABLE_HEADER}
-                    dataSource={tableData}
-                    bordered
-                    size="small"
-                    pagination={false}
-                    style={{ whiteSpace: 'pre', border: '1px solid grey' , borderRadius: '10px'}}
-                  />
-
-</div>
-              </div>
+              <Table
+                columns={HEALTH_TABLE_HEADER}
+                dataSource={tableDataCurrent}
+                bordered
+                size="small"
+                pagination={false}
+                style={{
+                  whiteSpace: "pre",
+                  border: "1px solid grey",
+                  // borderRadius: "10px",
+                }}
+              />
             </div>
           </div>
+        </div>
+      </div>
 
-    {/* <table
+      )}
+      {/* <h3>History Updates</h3> */}
+
+    
+      <div className="form-container">
+        <div className="farm-wrapper">
+          <div className="farm-table">
+            <div className="table-farms-wrapper">
+              <span
+                style={{
+                  color: "#1b62ab",
+                  fontSize: "16px",
+                  fontWeight: "bold",
+                  marginTop: "10px",
+                }}
+              >
+                History Updates
+                <br />
+              </span>
+              <br />
+
+              <Table
+                columns={HEALTH_TABLE_HEADER}
+                dataSource={tableData}
+                bordered
+                size="small"
+                pagination={false}
+                style={{
+                  whiteSpace: "pre",
+                  border: "1px solid grey",
+                  // borderRadius: "10px",
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* <table
       style={{
         border: "1px solid #1c62ab",
         // marginLeft: "30%",

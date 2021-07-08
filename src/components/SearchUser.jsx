@@ -4,7 +4,7 @@ import FormikMaterialTextField from "./FormikMaterialTextField";
 import * as handlers from './handlers';
 import { Link, useParams } from 'react-router-dom';
 import history from './lib/history';
-
+import './styles.css';
 import {
   Col,
   Container,
@@ -26,9 +26,13 @@ function UploadData() {
     const localTokenCalled = localStorage.getItem('token');
     setLocalToken1(localTokenCalled);
   }, []);
+
+  useEffect(() => {
+   localStorage.removeItem('user_data');
+  }, []);
  
   return (
-      <div>
+      <div style={{marginTop: 100}}>
       <h2>Welcome to Hospital Data Upload System</h2>
 
       {searchUser === undefined && (
@@ -92,13 +96,17 @@ function UploadData() {
               <br />
 
               <div className="btn-wrapper">
-                <Button color="primary" type="submit" disabled={isSubmitting}>
+                <Button  type="submit" disabled={isSubmitting}>
                   Search
                 </Button>
               </div>
               <br />
          
-          <Link to="/add-new-user" className="btn btn-primary">Add New User</Link>
+
+              <a href="/add-new-user" >
+      <button type="button" class="btn btn-success btn-sm">Add New User</button>
+   </a>  
+             
             </Form>
           );
         }}

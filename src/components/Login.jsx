@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './styles.css';
 import PropTypes from 'prop-types';
 import Notification from 'rc-notification';
+import logo from './images/logo.jpeg';
 
 async function loginUser(credentials) {
     return fetch('http://65.2.26.144:8000/hospital_login/', {
@@ -47,16 +48,31 @@ export default function Login({ setToken }) {
   }
 
   return(
-    <div className="login-wrapper">
-       <h1>Welcome to Hospital Data Upload System</h1>
+    <div className="login-wrapper" style={{   boxShadow: '0px 0px 10px #0000001a',
+      border: '1px solid #c9c9c9',
+      padding: 50,
+      marginLeft: 200,
+      marginRight: 200,
+      marginTop: 50,
+      backgroundColor: '#F7FBF9',
+      opacity: 1}}>
+
+<br />
+        <div  style={{padding: 20,  border: '10px solid', borderRadius: 10}}>
+        
+        <h1> <img src={logo} alt="Logo" width="40"/> MyMedCords</h1>
+        </div>
+        <br />
+
+       <h2>Welcome to Hospital Data Upload System</h2>
       <h3>Please login with the hospital username and password </h3>
-      <form onSubmit={handleSubmit} style={{backgroundColor: '#F7FBF9', width: '30%', border: '2px solid grey',  marginTop: '20px', padding: '20px'}}>
+      <form onSubmit={handleSubmit} style={{ boxShadow: '0px 0px 10px #0000001a', backgroundColor: '#0E53A5', width: '30%', border: '2px solid black',  marginTop: '20px', padding: '20px'}}>
         <label>
-          <p>Username</p>
+          <p style={{color: 'white'}}>Username</p>
           <input type="text"  onChange={e => setUserName(e.target.value)} required/>
         </label>
         <label>
-          <p>Password</p>
+          <p style={{color: 'white', marginTop: 20}}>Password</p>
           <input type="password" onChange={e => setPassword(e.target.value)} required/>
         </label>
       

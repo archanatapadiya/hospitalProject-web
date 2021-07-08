@@ -15,7 +15,8 @@ import AddHospital from './components/AddHospital';
 import HospitalList from './components/HospitalList';
 
 import Login from './components/Login';
-import Topbar from './components/layout/topbar'
+import Topbar from './components/layout/topbar';
+import Top from './components/topbar/topbar';
 
 export default function BasicExample() {
 
@@ -44,7 +45,9 @@ export default function BasicExample() {
     <Router basename="/">
       {superUser != "superuser.hospital@gmail.com" && (
       <div>
-      <Topbar userId={userId}/>
+        <Top userId={userId} />
+      {/* <Topbar userId={userId}/> */}
+      <div style={{marginTop: 90}}>
         <Switch>
           <Route exact path="/">
             <SearchUser />
@@ -74,6 +77,7 @@ export default function BasicExample() {
             <UserRegister />
           </Route>
         </Switch>
+        </div>
       </div>
     )}
 

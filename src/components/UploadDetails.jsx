@@ -90,13 +90,21 @@ function UploadData() {
 
   return (
     <React.Fragment>
-      <div className="account-profile-wrapper">
+      <div className="login-wrapper" style={{   boxShadow: '0px 0px 10px #0000001a',
+      border: '1px solid #c9c9c9',
+      padding: 50,
+      marginLeft: 200,
+      marginRight: 200,
+      marginTop: 50,
+      backgroundColor: '#F7FBF9',
+      opacity: 1}}>
         <h2 style={{ textDecoration: "underline" }}>Patient Details</h2>
         <div
           style={{
-            width: "30%",
+            // width: "30%",
+            padding: 20,
             border: "2px solid grey",
-            marginLeft: "35%",
+            // marginLeft: "35%",
             marginTop: "20px",
           }}
         >
@@ -124,65 +132,63 @@ function UploadData() {
         </div>
 
 {!userData.is_admit && (
-        <div className="col" style={{marginLeft: 40, marginBottom: -10}}>
-          <h3 className="form-group-label" style={{fontSize: 14}}>Enter Room Number</h3>
+        <div className="col" style={{ marginBottom: -10}}>
+          <h3 className="form-group-label" style={{fontSize: 14, marginTop: 10}}>Enter Room Number</h3>
           <p>
             <input ref={textInput} type="room_number" id="room_number"  required />
           </p>
         </div>
         )}
 
-        <div style={styles.tabs}>
-          <ul>
+        <div >
+         
             <React.Fragment>
-              <li>
+             <br />
               {userData?.is_admit && (
-                <button onClick= {() => setSure1(true)}>
+                <button class="btn btn-success btn-sm" onClick= {() => setSure1(true)}>
                   Discharge Patient
                 </button>
             )}
 
 {!userData?.is_admit && (
-                <button onClick={admitUser}>
+                <button class="btn btn-success btn-sm" onClick={admitUser}>
                  Admit Patient
                 </button>
 )}
 
 {sure1 && (
-          <Link style={{marginLeft: '30px'}} className="topbar__link" onClick={admitUser}>
+          <Link className="topbar__link" style={{marginLeft: 15}} onClick={admitUser}>
             Sure?
           </Link>
           )}
-              </li>
+            
             </React.Fragment>
-          </ul>
+         
         </div>
 
-        <div style={{marginLeft: '20%', marginRight: '20%'}}>
+        <div>
           <ul>
             <li>
               <NavLink to={`/fetch-user-reports/${id}`}>Fetch Reports</NavLink>
             </li>
 
-            <React.Fragment>
+            
               <li>
                 <NavLink to={`/fetch-user-health/${id}`}>
                   Fetch Health Details
                 </NavLink>
               </li>
-            </React.Fragment>
-
-            <React.Fragment>
+          
               <li>
                 <NavLink to={`/fetch-user-billing/${id}`}>
                   Fetch Billings
                 </NavLink>
               </li>
-            </React.Fragment>
+          
           </ul>
         </div>
 
-        <div style={{marginLeft: '20%', marginRight: '20%'}}>
+        <div >
           <ul>
             <li>
               <NavLink to={`/upload-user-reports/${id}`}>
@@ -190,21 +196,19 @@ function UploadData() {
               </NavLink>
             </li>
 
-            <React.Fragment>
+           
               <li>
                 <NavLink to={`/upload-user-health/${id}`}>
                   Upload Health Details
                 </NavLink>
               </li>
-            </React.Fragment>
-
-            <React.Fragment>
+       
               <li>
                 <NavLink to={`/upload-user-billing/${id}`}>
                   Upload Billings
                 </NavLink>
               </li>
-            </React.Fragment>
+        
           </ul>
         </div>
 

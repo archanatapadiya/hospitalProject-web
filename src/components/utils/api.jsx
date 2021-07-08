@@ -161,4 +161,52 @@ export const fetchUserBilling = async (params) => {
 }
 
 
+export const deleteUserUpdates = async (params) => {
+  let bodyparams = {
+    "Id": params, 
+    "delete": true ,
+  }
+    return fetch(`${baseUrl}/delete_health_update/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localToken,
+      },
+      body: JSON.stringify(bodyparams)
+    })
+      .then(data => data.json())
+}
+
+export const deleteUserReports = async (params) => {
+  let bodyparams = {
+    "Id": params, 
+    "delete": true ,
+  }
+    return fetch(`${baseUrl}/delete_report/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localToken,
+      },
+      body: JSON.stringify(bodyparams)
+    })
+      .then(data => data.json())
+}
+
+export const deleteUserBills = async (params) => {
+  let bodyparams = {
+    "Id": params, 
+    "delete": true ,
+  }
+    return fetch(`${baseUrl}/delete_bill/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localToken,
+      },
+      body: JSON.stringify(bodyparams)
+    })
+      .then(data => data.json())
+}
+
 

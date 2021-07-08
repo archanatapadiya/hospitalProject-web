@@ -145,3 +145,36 @@ export const fetchUserBilling = async (params) => {
   }
 };
 
+export const deleteUserUpdates = async (params) => {
+  try {
+    const res = await api.deleteUserUpdates(params);
+    return res;
+  } catch (err) {
+    console.log("handleSearch--->error---->");
+
+    throw err;
+  }
+};
+
+export const deleteUserReports = async (params) => {
+  try {
+    const res = await api.deleteUserReports(params);
+    return res;
+  } catch (err) {
+    console.log("handleSearch--->error---->");
+
+    throw err;
+  }
+};
+
+
+export const deleteUserBills = async (params) => {
+  try {
+    const res = await api.deleteUserBills(params);
+    return res;
+  } catch (err) {
+    console.log("handleSearch--->error---->");
+
+    throw err;
+  }
+};

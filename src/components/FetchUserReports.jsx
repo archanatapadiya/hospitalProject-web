@@ -3,9 +3,9 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import FormikMaterialTextField from "./FormikMaterialTextField";
 import * as handlers from "./handlers";
 import UploadDocument from "./UploadDocument";
-import Table from "react-bootstrap/Table";
+// import Table from "react-bootstrap/Table";
 import _ from "lodash";
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams } from "react-router-dom";
 
 import {
   Col,
@@ -14,36 +14,12 @@ import {
   Card,
   CardBody,
   ButtonToolbar,
-  Button,
+  
 } from "reactstrap";
 
-const renderTableRows = (userReportList) => {
-  let rows = _.map(userReportList, (userReportDetails, file_url) => {
-    return (
-      <tr key={file_url}>
-        
-        <td><a target="_blank" href={userReportDetails.file_url}>
-        {userReportDetails.file_name}
-      </a>
-     </td>
-     <td>{userReportDetails.description}</td>
-        <td>{userReportDetails.event_time}</td>
-      </tr>
-    );
-  });
+import PDFView from "./PDFView";
+import { Table, Input, Button, Popconfirm } from 'antd';
 
-  if (!rows.length) {
-    rows.push(
-      <tr key="0">
-        <td colSpan="7" className="">
-          User doesn't have any uploaded reports
-        </td>
-      </tr>
-    );
-  }
-
-  return rows;
-};
 
 function UploadReportData() {
 
@@ -53,9 +29,78 @@ function UploadReportData() {
 
   const hospitalId = localStorage.getItem('hospital_id');
 
-
   const [userReportList, setUserReportList] = useState([]);
   const [userReportListCurrent, setUserReportListCurrent] = useState([]);
+
+  let tableData = userReportList;
+  let tableDataCurrent = userReportListCurrent;
+
+  const handleDelete = async (id) => {
+    try {
+      let res = await handlers.deleteUserReports(id);
+    } catch (err) {
+      console.log('ConfirmDeleteModal-->handleConfirmErr---->', err);
+    }
+  };
+
+
+  const REPORT_TABLE_HEADER = [
+    {
+      title: "File Name",
+      dataIndex: "file_name",
+      width: "200px",
+      align: "center",
+      render: (text, row) => (
+        <PDFView file_name={row.file_name} file_url={row.file_url} />
+      ),
+    },
+    {
+      title: "Description",
+      dataIndex: "description",
+      width: "200px",
+      align: "center",
+      render: (value, row, index) => {
+        const obj = {
+          children: value,
+          props: {},
+        };
+        if (index == 0) {
+          obj.props.rowSpan = row.rowSpan;
+        } else {
+          obj.props.rowSpan = row.rowSpan;
+        }
+        return obj;
+      },
+    },
+    {
+      title: "Upload Date",
+      dataIndex: "event_time",
+      width: "200px",
+      align: "center",
+      render: (value, row, index) => {
+        const obj = {
+          children: value,
+          props: {},
+        };
+        if (index == 0) {
+          obj.props.rowSpan = row.rowSpan;
+        } else {
+          obj.props.rowSpan = row.rowSpan;
+        }
+        return obj;
+      },
+    },
+    {
+      title: 'Operation',
+      dataIndex: 'operation',
+      render: (text, record) =>
+
+          <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.id)}>
+            <a>Delete</a>
+          </Popconfirm>
+      
+    },
+  ];
 
   const userReportsData = async (params) => {
     const userReports = await handlers.fetchUserReport(params);
@@ -94,64 +139,94 @@ function UploadReportData() {
   }, []);
 
   return (
-    <div>
+    <div className="login-wrapper" style={{   boxShadow: '0px 0px 10px #0000001a',
+    border: '1px solid #c9c9c9',
+    padding: 50,
+    marginLeft: 200,
+    marginRight: 200,
+    marginTop: 50,
+    backgroundColor: '#F7FBF9',
+    opacity: 1}}>
       <div>
         <h2>Uploaded reports for the user</h2>
 
-        <Link to={`/upload-user-reports/${id}`} className="btn btn-primary">Add new report</Link>
+        <a href={`/upload-user-reports/${id}`} >
+      <button type="button" class="btn btn-success btn-sm">Add New Report</button>
+   </a>  
+         
+
       </div>
 
 {userDetails.is_admit && (
-  <div>
-      <h3>Current Reports</h3>
-
-      <table
-      style={{
-        border: "1px solid #1c62ab",
-        marginLeft: "30%",
-        marginBottom: "50px",
-      }}
-      id="dtBasicExample"
-      className="table table-farms"
-      cellspacing="10%"
-      width="40%"
-    >
-      <thead>
-        <tr>
-          <th class="th-sm">File Name</th>
-          <th class="th-sm">Description</th>
-          <th class="th-sm">Upload Date</th>
-        </tr>
-      </thead>
-
-      <tbody>{renderTableRows(userReportListCurrent)}</tbody>
-    </table>
-    </div>
+         <div className="form-container">
+         <div className="farm-wrapper">
+           <div className="farm-table">
+             <div className="table-farms-wrapper">
+               <br />
+               <span
+                 style={{
+                   color: "#1b62ab",
+                   fontSize: "16px",
+                   fontWeight: "bold",
+                   marginTop: "10px",
+                 }}
+               >
+                 Current Reports
+                 <br />
+               </span>
+               <br />
+ 
+               <Table
+                 columns={REPORT_TABLE_HEADER}
+                 dataSource={tableDataCurrent}
+                 bordered
+                 size="small"
+                 pagination={false}
+                 style={{
+                   whiteSpace: "pre",
+                   border: "1px solid grey",
+                 }}
+               />
+             </div>
+           </div>
+         </div>
+       </div>
     )}
 
-    <h3>History Reports</h3>
+ 
 
-    <table
-      style={{
-        border: "1px solid #1c62ab",
-        marginLeft: "30%",
-        // marginTop: "50px",
-      }}
-      id="dtBasicExample"
-      className="table table-farms"
-      cellspacing="10%"
-      width="40%"
-    >
-      <thead>
-        <tr>
-          <th class="th-sm">File Name</th>
-          <th class="th-sm">Description</th>
-          <th class="th-sm">Upload Date</th>
-        </tr>
-      </thead>
+<div className="form-container">
+        <div className="farm-wrapper">
+          <div className="farm-table">
+            <div className="table-farms-wrapper">
+              <span
+                style={{
+                  color: "#1b62ab",
+                  fontSize: "16px",
+                  fontWeight: "bold",
+                  marginTop: "10px",
+                }}
+              >
+                History Reports
+                <br />
+              </span>
+              <br />
 
-      <tbody>{renderTableRows(userReportList)}</tbody>
-    </table>
+              <Table
+                columns={REPORT_TABLE_HEADER}
+                dataSource={tableData}
+                bordered
+                size="small"
+                pagination={false}
+                style={{
+                  whiteSpace: "pre",
+                  border: "1px solid grey",
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
 
 
     </div>
