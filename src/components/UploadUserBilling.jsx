@@ -62,11 +62,18 @@ class App extends Component {
 
   render() {
     return (
-      <div className="login-wrapper">
+      <div  className="login-wrapper"  style={{   boxShadow: '0px 0px 10px #0000001a',
+      border: '1px solid #c9c9c9',
+      padding: 50,
+      marginLeft: 350,
+      marginRight: 350,
+      marginTop: 50,
+      backgroundColor: '#F7FBF9',
+      opacity: 1}}>
          <h2>Upload Patient Bills</h2>
       
       <div  >
-        <form onSubmit={this.handleSubmit} style={{backgroundColor: '#F7FBF9',  border: '2px solid grey',  marginTop: '20px', padding: '30px'}}>
+        <form onSubmit={this.handleSubmit} style={{backgroundColor: 'white',  border: '2px solid black',  marginTop: '20px', padding: '30px'}}>
         <div className="col">
                 <h3 className="form-group-label">Bill File Name</h3>
 

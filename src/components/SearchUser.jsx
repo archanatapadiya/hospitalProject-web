@@ -32,12 +32,21 @@ function UploadData() {
   }, []);
  
   return (
-      <div style={{marginTop: 100}}>
+      <div  className="login-wrapper"  style={{   boxShadow: '0px 0px 10px #0000001a',
+      border: '1px solid #c9c9c9',
+      padding: 50,
+      marginLeft: 350,
+      marginRight: 350,
+      marginTop: 50,
+      backgroundColor: '#F7FBF9',
+      opacity: 1}}>
       <h2>Welcome to Hospital Data Upload System</h2>
 
-      {searchUser === undefined && (
-        <p>No record found, please register</p>
-      )}
+      
+
+<a href="/add-new-user" >
+      <button type="button" class="btn btn-success btn-sm">Add New User</button>
+   </a>  
 
     <React.Fragment>
       <Formik
@@ -77,6 +86,16 @@ function UploadData() {
           } = formikBag;
 
           return (
+            <div   style={{
+              // width: "30%",
+              padding: 30,
+              border: "2px solid grey",
+              // marginLeft: "35%",
+              // marginTop: "20px",
+              backgroundColor: 'white'
+            }}>
+
+              
             <Form className="formik-form">
             
           
@@ -94,20 +113,21 @@ function UploadData() {
                   </div>
               
               <br />
-
+              {searchUser === undefined && (
+        <p>No record found, please register</p>
+      )}
               <div className="btn-wrapper">
                 <Button  type="submit" disabled={isSubmitting}>
                   Search
                 </Button>
               </div>
-              <br />
+             
          
 
-              <a href="/add-new-user" >
-      <button type="button" class="btn btn-success btn-sm">Add New User</button>
-   </a>  
+            
              
             </Form>
+            </div>
           );
         }}
       </Formik>

@@ -93,8 +93,8 @@ function UploadData() {
       <div className="login-wrapper" style={{   boxShadow: '0px 0px 10px #0000001a',
       border: '1px solid #c9c9c9',
       padding: 50,
-      marginLeft: 200,
-      marginRight: 200,
+      marginLeft: 300,
+      marginRight: 300,
       marginTop: 50,
       backgroundColor: '#F7FBF9',
       opacity: 1}}>
@@ -106,6 +106,7 @@ function UploadData() {
             border: "2px solid grey",
             // marginLeft: "35%",
             marginTop: "20px",
+            backgroundColor: 'white'
           }}
         >
           <p>
