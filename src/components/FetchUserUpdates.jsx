@@ -40,6 +40,9 @@ function UploadReportData() {
   const handleDelete = async (id) => {
     try {
       let res = await handlers.deleteUserUpdates(id);
+      if(res.is_success == true){
+        window.location.reload();
+      }
     } catch (err) {
       console.log('ConfirmDeleteModal-->handleConfirmErr---->', err);
     }

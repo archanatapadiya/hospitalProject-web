@@ -86,7 +86,7 @@ class App extends Component {
                 <h3 className="form-group-label">Remark</h3>
 
           <p>
-            <input type="remark"  id='remark' value={this.state.remark} onChange={this.handleChange} required/>
+            <input type="remark"  id='remark' value={this.state.remark} onChange={this.handleChange}/>
           </p>
           </div>
 

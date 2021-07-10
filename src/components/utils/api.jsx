@@ -163,7 +163,7 @@ export const fetchUserBilling = async (params) => {
 
 export const deleteUserUpdates = async (params) => {
   let bodyparams = {
-    "Id": params, 
+    "id": params, 
     "delete": true ,
   }
     return fetch(`${baseUrl}/delete_health_update/`, {
@@ -179,7 +179,7 @@ export const deleteUserUpdates = async (params) => {
 
 export const deleteUserReports = async (params) => {
   let bodyparams = {
-    "Id": params, 
+    "id": params, 
     "delete": true ,
   }
     return fetch(`${baseUrl}/delete_report/`, {
@@ -195,7 +195,7 @@ export const deleteUserReports = async (params) => {
 
 export const deleteUserBills = async (params) => {
   let bodyparams = {
-    "Id": params, 
+    "id": params, 
     "delete": true ,
   }
     return fetch(`${baseUrl}/delete_bill/`, {
