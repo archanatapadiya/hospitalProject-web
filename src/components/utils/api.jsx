@@ -1,6 +1,7 @@
 import { protectedAxios as protectedAxios } from './helpers'
 import { unProtectedAxios as unprotectedAxios } from './helpers'
 import axios from 'axios'
+import dayjs from 'dayjs';
 
 const localToken = localStorage.getItem('token');
 const userData = localStorage.getItem('user_data');
@@ -11,7 +12,6 @@ const  baseUrl  = "http://65.2.26.144:8000";
 
 export const searchUser = async (params) => {
 
-  console.log('params123', params)
       return fetch(`${baseUrl}/find_request/`, {
         method: 'POST',
         headers: {
@@ -51,6 +51,8 @@ export const fetchUserDetails = async (params) => {
 
 export const registerUser = async (params) => {
 
+ let dateOfBirth = dayjs(params.dob).format('YYYY-MM-DD');
+
   let bodyparams = {
     "username": params.username, 
     "email": params.email,
@@ -59,7 +61,8 @@ export const registerUser = async (params) => {
     "password": params.password,
     "address":params.address,
     "phone_number": params.phone_number,
-    "zip_code": params.zip_code
+    "zip_code": params.zip_code,
+    "dob": dateOfBirth
   }
     return fetch(`${baseUrl}/user_register/`, {
       method: 'POST',
@@ -70,13 +73,7 @@ export const registerUser = async (params) => {
       body: JSON.stringify(bodyparams)
     })
       .then(data => data.json())
-
-
-
 }
-
-
-
 
 export const uploadUserUpdates = async (params) => {
   try{
@@ -209,4 +206,32 @@ export const deleteUserBills = async (params) => {
       .then(data => data.json())
 }
 
+export const fetchHospitalList = async (params) => {
+  let bodyparams = {}
+  console.log('params454545', params)
+    return fetch(`${baseUrl}/fetch_hospitals/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: params,
+      },
+      body: JSON.stringify(bodyparams)
+    })
+      .then(data => data.json())
+}
 
+export const deleteHospital = async (params) => {
+  let bodyparams = {
+    "id": params, 
+    "delete": true ,
+  }
+    return fetch(`${baseUrl}/delete_hospital/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localToken,
+      },
+      body: JSON.stringify(bodyparams)
+    })
+      .then(data => data.json())
+}

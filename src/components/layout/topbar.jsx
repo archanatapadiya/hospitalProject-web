@@ -19,7 +19,10 @@ const TopbarNavMenu = (props) => {
         }
       })
           .then(res => {
+            localStorage.removeItem('isSuperuser');
+            localStorage.removeItem('username');
             localStorage.removeItem('token');
+           
             history.push(`/`);
             window.location.reload();
             console.log(res.data);

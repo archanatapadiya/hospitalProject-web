@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 
 import SearchUser from  './components/SearchUser';
+import SearchHospital from  './components/SearchHospital';
+
 import UploadDetails from './components/UploadDetails';
 import UserRegister from './components/UserRegister';
 import FetchUserReports from './components/FetchUserReports';
@@ -23,34 +25,32 @@ export default function BasicExample() {
   const localToken = localStorage.getItem('token');
 
   const [token, setToken] = useState(localToken);
-  const [superUser, setSuperUser] = useState(localToken);
 
-  useEffect(() => {
-    const localUsername = localStorage.getItem('username');
-    setSuperUser(localUsername);
-  }, []);
+  const localSuperUser = localStorage.getItem('isSuperuser');
 
-  if(!token) {
-    return <Login setToken={setToken} />
-  }
+  const [superUser, setSuperUser] = useState(localSuperUser);
 
-
-  // const superUser = localStorage.getItem('username');
   const userData = localStorage.getItem('user_data');
   const userData_parsed = JSON.parse(userData);
-
   const userId = userData_parsed?.user_id;
 
+  if(!token) {
+    return <Login setToken={setToken} setSuperUser={setSuperUser} />
+  }
+ 
   return (
     <Router basename="/">
-      {superUser != "superuser.hospital@gmail.com" && (
-      <div>
+     
+      
         <Top userId={userId} />
-      {/* <Topbar userId={userId}/> */}
+    
       <div style={{marginTop: 90}}>
         <Switch>
           <Route exact path="/">
-            <SearchUser />
+            {!superUser ? < SearchHospital /> : <SearchUser />}
+          </Route>
+          <Route exact path="/add-hospital">
+            <AddHospital />
           </Route>
           <Route exact path="/upload-details/:id(\d*)">
             <UploadDetails />
@@ -78,23 +78,9 @@ export default function BasicExample() {
           </Route>
         </Switch>
         </div>
-      </div>
-    )}
+    
+  
 
-{superUser == "superuser.hospital@gmail.com" && (
-      <div>
-      <Topbar userId={userId}/>
-        <Switch>
-        <Route exact path="/">
-            <HospitalList />
-          </Route>
-          <Route exact path="/add-hospital">
-            <AddHospital />
-          </Route>
-         
-        </Switch>
-      </div>
-    )}
 
     </Router>
   );

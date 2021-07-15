@@ -13,6 +13,10 @@ import {
 } from "reactstrap";
 import history from './lib/history';
 import * as Yup from 'yup';
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css";
+
+
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
@@ -39,6 +43,7 @@ function UploadReportData() {
     <Formik
       initialValues={{ first_name: '',
       last_name: '',
+      dob: '',
       email: '',
     password: '',
     phone_number: '',
@@ -94,6 +99,22 @@ zip_code: '' }}
                       component={FormikMaterialTextField}
                   
                     />
+                  </div>
+                </div>
+
+                <div className="col">
+                  <h3 className="form-group-label">Date of Birth</h3>
+
+                  <div className="form-group-field custom-input with-extention">
+              
+                  <DatePicker 
+                      selected={values.dob}
+                      dateFormat="yyyy-MM-dd"
+                      className="form-control"
+                      name="dob"
+                      onChange={date => setFieldValue('dob', date)}
+                    />
+
                   </div>
                 </div>
 

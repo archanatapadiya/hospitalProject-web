@@ -20,7 +20,6 @@ export const searchUser = async (values, formikBag) => {
 export const admitUser = async (params) => {
   try {
 
-  
 
  if(!params.room_number){
     Notification.newInstance({}, notification => {
@@ -171,6 +170,29 @@ export const deleteUserReports = async (params) => {
 export const deleteUserBills = async (params) => {
   try {
     const res = await api.deleteUserBills(params);
+    return res;
+  } catch (err) {
+    console.log("handleSearch--->error---->");
+
+    throw err;
+  }
+};
+
+export const fetchHospitalList = async (params) => {
+  try {
+    const res = await api.fetchHospitalList(params);
+    return res;
+  } catch (err) {
+    console.log("handleSearch--->error---->");
+
+    throw err;
+  }
+};
+
+export const deleteHospital = async (params) => {
+  try {
+   
+    const res = await api.deleteHospital(params);
     return res;
   } catch (err) {
     console.log("handleSearch--->error---->");

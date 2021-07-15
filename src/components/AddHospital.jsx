@@ -11,12 +11,12 @@ class App extends Component {
     logo: null,
     email: '',
   password: '',
+  registration_no: '',
   contact_number: '',
 address: '',
-latitude: '',
-longitude: '',
+
 description: '',
-image: null,
+// image: null,
 zip_code: ''
   };
 
@@ -32,11 +32,11 @@ zip_code: ''
     })
   };
 
-  handleImageChange = (e) => {
-    this.setState({
-      image: e.target.files[0]
-    })
-  };
+  // handleImageChange = (e) => {
+  //   this.setState({
+  //     image: e.target.files[0]
+  //   })
+  // };
 
 
 
@@ -59,12 +59,12 @@ zip_code: ''
     form_data.append('phone_number', this.state.phone_number);
     form_data.append('email', this.state.email);
     form_data.append('password', this.state.password);
+    form_data.append('registration_no', this.state.registration_no);
     form_data.append('contact_number', this.state.contact_number);
     form_data.append('address', this.state.address);
-    form_data.append('latitude', this.state.latitude);
-    form_data.append('longitude', this.state.longitude);
+  
     form_data.append('description', this.state.description);
-    form_data.append('image', this.state.image, this.state.image.name);
+    // form_data.append('image', this.state.image, this.state.image.name);
     form_data.append('zip_code', this.state.zip_code);
 
     let url = 'http://65.2.26.144:8000/add_hospital/';
@@ -84,11 +84,18 @@ zip_code: ''
 
   render() {
     return (
-      <div className="login-wrapper">
+      <div className="login-wrapper" style={{   boxShadow: '0px 0px 10px #0000001a',
+      border: '1px solid #c9c9c9',
+      padding: 50,
+      marginLeft: 300,
+      marginRight: 300,
+      marginTop: 50,
+      backgroundColor: '#F7FBF9',
+      opacity: 1}}>
          <h2>Add Hospital</h2>
       
       <div  >
-        <form onSubmit={this.handleSubmit} style={{backgroundColor: '#F7FBF9',  border: '2px solid grey',  marginTop: '20px', padding: '30px'}}>
+        <form onSubmit={this.handleSubmit} style={{backgroundColor: 'white',  border: '2px solid grey',  marginTop: '20px', padding: '30px'}}>
         <div className="col">
                 <h3 className="form-group-label">Name</h3>
 
@@ -118,6 +125,14 @@ zip_code: ''
 
           <p>
             <input type="password"  id='password' value={this.state.password} onChange={this.handleChange} required/>
+          </p>
+          </div>
+
+       <div className="col">
+                <h3 className="form-group-label">Registration Number</h3>
+
+          <p>
+            <input type="registration_no"  id='registration_no' value={this.state.registration_no} onChange={this.handleChange} required/>
           </p>
           </div>
 
@@ -154,21 +169,7 @@ zip_code: ''
           </p>
           </div>
 
-          <div className="col">
-                <h3 className="form-group-label">Latitude</h3>
-
-          <p>
-            <input type="latitude"  id='latitude' value={this.state.latitude} onChange={this.handleChange} required/>
-          </p>
-          </div>
-
-          <div className="col">
-                <h3 className="form-group-label">Longitude</h3>
-
-          <p>
-            <input type="longitude"  id='longitude' value={this.state.longitude} onChange={this.handleChange} required/>
-          </p>
-          </div>
+      
 
 
           <div className="col">
@@ -176,23 +177,23 @@ zip_code: ''
           <p style={{marginLeft: '80px'}}>
             <input type="file"
                    id="logo"
-                   accept="image/png, image/jpeg"  onChange={this.handleLogoChange} required/>
+                   accept="image/png, image/jpeg"  onChange={this.handleLogoChange} required />
           </p>
           </div>
 
-          <div className="col">
+          {/* <div className="col">
                 <h3 className="form-group-label">Upload Image</h3>
           <p style={{marginLeft: '80px'}}>
             <input type="file"
                    id="image"
                    accept="image/png, image/jpeg"  onChange={this.handleImageChange} required/>
           </p>
-          </div>
+          </div> */}
 
           <input type="submit"/>
         </form>
       </div>
-    / </div>
+     </div>
     );
   }
 }
