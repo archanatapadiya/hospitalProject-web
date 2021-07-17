@@ -36,9 +36,9 @@ function FetchHospitalData() {
   const handleDelete = async (id) => {
     try {
       let res = await handlers.deleteHospital(id);
-      if(res.is_success == true){
-        window.location.reload();
-      }
+      // if(res.is_success == true){
+      //   window.location.reload();
+      // }
       console.log("ConfirmDeleteModal-->handleConfirmErr---->");
     } catch (err) {
       console.log("ConfirmDeleteModal-->handleConfirmErr---->", err);
@@ -134,7 +134,10 @@ function FetchHospitalData() {
   ];
 
   const userReportsData = async (localToken1) => {
-    const userReports = await handlers.fetchHospitalList(localToken1);
+    let userReports = {};
+    if(localToken1){
+     userReports = await handlers.fetchHospitalList(localToken1);
+    }
     let reportsData = userReports?.response_message;
     setUserReportList(reportsData);
     return reportsData;

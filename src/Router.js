@@ -15,7 +15,7 @@ import UploadUserUpdates from './components/UploadUserUpdates';
 import UploadUserBilling from './components/UploadUserBilling';
 import AddHospital from './components/AddHospital';
 import HospitalList from './components/HospitalList';
-
+import ForgotPassword from './components/ForgotPassword';
 import Login from './components/Login';
 import Topbar from './components/layout/topbar';
 import Top from './components/topbar/topbar';
@@ -47,7 +47,10 @@ export default function BasicExample() {
       <div style={{marginTop: 90}}>
         <Switch>
           <Route exact path="/">
-            {!superUser ? < SearchHospital /> : <SearchUser />}
+            {superUser ? < SearchHospital /> : <SearchUser />}
+          </Route> 
+          <Route exact path="/forgot-password">
+            <ForgotPassword />
           </Route>
           <Route exact path="/add-hospital">
             <AddHospital />

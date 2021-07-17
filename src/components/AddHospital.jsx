@@ -136,13 +136,13 @@ zip_code: ''
           </p>
           </div>
 
-          <div className="col">
+          {/* <div className="col">
                 <h3 className="form-group-label">Contact Number</h3>
 
           <p>
             <input type="contact_number"  id='contact_number' value={this.state.contact_number} onChange={this.handleChange} required/>
           </p>
-          </div>
+          </div> */}
 
           <div className="col">
                 <h3 className="form-group-label">Address</h3>

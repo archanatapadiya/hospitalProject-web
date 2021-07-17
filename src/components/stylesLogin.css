@@ -17,10 +17,6 @@ li {
     padding: 15px !important;
 }
 
-a {
-    color: #1b62ab;
-    padding-bottom: 5px !important;
-}
 
 
  
@@ -111,4 +107,10 @@ a {
                   z-index: 0;
                   /* background-color: #3ea3fc; */
                   /* color: white; */
+              }
+
+         
+
+              a:link {
+                color: red;
               }
