@@ -206,14 +206,16 @@ export const deleteUserBills = async (params) => {
       .then(data => data.json())
 }
 
-export const fetchHospitalList = async (params) => {
-  let bodyparams = {}
-  console.log('params454545', params)
+export const fetchHospitalList = async (localToken1, userIdLocal) => {
+  let bodyparams = {
+    user_id: userIdLocal
+  }
+  console.log('params454545', localToken1, userIdLocal)
     return fetch(`${baseUrl}/fetch_hospitals/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: params,
+        Authorization: localToken1,
       },
       body: JSON.stringify(bodyparams)
     })
@@ -222,8 +224,9 @@ export const fetchHospitalList = async (params) => {
 
 export const deleteHospital = async (params) => {
   let bodyparams = {
-    "id": params, 
-    "delete": true ,
+    "id": params['id'], 
+    "user_id": params['user_id'],
+    "delete": params['is_active'] ,
   }
     return fetch(`${baseUrl}/delete_hospital/`, {
       method: 'POST',

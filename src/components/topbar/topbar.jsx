@@ -29,6 +29,10 @@ const Topbar = (props) => {
       .then((res) => {
         localStorage.removeItem("token");
         localStorage.removeItem("is_superuser");
+        localStorage.removeItem("isSuperuser");
+        localStorage.removeItem("user_id");
+        localStorage.removeItem("username");
+        localStorage.removeItem("hospital_id");
         history.push(`/`);
         window.location.reload();
         console.log(res.data);

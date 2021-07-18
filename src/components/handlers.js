@@ -178,9 +178,9 @@ export const deleteUserBills = async (params) => {
   }
 };
 
-export const fetchHospitalList = async (params) => {
+export const fetchHospitalList = async (localToken1, userIdLocal) => {
   try {
-    const res = await api.fetchHospitalList(params);
+    const res = await api.fetchHospitalList(localToken1, userIdLocal);
     return res;
   } catch (err) {
     console.log("handleSearch--->error---->");

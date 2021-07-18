@@ -47,7 +47,7 @@ async function loginAdmin(credentials) {
   }).then((data) => data.json());
 }
 
-export default function Login({ setToken, setSuperUser }) {
+export default function Login({ setToken, setSuperUser, setUserId }) {
   const [isOpen, setIsOpen] = useState(false);
 
   function toggleModal() {
@@ -61,7 +61,7 @@ export default function Login({ setToken, setSuperUser }) {
   const [hospital_id, setHospital_id] = useState();
   const [reg_no, setRegNo] = useState();
 
-  const [newPassword, setNewPassword] = useState();
+  const [new_password, setNewPassword] = useState();
   const [adminLogin, setAdminLogin] = useState(false);
 
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -76,6 +76,7 @@ export default function Login({ setToken, setSuperUser }) {
     if (token.is_success) {
       setToken(token.data.token);
       setSuperUser(token.data.is_superuser);
+      setUserId(token.data.user_id);
       localStorage.setItem("token", token.data.token);
       localStorage.setItem("hospital_id", token.data.user_id);
       localStorage.setItem("username", token.data.username);
@@ -101,7 +102,7 @@ export default function Login({ setToken, setSuperUser }) {
     e.preventDefault();
     const token = await setNewPasswordCall({
       hospital_id,
-      newPassword,
+      new_password,
     });
 
     
@@ -177,9 +178,11 @@ export default function Login({ setToken, setSuperUser }) {
     if (token.is_success) {
       setToken(token.data.token);
       setSuperUser(token.data.is_superuser);
+      setUserId(token.data.user_id);
       localStorage.setItem("token", token.data.token);
       localStorage.setItem("username", token.data.username);
       localStorage.setItem("isSuperuser", token.data.is_superuser);
+      localStorage.setItem("user_id", token.data.user_id);
     }
 
     if (!token.is_success) {
@@ -224,9 +227,9 @@ export default function Login({ setToken, setSuperUser }) {
       <button
         type="button"
         class="btn btn-success btn-sm"
-        onClick={() => setAdminLogin(true)}
+        onClick={() => setAdminLogin(!adminLogin)}
       >
-        Admin Login
+       {adminLogin ? 'Hospital Login' : 'Admin Login' }
       </button>
 
       <h2>Welcome to Hospital Data Upload System</h2>
@@ -401,5 +404,6 @@ export default function Login({ setToken, setSuperUser }) {
 
 Login.propTypes = {
   setToken: PropTypes.func.isRequired,
+  setUserId: PropTypes.func.isRequired,
   setSuperUser: PropTypes.func.isRequired,
 };

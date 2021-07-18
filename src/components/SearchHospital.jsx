@@ -16,34 +16,49 @@ function FetchHospitalData() {
   const { id } = useParams();
 
   const userData = localStorage.getItem("user_data");
+  const userIdLocal = localStorage.getItem("user_id");
+
   const userData_parsed = JSON.parse(userData);
 
   const [userReportList, setUserReportList] = useState([]);
 
   let tableData = userReportList;
 
-  const [localToken1, setLocalToken1] = useState("");
+  const [localToken1, setLocalToken1] = useState(localStorage.getItem("token"));
+
+  console.log('localToken1localToken1', localToken1)
 
   useEffect(() => {
     const localTokenCalled = localStorage.getItem("token");
+    console.log("localtoken in search hospi1111", localTokenCalled);
     if (localTokenCalled != null) {
       setLocalToken1(localTokenCalled);
     }
-  }, []);
+    if (localTokenCalled == null) {
+      window.location.reload();
+    }
+  }, [localToken1]);
 
   console.log("localtoken in search hospi", localToken1);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id, is_active) => {
     try {
-      let res = await handlers.deleteHospital(id);
-      // if(res.is_success == true){
-      //   window.location.reload();
-      // }
+
+      let params = {
+        id: id,
+        user_id: userIdLocal,
+        is_active: is_active
+      }
+      let res = await handlers.deleteHospital(params);
+      if(res.is_success == true){
+        window.location.reload();
+      }
       console.log("ConfirmDeleteModal-->handleConfirmErr---->");
     } catch (err) {
       console.log("ConfirmDeleteModal-->handleConfirmErr---->", err);
     }
   };
+
 
   const HOSPITAL_TABLE_HEADER = [
     {
@@ -118,16 +133,15 @@ function FetchHospitalData() {
         return obj;
       },
     },
-
     {
       title: "Operation",
       dataIndex: "operation",
       render: (text, record) => (
         <Popconfirm
-          title="Sure to disable?"
-          onConfirm={() => handleDelete(record.id)}
+          title= {record.is_active ? "Sure to disable?" : "Sure to enable?" }
+          onConfirm={() => handleDelete(record.id, record.is_active)}
         >
-          <a>Disable</a>
+          <a style={!record.is_active ? {color: 'red'} : {color: 'green'}}>{record.is_active ? 'Disable' : 'Enable'}</a>
         </Popconfirm>
       ),
     },
@@ -136,22 +150,11 @@ function FetchHospitalData() {
   const userReportsData = async (localToken1) => {
     let userReports = {};
     if(localToken1){
-     userReports = await handlers.fetchHospitalList(localToken1);
+     userReports = await handlers.fetchHospitalList(localToken1, userIdLocal );
     }
     let reportsData = userReports?.response_message;
     setUserReportList(reportsData);
     return reportsData;
-
-    // return fetch(`http://65.2.26.144:8000/fetch_hospitals/`, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'multipart/form-data',
-    //     Authorization: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFyY2hhbmEiLCJleHAiOjE2NTc4NjM0NjV9.zqTBrcj0yT0SJzUNwhUCmC-ybmb0FjwL5btMZgAuZCQ",
-    //      'Cookie': 'sessionid=qdcsyxep01irnp93y46pzynwrn7h1fc9',
-    //   },
-    //   // body: JSON.stringify(bodyparams)
-    // })
-    //   .then(data => data.json())
   };
 
   useEffect(() => {

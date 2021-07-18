@@ -30,12 +30,18 @@ export default function BasicExample() {
 
   const [superUser, setSuperUser] = useState(localSuperUser);
 
+  const localUserId = localStorage.getItem('userId');
+
+
+  const [locuserId, setLocUserId] = useState(localUserId);
+
+
   const userData = localStorage.getItem('user_data');
   const userData_parsed = JSON.parse(userData);
   const userId = userData_parsed?.user_id;
 
   if(!token) {
-    return <Login setToken={setToken} setSuperUser={setSuperUser} />
+    return <Login setToken={setToken} setSuperUser={setSuperUser} setUserId={setLocUserId} />
   }
  
   return (
