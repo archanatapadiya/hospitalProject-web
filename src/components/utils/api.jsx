@@ -22,6 +22,21 @@ export const searchUser = async (params) => {
       })
         .then(data => data.json())
      }
+
+     export const searchUserSuperuser = async (params) => {
+
+      return fetch(`${baseUrl}/find_user_super_admin/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localToken,
+        },
+        body: JSON.stringify(params)
+      })
+        .then(data => data.json())
+     }
+
+     
        
 export const admitUser = async (params) => {
 

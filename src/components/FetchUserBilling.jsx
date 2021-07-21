@@ -35,6 +35,8 @@ function UploadReportData() {
   let tableData = userReportList;
   let tableDataCurrent = userReportListCurrent;
 
+  console.log('tableData in bills', tableData)
+
   const handleDelete = async (id) => {
     try {
       let res = await handlers.deleteUserBills(id);

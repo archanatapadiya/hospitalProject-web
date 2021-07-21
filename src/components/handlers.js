@@ -17,6 +17,23 @@ export const searchUser = async (values, formikBag) => {
   }
 };
 
+
+
+export const searchUserSuperuser = async (values) => {
+  try {
+    
+    const res = await api.searchUserSuperuser(values);
+
+
+    return res;
+  } catch (err) {
+    console.log("handleSearch--->error---->");
+
+    throw err;
+  }
+};
+
+
 export const admitUser = async (params) => {
   try {
 

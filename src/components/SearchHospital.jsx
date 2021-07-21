@@ -6,6 +6,7 @@ import UploadDocument from "./UploadDocument";
 // import Table from "react-bootstrap/Table";
 import _ from "lodash";
 import { Link, useParams } from "react-router-dom";
+import history from "./lib/history";
 
 import { Col, Container, Row, Card, CardBody, ButtonToolbar } from "reactstrap";
 
@@ -21,6 +22,9 @@ function FetchHospitalData() {
   const userData_parsed = JSON.parse(userData);
 
   const [userReportList, setUserReportList] = useState([]);
+
+  const [showSearchPatient, setShowSearchPatient] = useState(false);
+
 
   let tableData = userReportList;
 
@@ -147,6 +151,26 @@ function FetchHospitalData() {
     },
   ];
 
+  const searchUserSuperUser = async(username) => {
+    console.log('searched user usper', username)
+    let params={
+      username : username
+    }
+    let success = await handlers.searchUserSuperuser(params);
+
+    console.log('success121212', success)
+    if (success.data.user_id) {
+      history.push(`/user-details/${success.data.user_id}`);
+      window.location.reload();
+    }
+
+    if (success) {
+      // setSearchUser(success.data.username);
+      // setUserId(success.data.user_id);
+      localStorage.setItem("searched_user_data", JSON.stringify(success.data));
+    }
+  }
+
   const userReportsData = async (localToken1) => {
     let userReports = {};
     if(localToken1){
@@ -176,25 +200,111 @@ function FetchHospitalData() {
       }}
     >
       <div>
-        <h2>Uploaded bills for the user</h2>
+        <h2>Hospital and User Details</h2>
 
+<Row>
         <a href={`/add-hospital`}>
           <button type="button" class="btn btn-success btn-sm">
             Add New Hospital
           </button>
         </a>
+
+
+        <a>
+          <button type="button" onClick={ () => setShowSearchPatient(!showSearchPatient) } style={{marginLeft: 60}} class="btn btn-success btn-sm">
+            Search Patient
+          </button>
+        </a>
+
+        </Row>
       </div>
+      
+
+      {showSearchPatient && (
+      <React.Fragment>
+        <Formik
+          initialValues={{}}
+          onSubmit={async (values, formikBag) => {
+            console.log('values in search', values)
+            values.localToken = localToken1;
+            let success = await handlers.searchUser(values, formikBag);
+
+            // if (success.data.user_id) {
+            //   history.push(`/upload-details/${success.data.user_id}`);
+            //   window.location.reload();
+            // }
+
+            // if (success) {
+            //   setSearchUser(success.data.username);
+            //   setUserId(success.data.user_id);
+            //   localStorage.setItem("user_data", JSON.stringify(success.data));
+            // }
+          }}
+        >
+          {(formikBag) => {
+            const {
+              isSubmitting,
+              errors,
+              values,
+              touched,
+              setErrors,
+              setFieldValue,
+              handleSubmit,
+            } = formikBag;
+
+            return (
+              <div
+                style={{
+                  // width: "30%",
+                  padding: 30,
+                  border: "2px solid grey",
+                  // marginLeft: "35%",
+                  // marginTop: "20px",
+                  backgroundColor: "white",
+                }}
+              >
+                <Form className="formik-form">
+                  <div className="col">
+                    <h3 className="form-group-label">Search patient</h3>
+
+                    <div className="form-group-field custom-input with-extention">
+                      <Field
+                        name="username"
+                        component={FormikMaterialTextField}
+                        // type="number"
+                        placeholder="Enter phone number"
+                      />
+                    </div>
+                  </div>
+
+                  <br />
+                  {/* {searchUser === undefined && (
+                    <p>No record found, please register</p>
+                  )} */}
+                  <div className="btn-wrapper">
+                    <Button type="button" onClick = {() => searchUserSuperUser(values.username)} >
+                      Search
+                    </Button>
+                  </div>
+                </Form>
+              </div>
+            );
+          }}
+        </Formik>
+      </React.Fragment>
+      )}
 
       <div className="form-container">
         <div className="farm-wrapper">
           <div className="farm-table">
             <div className="table-farms-wrapper">
+              <br />
               <span
                 style={{
                   color: "#1b62ab",
                   fontSize: "16px",
                   fontWeight: "bold",
-                  marginTop: "10px",
+                  marginTop: "20px",
                 }}
               >
                 List of hospitals

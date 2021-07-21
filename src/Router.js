@@ -13,6 +13,7 @@ import FetchUserBilling from './components/FetchUserBilling';
 import UploadUserReports from './components/UploadUserReports';
 import UploadUserUpdates from './components/UploadUserUpdates';
 import UploadUserBilling from './components/UploadUserBilling';
+import UserDetails from './components/UserDetails';
 import AddHospital from './components/AddHospital';
 import HospitalList from './components/HospitalList';
 import ForgotPassword from './components/ForgotPassword';
@@ -63,6 +64,9 @@ export default function BasicExample() {
           </Route>
           <Route exact path="/upload-details/:id(\d*)">
             <UploadDetails />
+          </Route>
+          <Route exact path="/user-details/:id(\d*)">
+            <UserDetails />
           </Route>
           <Route exact path="/upload-user-reports/:id(\d*)">
             <UploadUserReports />
