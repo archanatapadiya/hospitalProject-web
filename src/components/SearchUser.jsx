@@ -23,8 +23,14 @@ function UploadData() {
 
   useEffect(() => {
     const localTokenCalled = localStorage.getItem("token");
-    setLocalToken1(localTokenCalled);
-  }, []);
+    if (localTokenCalled != null) {
+      setLocalToken1(localTokenCalled);
+    }
+    if (localTokenCalled == null) {
+      window.location.reload();
+    }
+  }, [localToken1]);
+
 
   useEffect(() => {
     localStorage.removeItem("user_data");

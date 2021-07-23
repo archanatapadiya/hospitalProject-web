@@ -6,7 +6,7 @@ import logo from './images/logo.jpeg';
 import { Link, useParams } from 'react-router-dom';
 
 async function loginUser(credentials) {
-    return fetch('http://65.2.26.144:8000/hospital_login/', {
+    return fetch('http://3.109.71.28/hospital_login/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -18,7 +18,7 @@ async function loginUser(credentials) {
    
    
 async function loginAdmin(credentials) {
-  return fetch('http://65.2.26.144:8000/super_admin_login/', {
+  return fetch('http://3.109.71.28/super_admin_login/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

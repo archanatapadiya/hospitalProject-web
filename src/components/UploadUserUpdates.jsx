@@ -36,7 +36,7 @@ class App extends Component {
     form_data.append('hospital_id', hospitalId);
     form_data.append('dr_name', this.state.dr_name);
 
-    let url = 'http://65.2.26.144:8000/user_health_update/';
+    let url = 'http://3.109.71.28/user_health_update/';
     axios.post(url, form_data, {
       headers: {
         'content-type': 'multipart/form-data',

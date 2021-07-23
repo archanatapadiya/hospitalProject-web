@@ -67,7 +67,7 @@ zip_code: ''
     // form_data.append('image', this.state.image, this.state.image.name);
     form_data.append('zip_code', this.state.zip_code);
 
-    let url = 'http://65.2.26.144:8000/add_hospital/';
+    let url = 'http://3.109.71.28/add_hospital/';
     axios.post(url, form_data, {
       headers: {
         'content-type': 'multipart/form-data',

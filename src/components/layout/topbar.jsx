@@ -11,7 +11,7 @@ const TopbarNavMenu = (props) => {
     const localToken = localStorage.getItem('token');
 
     const clickLogout = async (params) => {
-      let url = 'http://65.2.26.144:8000/user_logout/';
+      let url = 'http://3.109.71.28/user_logout/';
       axios.get(url, {
         headers: {
           'content-type': 'multipart/form-data',

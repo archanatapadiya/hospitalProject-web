@@ -78,6 +78,24 @@ console.log('searchedUserData_parsed', searchedUserData_parsed)
         return obj;
       },
     },
+    {
+      title: "Contact Number",
+      dataIndex: "phone_number",
+      width: "200px",
+      align: "center",
+      render: (value, row, index) => {
+        const obj = {
+          children: value,
+          props: {},
+        };
+        if (index == 0) {
+          obj.props.rowSpan = row.rowSpan;
+        } else {
+          obj.props.rowSpan = row.rowSpan;
+        }
+        return obj;
+      },
+    },
    
      
   ];
@@ -143,7 +161,7 @@ console.log('searchedUserData_parsed', searchedUserData_parsed)
 <br />
         <Table
                 columns={BILL_TABLE_HEADER}
-                // dataSource={tableData}
+                dataSource={tableData}
                 bordered
                 size="small"
                 pagination={false}
