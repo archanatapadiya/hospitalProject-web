@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import history from './lib/history';
 import { Link, useParams } from 'react-router-dom';
+import Notification from "rc-notification";
+
 
 class App extends Component {
 
@@ -79,7 +81,36 @@ zip_code: ''
           window.location.reload();
           console.log(res.data);
         })
-        .catch(err => console.log(err))
+        // .catch(res => {console.log(res)})
+
+        .catch(function (error) {
+          if (error.response) {
+            // Request made and server responded
+            console.log(error.response.data);
+           
+            Notification.newInstance({}, (notification) => {
+              notification.notice({
+                content: (
+                  <span style={{ backgroundColor: "red", top: 65, left: "50%" }}>
+                    {error?.response?.data?.response_message?.registration_no ? 
+                    'Registration Number -- ' + error?.response?.data?.response_message?.registration_no[0] :
+                     error?.response?.data?.response_message }
+                  </span>
+                ),
+                closable: true,
+                duration: null,
+              });
+            });
+
+          } else if (error.request) {
+            // The request was made but no response was received
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message);
+          }
+      
+        });
   };
 
   render() {
