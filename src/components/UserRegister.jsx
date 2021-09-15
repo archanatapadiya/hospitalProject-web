@@ -136,6 +136,7 @@ zip_code: '' }}
                   <div className="form-group-field custom-input with-extention">
                     <Field
                       name="password"
+                      type="password"
                       component={FormikMaterialTextField}
                   
                     />
