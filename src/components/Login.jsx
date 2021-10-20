@@ -139,8 +139,9 @@ export default function Login({ setToken, setSuperUser, setUserId }) {
     if (token.is_success) {
       setShowNewPassword(true);
       setHospital_id(token.data.user_id);
-      localStorage.setItem("hospital_id", token.data.user_id);
-     
+      localStorage.setItem("hospital_id", token.data.user_id); 
+    }else{
+      alert('Invalid Username or Registration Number')
     }
 
     // if (token.is_success) {
