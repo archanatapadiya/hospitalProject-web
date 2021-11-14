@@ -7,45 +7,40 @@ import UploadDocument from "./UploadDocument";
 import _ from "lodash";
 import { Link, useParams } from "react-router-dom";
 
-import {
-  Col,
-  Container,
-  Row,
-  Card,
-  CardBody,
-  ButtonToolbar,
-  
-} from "reactstrap";
+import { Col, Container, Row, Card, CardBody, ButtonToolbar } from "reactstrap";
 
 import PDFView from "./PDFView";
-import { Table, Input, Button, Popconfirm } from 'antd';
+import { Table, Input, Button, Popconfirm } from "antd";
 
-
-function UploadReportData() {
+function UploadReportData(props) {
+  console.log("hospital_type in fetch reports", props.hospitalType);
 
   const { id } = useParams();
-  const userData = localStorage.getItem('user_data');
+  const userData = localStorage.getItem("user_data");
   const userData_parsed = JSON.parse(userData);
 
-  const hospitalId = localStorage.getItem('hospital_id');
+  const hospitalId = localStorage.getItem("hospital_id");
 
   const [userReportList, setUserReportList] = useState([]);
   const [userReportListCurrent, setUserReportListCurrent] = useState([]);
+  const [userReportListOpd, setUserReportListOpd] = useState([]);
+  let hospital_type = localStorage.getItem("hospital_type");
 
   let tableData = userReportList;
   let tableDataCurrent = userReportListCurrent;
+  let tableDataOpd = userReportListOpd;
+
 
   const handleDelete = async (id) => {
     try {
       let res = await handlers.deleteUserReports(id);
-      if(res.is_success == true){
+      if (res.is_success == true) {
         window.location.reload();
       }
     } catch (err) {
-      console.log('ConfirmDeleteModal-->handleConfirmErr---->', err);
+      console.log("ConfirmDeleteModal-->handleConfirmErr---->", err);
     }
   };
-
 
   const REPORT_TABLE_HEADER = [
     {
@@ -67,11 +62,19 @@ function UploadReportData() {
           children: value,
           props: {},
         };
-        if (index == 0) {
-          obj.props.rowSpan = row.rowSpan;
-        } else {
-          obj.props.rowSpan = row.rowSpan;
-        }
+        return obj;
+      },
+    },
+    {
+      title: "Dr. Name",
+      dataIndex: "dr_name",
+      width: "200px",
+      align: "center",
+      render: (value, row, index) => {
+        const obj = {
+          children: value,
+          props: {},
+        };
         return obj;
       },
     },
@@ -85,23 +88,20 @@ function UploadReportData() {
           children: value,
           props: {},
         };
-        if (index == 0) {
-          obj.props.rowSpan = row.rowSpan;
-        } else {
-          obj.props.rowSpan = row.rowSpan;
-        }
         return obj;
       },
     },
     {
-      title: 'Operation',
-      dataIndex: 'operation',
-      render: (text, record) =>
-
-          <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.id)}>
-            <a>Delete</a>
-          </Popconfirm>
-      
+      title: "Operation",
+      dataIndex: "operation",
+      render: (text, record) => (
+        <Popconfirm
+          title="Sure to delete?"
+          onConfirm={() => handleDelete(record.id)}
+        >
+          <a>Delete</a>
+        </Popconfirm>
+      ),
     },
   ];
 
@@ -109,17 +109,19 @@ function UploadReportData() {
     const userReports = await handlers.fetchUserReport(params);
     let reportsData = userReports?.data?.history;
     let reportsDataCurrent = userReports?.data?.current;
-
+    let reportsDataOpd = userReports?.data?.opd;
 
     setUserReportList(reportsData);
     setUserReportListCurrent(reportsDataCurrent);
+    setUserReportListOpd(reportsDataOpd);
+
     return reportsData;
   };
 
   useEffect(() => {
     let params = {
       user_id: userData_parsed.user_id,
-      hospital_id: hospitalId 
+      hospital_id: hospitalId,
     };
     const userReports = userReportsData(params);
   }, []);
@@ -142,96 +144,153 @@ function UploadReportData() {
   }, []);
 
   return (
-    <div className="login-wrapper" style={{   boxShadow: '0px 0px 10px #0000001a',
-    border: '1px solid #c9c9c9',
-    padding: 50,
-    marginLeft: 200,
-    marginRight: 200,
-    marginTop: 50,
-    backgroundColor: '#F7FBF9',
-    opacity: 1}}>
+    <div
+      className="login-wrapper"
+      style={{
+        boxShadow: "0px 0px 10px #0000001a",
+        border: "1px solid #c9c9c9",
+        padding: 50,
+        marginLeft: 200,
+        marginRight: 200,
+        marginTop: 50,
+        backgroundColor: "#F7FBF9",
+        opacity: 1,
+      }}
+    >
       <div>
         <h2>Uploaded reports for the user</h2>
 
-        <a href={`/upload-user-reports/${id}`} >
-      <button type="button" class="btn btn-success btn-sm">Add New Report</button>
-   </a>  
-         
-
+        <a href={`/upload-user-reports/${id}`}>
+          <button type="button" class="btn btn-success btn-sm">
+            Add New Report
+          </button>
+        </a>
       </div>
 
-{userDetails.is_admit && (
-         <div className="form-container">
-         <div className="farm-wrapper">
-           <div className="farm-table">
-             <div className="table-farms-wrapper">
-               <br />
-               <span
-                 style={{
-                   color: "#1b62ab",
-                   fontSize: "16px",
-                   fontWeight: "bold",
-                   marginTop: "10px",
-                 }}
-               >
-                 Current Reports
-                 <br />
-               </span>
-               <br />
- 
-               <Table
-                 columns={REPORT_TABLE_HEADER}
-                 dataSource={tableDataCurrent}
-                 bordered
-                 size="small"
-                 pagination={false}
-                 style={{
-                   whiteSpace: "pre",
-                   border: "1px solid grey",
-                 }}
-               />
-             </div>
-           </div>
-         </div>
-       </div>
-    )}
+      <br />
+      {hospital_type != 2 && (
+        <div>
+          <div className="form-container">
+            <div className="farm-wrapper">
+              <div className="farm-table">
+                <div className="table-farms-wrapper">
+                  <span
+                    style={{
+                      color: "#1b62ab",
+                      fontSize: "16px",
+                      fontWeight: "bold",
+                      marginTop: "10px",
+                      textDecoration: "underline",
+                    }}
+                  >
+                    OPD REPORTS
+                    <br />
+                  </span>
+                  <br />
 
- 
-
-<div className="form-container">
-        <div className="farm-wrapper">
-          <div className="farm-table">
-            <div className="table-farms-wrapper">
-              <span
-                style={{
-                  color: "#1b62ab",
-                  fontSize: "16px",
-                  fontWeight: "bold",
-                  marginTop: "10px",
-                }}
-              >
-                History Reports
-                <br />
-              </span>
-              <br />
-
-              <Table
-                columns={REPORT_TABLE_HEADER}
-                dataSource={tableData}
-                bordered
-                size="small"
-                pagination={false}
-                style={{
-                  whiteSpace: "pre",
-                  border: "1px solid grey",
-                }}
-              />
+                  <Table
+                    columns={REPORT_TABLE_HEADER}
+                    dataSource={tableDataOpd}
+                    bordered
+                    size="small"
+                    pagination={false}
+                    style={{
+                      whiteSpace: "pre",
+                      border: "1px solid grey",
+                    }}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
+      {hospital_type != 1 && (
+        <div>
+          <span
+            style={{
+              color: "#1b62ab",
+              fontSize: "16px",
+              fontWeight: "bold",
+              marginTop: "10px",
+              textDecoration: "underline",
+            }}
+          >
+            IPD REPORTS
+            <br />
+          </span>
+          {userDetails.is_admit && (
+            <div className="form-container">
+              <div className="farm-wrapper">
+                <div className="farm-table">
+                  <div className="table-farms-wrapper">
+                    <br />
+                    <span
+                      style={{
+                        color: "#1b62ab",
+                        fontSize: "14px",
+                        fontWeight: "bold",
+                        marginTop: "10px",
+                      }}
+                    >
+                      Current Reports
+                      <br />
+                    </span>
+                    <br />
 
+                    <Table
+                      columns={REPORT_TABLE_HEADER}
+                      dataSource={tableDataCurrent}
+                      bordered
+                      size="small"
+                      pagination={false}
+                      style={{
+                        whiteSpace: "pre",
+                        border: "1px solid grey",
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className="form-container">
+            <div className="farm-wrapper">
+              <div className="farm-table">
+                <div className="table-farms-wrapper">
+                  <span
+                    style={{
+                      color: "#1b62ab",
+                      fontSize: "14px",
+                      fontWeight: "bold",
+                      marginTop: "10px",
+                    }}
+                  >
+                      <br />
+                    History Reports
+                    <br />
+                  </span>
+                  <br />
+
+                  <Table
+                    columns={REPORT_TABLE_HEADER}
+                    dataSource={tableData}
+                    bordered
+                    size="small"
+                    pagination={false}
+                    style={{
+                      whiteSpace: "pre",
+                      border: "1px solid grey",
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

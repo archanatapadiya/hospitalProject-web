@@ -31,11 +31,13 @@ function UploadReportData() {
 
   const [userReportList, setUserReportList] = useState([]);
   const [userReportListCurrent, setUserReportListCurrent] = useState([]);
+  const [userReportListOpd, setUserReportListOpd] = useState([]);
 
   let tableData = userReportList;
   let tableDataCurrent = userReportListCurrent;
+  let tableDataOpd = userReportListOpd;
 
-  console.log('tableData in bills', tableData)
+  let hospital_type = localStorage.getItem("hospital_type");
 
   const handleDelete = async (id) => {
     try {
@@ -110,9 +112,12 @@ function UploadReportData() {
     const userReports = await handlers.fetchUserBilling(params);
     let reportsData = userReports?.data?.history;
     let reportsDataCurrent = userReports?.data?.current;
+    let reportsDataOpd = userReports?.data?.opd;
+
 
     setUserReportList(reportsData);
     setUserReportListCurrent(reportsDataCurrent);
+    setUserReportListOpd(reportsDataOpd);
     return reportsData;
   };
 
@@ -160,26 +165,79 @@ function UploadReportData() {
      
       </div>
 
-      {userDetails.is_admit && (
+      <br />
+      {hospital_type != 2 && (
+        <div>
           <div className="form-container">
-          <div className="farm-wrapper">
-            <div className="farm-table">
-              <div className="table-farms-wrapper">
-                <br />
-                <span
-                  style={{
-                    color: "#1b62ab",
-                    fontSize: "16px",
-                    fontWeight: "bold",
-                    marginTop: "10px",
-                  }}
-                >
-                  Current Bills
+            <div className="farm-wrapper">
+              <div className="farm-table">
+                <div className="table-farms-wrapper">
+                  <span
+                    style={{
+                      color: "#1b62ab",
+                      fontSize: "16px",
+                      fontWeight: "bold",
+                      marginTop: "10px",
+                      textDecoration: "underline",
+                    }}
+                  >
+                    OPD BILLS
+                    <br />
+                  </span>
                   <br />
-                </span>
-                <br />
-  
-                <Table
+
+                  <Table
+                  columns={BILL_TABLE_HEADER}
+                  dataSource={tableDataOpd}
+                  bordered
+                  size="small"
+                  pagination={false}
+                  style={{
+                    whiteSpace: "pre",
+                    border: "1px solid grey",
+                  }}
+                />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {hospital_type != 1 && (
+        <div>
+          <span
+            style={{
+              color: "#1b62ab",
+              fontSize: "16px",
+              fontWeight: "bold",
+              marginTop: "10px",
+              textDecoration: "underline",
+            }}
+          >
+            IPD BILLS
+            <br />
+          </span>
+          {userDetails.is_admit && (
+            <div className="form-container">
+              <div className="farm-wrapper">
+                <div className="farm-table">
+                  <div className="table-farms-wrapper">
+                    <br />
+                    <span
+                      style={{
+                        color: "#1b62ab",
+                        fontSize: "14px",
+                        fontWeight: "bold",
+                        // marginTop: "10px",
+                      }}
+                    >
+                      Current Bills
+                      <br />
+                    </span>
+                    <br />
+
+                    <Table
                   columns={BILL_TABLE_HEADER}
                   dataSource={tableDataCurrent}
                   bordered
@@ -190,32 +248,31 @@ function UploadReportData() {
                     border: "1px solid grey",
                   }}
                 />
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      )}
+          )}
 
- 
+          <div className="form-container">
+            <div className="farm-wrapper">
+              <div className="farm-table">
+                <div className="table-farms-wrapper">
+                  <span
+                    style={{
+                      color: "#1b62ab",
+                      fontSize: "14px",
+                      fontWeight: "bold",
+                      marginTop: "10px",
+                    }}
+                  >
+                      <br />
+                    History Bills
+                    <br />
+                  </span>
+                  <br />
 
-      <div className="form-container">
-        <div className="farm-wrapper">
-          <div className="farm-table">
-            <div className="table-farms-wrapper">
-              <span
-                style={{
-                  color: "#1b62ab",
-                  fontSize: "16px",
-                  fontWeight: "bold",
-                  marginTop: "10px",
-                }}
-              >
-                History Bills
-                <br />
-              </span>
-              <br />
-
-              <Table
+                  <Table
                 columns={BILL_TABLE_HEADER}
                 dataSource={tableData}
                 bordered
@@ -226,12 +283,17 @@ function UploadReportData() {
                   border: "1px solid grey",
                 }}
               />
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
+
+
+     
 
 export default UploadReportData;

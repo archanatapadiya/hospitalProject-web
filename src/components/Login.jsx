@@ -8,7 +8,7 @@ import "./modal.css";
 import Modal from "react-modal";
 
 async function loginUser(credentials) {
-  return fetch("http://3.109.71.28/hospital_login/", {
+  return fetch("http://3.110.35.199/hospital_login/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -18,7 +18,7 @@ async function loginUser(credentials) {
 }
 
 async function forgotPassword(credentials) {
-  return fetch("http://3.109.71.28/check_hospital_username/", {
+  return fetch("http://3.110.35.199/check_hospital_username/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -28,7 +28,7 @@ async function forgotPassword(credentials) {
 }
 
 async function setNewPasswordCall(credentials) {
-  return fetch("http://3.109.71.28/hospital_forgot_password/", {
+  return fetch("http://3.110.35.199/hospital_forgot_password/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -38,7 +38,7 @@ async function setNewPasswordCall(credentials) {
 }
 
 async function loginAdmin(credentials) {
-  return fetch("http://3.109.71.28/super_admin_login/", {
+  return fetch("http://3.110.35.199/super_admin_login/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -73,12 +73,14 @@ export default function Login({ setToken, setSuperUser, setUserId }) {
       password,
     });
 
+    console.log('token-->', token)
     if (token.is_success) {
       setToken(token.data.token);
       setSuperUser(token.data.is_superuser);
       setUserId(token.data.user_id);
       localStorage.setItem("token", token.data.token);
       localStorage.setItem("hospital_id", token.data.user_id);
+      localStorage.setItem("hospital_type", token.data.hospital_type);
       localStorage.setItem("username", token.data.username);
       localStorage.setItem("is_superuser", false);
     }
@@ -98,17 +100,17 @@ export default function Login({ setToken, setSuperUser, setUserId }) {
     }
   };
 
-  const handleNewPasswordSubmit  = async (e) => {
+  const handleNewPasswordSubmit = async (e) => {
     e.preventDefault();
     const token = await setNewPasswordCall({
       hospital_id,
       new_password,
     });
 
-    
+
     if (token.is_success) {
-     window.location.reload();
-     
+      window.location.reload();
+
     }
 
 
@@ -127,9 +129,10 @@ export default function Login({ setToken, setSuperUser, setUserId }) {
     // }
   };
 
-  
 
-  const handleForgotPasswordSubmit  = async (e) => {
+
+  const handleForgotPasswordSubmit = async (e) => {
+    
     e.preventDefault();
     const token = await forgotPassword({
       Username,
@@ -139,35 +142,12 @@ export default function Login({ setToken, setSuperUser, setUserId }) {
     if (token.is_success) {
       setShowNewPassword(true);
       setHospital_id(token.data.user_id);
-      localStorage.setItem("hospital_id", token.data.user_id); 
-    }else{
+      localStorage.setItem("hospital_id", token.data.user_id);
+    } else {
       alert('Invalid Username or Registration Number')
     }
-
-    // if (token.is_success) {
-    //   setToken(token.data.token);
-    //   setSuperUser(token.data.is_superuser);
-    //   localStorage.setItem("token", token.data.token);
-    //   localStorage.setItem("hospital_id", token.data.user_id);
-    //   localStorage.setItem("username", token.data.username);
-    //   localStorage.setItem("is_superuser", false);
-    // }
-
-    // if (!token.is_success) {
-    //   Notification.newInstance({}, (notification) => {
-    //     notification.notice({
-    //       content: (
-    //         <span style={{ backgroundColor: "red", top: 65, left: "50%" }}>
-    //           {token.response_message}
-    //         </span>
-    //       ),
-    //       closable: true,
-    //       duration: null,
-    //     });
-    //   });
-    // }
   };
-  
+
 
   const handleAdminSubmit = async (e) => {
     e.preventDefault();
@@ -230,7 +210,7 @@ export default function Login({ setToken, setSuperUser, setUserId }) {
         class="btn btn-success btn-sm"
         onClick={() => setAdminLogin(!adminLogin)}
       >
-       {adminLogin ? 'Hospital Login' : 'Admin Login' }
+        {adminLogin ? 'Hospital Login' : 'Admin Login'}
       </button>
 
       <h2>Welcome to Hospital Data Upload System</h2>
@@ -275,9 +255,9 @@ export default function Login({ setToken, setSuperUser, setUserId }) {
             </div> */}
 
             <div className="App">
-             
 
-              <span style={{cursor: 'pointer'}} onClick={toggleModal}>
+
+              <span style={{ cursor: 'pointer' }} onClick={toggleModal}>
                 Forgot Password
               </span>
             </div>
@@ -333,7 +313,7 @@ export default function Login({ setToken, setSuperUser, setUserId }) {
         contentLabel="My dialog"
       >
         <div className="login-wrapper">
-         <span style={{fontSize: 20, fontWeight: 'bold'}}> Confirm your identity </span>
+          <span style={{ fontSize: 20, fontWeight: 'bold' }}> Confirm your identity </span>
           <form
             onSubmit={handleForgotPasswordSubmit}
             style={{
@@ -367,35 +347,35 @@ export default function Login({ setToken, setSuperUser, setUserId }) {
               <button type="submit">Submit</button>
             </div>
           </form>
-{showNewPassword && (
-          <form
-            onSubmit={handleNewPasswordSubmit}
-            style={{
-              // boxShadow: "0px 0px 10px #0000001a",
-              // backgroundColor: "#0E53A5",
-              // width: "30%",
-              // border: "2px solid black",
-              // marginTop: "10px",
-              padding: "20px",
-            }}
-          >
-            <label>
-              <p style={{ color: "black" }}>Enter New Password</p>
-              <input
-                type="text"
-                onChange={(e) => setNewPassword(e.target.value)}
-                required
-              />
-            </label>
-       
+          {showNewPassword && (
+            <form
+              onSubmit={handleNewPasswordSubmit}
+              style={{
+                // boxShadow: "0px 0px 10px #0000001a",
+                // backgroundColor: "#0E53A5",
+                // width: "30%",
+                // border: "2px solid black",
+                // marginTop: "10px",
+                padding: "20px",
+              }}
+            >
+              <label>
+                <p style={{ color: "black" }}>Enter New Password</p>
+                <input
+                  type="text"
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  required
+                />
+              </label>
 
-            <div>
-              <br />
-              <button type="submit">Submit</button>
-            </div>
-          </form>
+
+              <div>
+                <br />
+                <button type="submit">Submit</button>
+              </div>
+            </form>
           )}
-        
+
         </div>
         {/* <button onClick={toggleModal}>Close modal</button> */}
       </Modal>
