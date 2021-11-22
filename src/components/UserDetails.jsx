@@ -6,6 +6,7 @@ import { Route, Switch, NavLink } from "react-router-dom";
 import styles from "./styles.css";
 import { Link, useParams } from "react-router-dom";
 import _ from "lodash";
+import ArrowIcon from 'mdi-react/ArrowBackIcon';
 
 import {
   Col,
@@ -121,6 +122,9 @@ console.log('searchedUserData_parsed', searchedUserData_parsed)
       marginTop: 50,
       backgroundColor: '#F7FBF9',
       opacity: 1}}>
+        <a href={`/`} style={{marginLeft: '-95%'}}>     
+          <ArrowIcon /> 
+        </a>
         <h2 style={{ textDecoration: "underline" }}>Patient Details</h2>
         <div
           style={{
@@ -156,6 +160,9 @@ console.log('searchedUserData_parsed', searchedUserData_parsed)
         </div>
 
 <br />
+
+
+
         <h2 style={{ textDecoration: "underline" }}>List of admitted hospitals</h2>
      
 <br />

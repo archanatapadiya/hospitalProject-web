@@ -8,6 +8,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import ArrowIcon from 'mdi-react/ArrowBackIcon';
 
 class App extends Component {
 
@@ -133,6 +134,13 @@ zip_code: ''
       marginTop: 50,
       backgroundColor: '#F7FBF9',
       opacity: 1}}>
+
+
+
+        <a href={`/`} style={{marginLeft: '-95%'}}>     
+          <ArrowIcon /> 
+        </a>
+
          <h2>Add New Clinic</h2>
       
       <div  >
