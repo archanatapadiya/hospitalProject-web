@@ -193,7 +193,7 @@ function UploadReportData() {
 
                   <Table
                     columns={HEALTH_TABLE_HEADER}
-                    dataSource={tableData}
+                    dataSource={tableDataOpd}
                     bordered
                     size="small"
                     pagination={false}
