@@ -37,7 +37,7 @@ function UploadData() {
   const location = useLocation()
   const { id } = useParams();
 
-  if(location){
+  if(location?.query?.hosp_id?.hospital_id){
     localStorage.setItem("hospital_id", location?.query?.hosp_id?.hospital_id);
   }
   const hospitalId = localStorage.getItem("hospital_id") || location.query.hosp_id.hospital_id;
