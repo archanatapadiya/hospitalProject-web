@@ -28,13 +28,20 @@ import FetchUserBilling from "./FetchUserBilling";
 import UploadUserReports from "./UploadUserReports";
 import UploadUserUpdates from "./UploadUserUpdates";
 import UploadUserBilling from "./UploadUserBilling";
+import { useLocation } from "react-router-dom"
 
 import notifications from "./notifications";
 import { setSourceMapRange } from "typescript";
 
 function UploadData() {
+  const location = useLocation()
   const { id } = useParams();
-  const hospitalId = localStorage.getItem("hospital_id");
+
+  if(location){
+    localStorage.setItem("hospital_id", location?.query?.hosp_id?.hospital_id);
+  }
+  const hospitalId = localStorage.getItem("hospital_id") || location.query.hosp_id.hospital_id;
+  localStorage.setItem("hospital_id", hospitalId);
 
   const [show, setShow] = useState(false);
 
@@ -92,6 +99,16 @@ function UploadData() {
   };
 
   useEffect(() => {
+    if (!localStorage.getItem('reload')) {
+      localStorage['reload'] = true;
+      window.location.reload();
+  } else {
+      localStorage.removeItem('reload');
+  }
+  }, []);
+
+  useEffect(() => {
+    
     let params = {
       user_id: id,
     };

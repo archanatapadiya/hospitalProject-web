@@ -45,12 +45,6 @@ zip_code: ''
       hospital_type: e.target.value
     })  };
 
-  // handleImageChange = (e) => {
-  //   this.setState({
-  //     image: e.target.files[0]
-  //   })
-  // };
-
 
   handleSubmit = (e) => {
     
@@ -199,15 +193,9 @@ zip_code: ''
       </RadioGroup>
     </FormControl>
 
-          {/* <p>
-            <input type="hospital_type"  id='hospital_type' value={this.state.hospital_type} onChange={this.handleChange} required/>
-          </p> */}
-          </div>
-
-       
+          </div>       
           <div className="col">
                 <h3 className="form-group-label">Address</h3>
-
           <p>
             <input type="address"  id='address' value={this.state.address} onChange={this.handleChange} required/>
           </p>

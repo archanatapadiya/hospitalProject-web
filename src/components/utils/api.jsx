@@ -125,7 +125,7 @@ export const uploadUserBilling = async (params) => {
 export const fetchUserReport = async (params) => {
   let bodyparams = {
     "hospital_id": hospitalId,
-    "user_id": userData_parsed.user_id,
+    "user_id": userData_parsed?.user_id,
   }
   return fetch(`${baseUrl}/report_fetch/`, {
     method: 'POST',
@@ -237,7 +237,7 @@ export const fetchHospitalList = async (localToken1, userIdLocal) => {
     .then(data => data.json())
 }
 
-export const deleteHospital = async (params) => {
+export const disableHospital = async (params) => {
   let bodyparams = {
     "id": params['id'],
     "user_id": params['user_id'],
@@ -253,3 +253,21 @@ export const deleteHospital = async (params) => {
   })
     .then(data => data.json())
 }
+
+export const deleteHospital = async (params) => {
+  let bodyparams = {
+    "id": params['id'],
+    "user_id": params['user_id'],
+    "delete": true
+  }
+  return fetch(`${baseUrl}/remove_hospital/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: localToken,
+    },
+    body: JSON.stringify(bodyparams)
+  })
+    .then(data => data.json())
+}
+

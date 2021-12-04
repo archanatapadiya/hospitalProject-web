@@ -13,6 +13,7 @@ import { Col, Container, Row, Card, CardBody, ButtonToolbar } from "reactstrap";
 import PDFView from "./PDFView";
 import { Table, Input, Button, Popconfirm } from "antd";
 
+
 function FetchHospitalData() {
   const { id } = useParams();
 
@@ -25,16 +26,12 @@ function FetchHospitalData() {
 
   const [showSearchPatient, setShowSearchPatient] = useState(false);
 
-
   let tableData = userReportList;
 
   const [localToken1, setLocalToken1] = useState(localStorage.getItem("token"));
 
-  console.log('localToken1localToken1', localToken1)
-
   useEffect(() => {
     const localTokenCalled = localStorage.getItem("token");
-    console.log("localtoken in search hospi1111", localTokenCalled);
     if (localTokenCalled != null) {
       setLocalToken1(localTokenCalled);
     }
@@ -43,8 +40,6 @@ function FetchHospitalData() {
     }
   }, [localToken1]);
 
-  console.log("localtoken in search hospi", localToken1);
-
   const handleDelete = async (id, is_active) => {
     try {
 
@@ -52,6 +47,23 @@ function FetchHospitalData() {
         id: id,
         user_id: userIdLocal,
         is_active: is_active
+      }
+      let res = await handlers.disableHospital(params);
+      if(res.is_success == true){
+        window.location.reload();
+      }
+      console.log("ConfirmDeleteModal-->handleConfirmErr---->");
+    } catch (err) {
+      console.log("ConfirmDeleteModal-->handleConfirmErr---->", err);
+    }
+  };
+
+  const handleRemove = async (id, is_active) => {
+    try {
+
+      let params = {
+        id: id,
+        user_id: userIdLocal,
       }
       let res = await handlers.deleteHospital(params);
       if(res.is_success == true){
@@ -75,11 +87,6 @@ function FetchHospitalData() {
           children: value,
           props: {},
         };
-        if (index == 0) {
-          obj.props.rowSpan = row.rowSpan;
-        } else {
-          obj.props.rowSpan = row.rowSpan;
-        }
         return obj;
       },
     },
@@ -141,12 +148,33 @@ function FetchHospitalData() {
       title: "Operation",
       dataIndex: "operation",
       render: (text, record) => (
+        <div>
         <Popconfirm
           title= {record.is_active ? "Sure to disable?" : "Sure to enable?" }
           onConfirm={() => handleDelete(record.id, record.is_active)}
         >
           <a style={!record.is_active ? {color: 'red'} : {color: 'green'}}>{record.is_active ? 'Disable' : 'Enable'}</a>
         </Popconfirm>
+        
+        <Link 
+        onClick={() => localStorage.setItem('editHospital', JSON.stringify(record))}
+        style={{marginLeft: 15}}
+        to={{
+          pathname: `/edit-hospital`, 
+          query:{test: "test"}
+        }}>
+       Edit
+        </Link>
+
+        <Popconfirm
+          title= "Sure to delete?"
+          onConfirm={() => handleRemove(record.id, record.is_active)}
+        >
+          <a style={{color: 'red', marginLeft: 15}}>Delete</a>
+        </Popconfirm>
+
+        
+       </div>
       ),
     },
   ];

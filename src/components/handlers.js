@@ -206,14 +206,24 @@ export const fetchHospitalList = async (localToken1, userIdLocal) => {
   }
 };
 
-export const deleteHospital = async (params) => {
+export const disableHospital = async (params) => {
   try {
    
-    const res = await api.deleteHospital(params);
+    const res = await api.disableHospital(params);
     return res;
   } catch (err) {
     console.log("handleSearch--->error---->");
 
+    throw err;
+  }
+};
+
+export const deleteHospital = async (params) => {
+  try {
+    const res = await api.deleteHospital(params);
+    return res;
+  } catch (err) {
+    console.log("deleteHosp--->error---->");
     throw err;
   }
 };

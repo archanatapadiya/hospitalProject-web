@@ -37,7 +37,8 @@ function UploadData() {
 
   const searchedUserData_parsed = JSON.parse(searchedUserData);
 
-console.log('searchedUserData_parsed', searchedUserData_parsed)
+  localStorage.setItem("user_data", JSON.stringify(searchedUserData_parsed));
+
   const [show, setShow] = useState(false);
 
  
@@ -66,18 +67,14 @@ console.log('searchedUserData_parsed', searchedUserData_parsed)
       dataIndex: "hospital_name",
       width: "200px",
       align: "center",
-      render: (value, row, index) => {
-        const obj = {
-          children: value,
-          props: {},
-        };
-        if (index == 0) {
-          obj.props.rowSpan = row.rowSpan;
-        } else {
-          obj.props.rowSpan = row.rowSpan;
-        }
-        return obj;
-      },
+      render: (text, record) => <
+        Link 
+        to={{
+          pathname: `/upload-details/${searchedUserData_parsed.user_id}`, 
+          query:{hosp_id: record}
+        }}>
+       {text}
+        </Link>
     },
     {
       title: "Contact Number",

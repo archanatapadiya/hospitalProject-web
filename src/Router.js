@@ -15,6 +15,7 @@ import UploadUserUpdates from './components/UploadUserUpdates';
 import UploadUserBilling from './components/UploadUserBilling';
 import UserDetails from './components/UserDetails';
 import AddHospital from './components/AddHospital';
+import EditHospital from './components/EditHospital';
 import HospitalList from './components/HospitalList';
 import ForgotPassword from './components/ForgotPassword';
 import Login from './components/Login';
@@ -61,6 +62,9 @@ export default function BasicExample() {
           </Route>
           <Route exact path="/add-hospital">
             <AddHospital />
+          </Route>
+          <Route exact path="/edit-hospital">
+            <EditHospital />
           </Route>
           <Route exact path="/upload-details/:id(\d*)">
             <UploadDetails />

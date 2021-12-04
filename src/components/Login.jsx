@@ -86,17 +86,18 @@ export default function Login({ setToken, setSuperUser, setUserId }) {
     }
 
     if (!token.is_success) {
-      Notification.newInstance({}, (notification) => {
-        notification.notice({
-          content: (
-            <span style={{ backgroundColor: "red", top: 65, left: "50%" }}>
-              {token.response_message}
-            </span>
-          ),
-          closable: true,
-          duration: null,
-        });
-      });
+      alert(token.response_message)
+      // Notification.newInstance({}, (notification) => {
+      //   notification.notice({
+      //     content: (
+      //       <span style={{ backgroundColor: "red", top: 65, left: "50%" }}>
+      //         {token.response_message}
+      //       </span>
+      //     ),
+      //     closable: true,
+      //     duration: null,
+      //   });
+      // });
     }
   };
 
@@ -167,17 +168,18 @@ export default function Login({ setToken, setSuperUser, setUserId }) {
     }
 
     if (!token.is_success) {
-      Notification.newInstance({}, (notification) => {
-        notification.notice({
-          content: (
-            <span style={{ backgroundColor: "red", top: 65, left: "50%" }}>
-              {token.response_message}
-            </span>
-          ),
-          closable: true,
-          duration: 5,
-        });
-      });
+      alert(token.response_message)
+      // Notification.newInstance({}, (notification) => {
+      //   notification.notice({
+      //     content: (
+      //       <span style={{ backgroundColor: "red", top: 65, left: "50%" }}>
+      //         {token.response_message}
+      //       </span>
+      //     ),
+      //     closable: true,
+      //     duration: 5,
+      //   });
+      // });
     }
   };
 
