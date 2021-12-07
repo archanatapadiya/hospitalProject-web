@@ -29,9 +29,7 @@ import UploadUserReports from "./UploadUserReports";
 import UploadUserUpdates from "./UploadUserUpdates";
 import UploadUserBilling from "./UploadUserBilling";
 import { useLocation } from "react-router-dom"
-
 import notifications from "./notifications";
-import { setSourceMapRange } from "typescript";
 
 function UploadData() {
   const location = useLocation()

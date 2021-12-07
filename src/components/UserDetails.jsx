@@ -6,8 +6,7 @@ import { Route, Switch, NavLink } from "react-router-dom";
 import styles from "./styles.css";
 import { Link, useParams } from "react-router-dom";
 import _ from "lodash";
-import ArrowIcon from 'mdi-react/ArrowBackIcon';
-
+import ArrowIcon from "mdi-react/ArrowBackIcon";
 import {
   Col,
   Container,
@@ -17,64 +16,52 @@ import {
   ButtonToolbar,
   Button,
 } from "reactstrap";
-// import { uploadUserReports } from "./utils/api";
 import FetchUserReports from "./FetchUserReports";
 import FetchUserUpdates from "./FetchUserUpdates";
 import FetchUserBilling from "./FetchUserBilling";
 import UploadUserReports from "./UploadUserReports";
 import UploadUserUpdates from "./UploadUserUpdates";
 import UploadUserBilling from "./UploadUserBilling";
-import { Table, Input, Popconfirm } from 'antd';
-
-import notifications from './notifications';
+import { Table, Input, Popconfirm } from "antd";
+import notifications from "./notifications";
 import { setSourceMapRange } from "typescript";
 
 function UploadData() {
   const { id } = useParams();
   const hospitalId = localStorage.getItem("hospital_id");
-
   const searchedUserData = localStorage.getItem("searched_user_data");
-
   const searchedUserData_parsed = JSON.parse(searchedUserData);
-
   localStorage.setItem("user_data", JSON.stringify(searchedUserData_parsed));
-
   const [show, setShow] = useState(false);
-
- 
-
   const [userData, setUserData] = useState([]);
   const [sure1, setSure1] = useState(false);
-
   const patientName = userData?.first_name + " " + userData?.last_name;
-
   const fetchUserData = async (params) => {
     const userReports = await handlers.fetchUserDetails(params);
     let reportsData = userReports?.data;
-
     setUserData(reportsData);
     return reportsData;
   };
 
   let tableData = {};
-  
-  tableData = _.get(searchedUserData_parsed, 'hospital_list');
+  tableData = _.get(searchedUserData_parsed, "hospital_list");
 
   const BILL_TABLE_HEADER = [
-   
     {
       title: "Hospital Name",
       dataIndex: "hospital_name",
       width: "200px",
       align: "center",
-      render: (text, record) => <
-        Link 
-        to={{
-          pathname: `/upload-details/${searchedUserData_parsed.user_id}`, 
-          query:{hosp_id: record}
-        }}>
-       {text}
+      render: (text, record) => (
+        <Link
+          to={{
+            pathname: `/upload-details/${searchedUserData_parsed.user_id}`,
+            query: { hosp_id: record },
+          }}
+        >
+          {text}
         </Link>
+      ),
     },
     {
       title: "Contact Number",
@@ -94,10 +81,7 @@ function UploadData() {
         return obj;
       },
     },
-   
-     
   ];
-
 
   useEffect(() => {
     let params = {
@@ -108,29 +92,31 @@ function UploadData() {
 
   let textInput = React.createRef();
 
-
   return (
     <React.Fragment>
-      <div className="login-wrapper" style={{   boxShadow: '0px 0px 10px #0000001a',
-      border: '1px solid #c9c9c9',
-      padding: 50,
-      marginLeft: 300,
-      marginRight: 300,
-      marginTop: 50,
-      backgroundColor: '#F7FBF9',
-      opacity: 1}}>
-        <a href={`/`} style={{marginLeft: '-95%'}}>     
-          <ArrowIcon /> 
+      <div
+        className="login-wrapper"
+        style={{
+          boxShadow: "0px 0px 10px #0000001a",
+          border: "1px solid #c9c9c9",
+          padding: 50,
+          marginLeft: 300,
+          marginRight: 300,
+          marginTop: 50,
+          backgroundColor: "#F7FBF9",
+          opacity: 1,
+        }}
+      >
+        <a href={`/`} style={{ marginLeft: "-95%" }}>
+          <ArrowIcon />
         </a>
         <h2 style={{ textDecoration: "underline" }}>Patient Details</h2>
         <div
           style={{
-            // width: "30%",
             padding: 20,
             border: "2px solid grey",
-            // marginLeft: "35%",
             marginTop: "20px",
-            backgroundColor: 'white'
+            backgroundColor: "white",
           }}
         >
           <p>
@@ -156,26 +142,24 @@ function UploadData() {
           )}
         </div>
 
-<br />
+        <br />
 
+        <h2 style={{ textDecoration: "underline" }}>
+          List of admitted hospitals
+        </h2>
 
-
-        <h2 style={{ textDecoration: "underline" }}>List of admitted hospitals</h2>
-     
-<br />
+        <br />
         <Table
-                columns={BILL_TABLE_HEADER}
-                dataSource={tableData}
-                bordered
-                size="small"
-                pagination={false}
-                style={{
-                  whiteSpace: "pre",
-                  border: "1px solid grey",
-                }}
-              />
-  
-
+          columns={BILL_TABLE_HEADER}
+          dataSource={tableData}
+          bordered
+          size="small"
+          pagination={false}
+          style={{
+            whiteSpace: "pre",
+            border: "1px solid grey",
+          }}
+        />
 
         <Switch>
           <Route path={`/fetch-user-reports/:id(\d*)`}>

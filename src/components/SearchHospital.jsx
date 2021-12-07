@@ -1,33 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Formik, Field, Form } from "formik";
 import FormikMaterialTextField from "./FormikMaterialTextField";
 import * as handlers from "./handlers";
-import UploadDocument from "./UploadDocument";
-// import Table from "react-bootstrap/Table";
 import _ from "lodash";
 import { Link, useParams } from "react-router-dom";
 import history from "./lib/history";
-
 import { Col, Container, Row, Card, CardBody, ButtonToolbar } from "reactstrap";
-
-import PDFView from "./PDFView";
 import { Table, Input, Button, Popconfirm } from "antd";
-
 
 function FetchHospitalData() {
   const { id } = useParams();
-
   const userData = localStorage.getItem("user_data");
   const userIdLocal = localStorage.getItem("user_id");
-
   const userData_parsed = JSON.parse(userData);
-
   const [userReportList, setUserReportList] = useState([]);
-
   const [showSearchPatient, setShowSearchPatient] = useState(false);
-
   let tableData = userReportList;
-
   const [localToken1, setLocalToken1] = useState(localStorage.getItem("token"));
 
   useEffect(() => {
@@ -42,14 +30,13 @@ function FetchHospitalData() {
 
   const handleDelete = async (id, is_active) => {
     try {
-
       let params = {
         id: id,
         user_id: userIdLocal,
-        is_active: is_active
-      }
+        is_active: is_active,
+      };
       let res = await handlers.disableHospital(params);
-      if(res.is_success == true){
+      if (res.is_success == true) {
         window.location.reload();
       }
       console.log("ConfirmDeleteModal-->handleConfirmErr---->");
@@ -60,13 +47,12 @@ function FetchHospitalData() {
 
   const handleRemove = async (id, is_active) => {
     try {
-
       let params = {
         id: id,
         user_id: userIdLocal,
-      }
+      };
       let res = await handlers.deleteHospital(params);
-      if(res.is_success == true){
+      if (res.is_success == true) {
         window.location.reload();
       }
       console.log("ConfirmDeleteModal-->handleConfirmErr---->");
@@ -74,7 +60,6 @@ function FetchHospitalData() {
       console.log("ConfirmDeleteModal-->handleConfirmErr---->", err);
     }
   };
-
 
   const HOSPITAL_TABLE_HEADER = [
     {
@@ -149,60 +134,63 @@ function FetchHospitalData() {
       dataIndex: "operation",
       render: (text, record) => (
         <div>
-        <Popconfirm
-          title= {record.is_active ? "Sure to disable?" : "Sure to enable?" }
-          onConfirm={() => handleDelete(record.id, record.is_active)}
-        >
-          <a style={!record.is_active ? {color: 'red'} : {color: 'green'}}>{record.is_active ? 'Disable' : 'Enable'}</a>
-        </Popconfirm>
-        
-        <Link 
-        onClick={() => localStorage.setItem('editHospital', JSON.stringify(record))}
-        style={{marginLeft: 15}}
-        to={{
-          pathname: `/edit-hospital`, 
-          query:{test: "test"}
-        }}>
-       Edit
-        </Link>
+          <Popconfirm
+            title={record.is_active ? "Sure to disable?" : "Sure to enable?"}
+            onConfirm={() => handleDelete(record.id, record.is_active)}
+          >
+            <a
+              style={!record.is_active ? { color: "red" } : { color: "green" }}
+            >
+              {record.is_active ? "Disable" : "Enable"}
+            </a>
+          </Popconfirm>
 
-        <Popconfirm
+          <Link
+            onClick={() =>
+              localStorage.setItem("editHospital", JSON.stringify(record))
+            }
+            style={{ marginLeft: 15 }}
+            to={{
+              pathname: `/edit-hospital`,
+              query: { test: "test" },
+            }}
+          >
+            Edit
+          </Link>
+
+          {/* <Popconfirm
           title= "Sure to delete?"
           onConfirm={() => handleRemove(record.id, record.is_active)}
         >
           <a style={{color: 'red', marginLeft: 15}}>Delete</a>
-        </Popconfirm>
-
-        
-       </div>
+        </Popconfirm> */}
+        </div>
       ),
     },
   ];
 
-  const searchUserSuperUser = async(username) => {
-    console.log('searched user usper', username)
-    let params={
-      username : username
-    }
+  const searchUserSuperUser = async (username) => {
+    console.log("searched user usper", username);
+    let params = {
+      username: username,
+    };
     let success = await handlers.searchUserSuperuser(params);
 
-    console.log('success121212', success)
+    console.log("success121212", success);
     if (success.data.user_id) {
       history.push(`/user-details/${success.data.user_id}`);
       window.location.reload();
     }
 
     if (success) {
-      // setSearchUser(success.data.username);
-      // setUserId(success.data.user_id);
       localStorage.setItem("searched_user_data", JSON.stringify(success.data));
     }
-  }
+  };
 
   const userReportsData = async (localToken1) => {
     let userReports = {};
-    if(localToken1){
-     userReports = await handlers.fetchHospitalList(localToken1, userIdLocal );
+    if (localToken1) {
+      userReports = await handlers.fetchHospitalList(localToken1, userIdLocal);
     }
     let reportsData = userReports?.response_message;
     setUserReportList(reportsData);
@@ -230,96 +218,82 @@ function FetchHospitalData() {
       <div>
         <h2>Hospital and User Details</h2>
 
-<Row>
-        <a href={`/add-hospital`}>
-          <button type="button" class="btn btn-success btn-sm">
-            Add New Hospital
-          </button>
-        </a>
+        <Row>
+          <a href={`/add-hospital`}>
+            <button type="button" class="btn btn-success btn-sm">
+              Add New Hospital
+            </button>
+          </a>
 
-
-        <a>
-          <button type="button" onClick={ () => setShowSearchPatient(!showSearchPatient) } style={{marginLeft: 60}} class="btn btn-success btn-sm">
-            Search Patient
-          </button>
-        </a>
-
+          <a>
+            <button
+              type="button"
+              onClick={() => setShowSearchPatient(!showSearchPatient)}
+              style={{ marginLeft: 60 }}
+              class="btn btn-success btn-sm"
+            >
+              Search Patient
+            </button>
+          </a>
         </Row>
       </div>
-      
 
       {showSearchPatient && (
-      <React.Fragment>
-        <Formik
-          initialValues={{}}
-          onSubmit={async (values, formikBag) => {
-            console.log('values in search', values)
-            values.localToken = localToken1;
-            let success = await handlers.searchUser(values, formikBag);
+        <React.Fragment>
+          <Formik
+            initialValues={{}}
+            onSubmit={async (values, formikBag) => {
+              console.log("values in search", values);
+              values.localToken = localToken1;
+              let success = await handlers.searchUser(values, formikBag);
+            }}
+          >
+            {(formikBag) => {
+              const {
+                isSubmitting,
+                errors,
+                values,
+                touched,
+                setErrors,
+                setFieldValue,
+                handleSubmit,
+              } = formikBag;
 
-            // if (success.data.user_id) {
-            //   history.push(`/upload-details/${success.data.user_id}`);
-            //   window.location.reload();
-            // }
+              return (
+                <div
+                  style={{
+                    padding: 30,
+                    border: "2px solid grey",
+                    backgroundColor: "white",
+                  }}
+                >
+                  <Form className="formik-form">
+                    <div className="col">
+                      <h3 className="form-group-label">Search patient</h3>
 
-            // if (success) {
-            //   setSearchUser(success.data.username);
-            //   setUserId(success.data.user_id);
-            //   localStorage.setItem("user_data", JSON.stringify(success.data));
-            // }
-          }}
-        >
-          {(formikBag) => {
-            const {
-              isSubmitting,
-              errors,
-              values,
-              touched,
-              setErrors,
-              setFieldValue,
-              handleSubmit,
-            } = formikBag;
-
-            return (
-              <div
-                style={{
-                  // width: "30%",
-                  padding: 30,
-                  border: "2px solid grey",
-                  // marginLeft: "35%",
-                  // marginTop: "20px",
-                  backgroundColor: "white",
-                }}
-              >
-                <Form className="formik-form">
-                  <div className="col">
-                    <h3 className="form-group-label">Search patient</h3>
-
-                    <div className="form-group-field custom-input with-extention">
-                      <Field
-                        name="username"
-                        component={FormikMaterialTextField}
-                        // type="number"
-                        placeholder="Enter phone number"
-                      />
+                      <div className="form-group-field custom-input with-extention">
+                        <Field
+                          name="username"
+                          component={FormikMaterialTextField}
+                          placeholder="Enter phone number"
+                        />
+                      </div>
                     </div>
-                  </div>
-
-                  <br />
-                  {/* {searchUser === undefined && (
-                    <p>No record found, please register</p>
-                  )} */}
-                  <div className="btn-wrapper">
-                    <Button type="button" onClick = {() => searchUserSuperUser(values.username)} >
-                      Search
-                    </Button>
-                  </div>
-                </Form>
-              </div>
-            );
-          }}
-        </Formik>
-      </React.Fragment>
+                    <br />
+                    <div className="btn-wrapper">
+                      <Button
+                        type="button"
+                        onClick={() => searchUserSuperUser(values.username)}
+                      >
+                        Search
+                      </Button>
+                    </div>
+                  </Form>
+                </div>
+              );
+            }}
+          </Formik>
+        </React.Fragment>
       )}
 
       <div className="form-container">
