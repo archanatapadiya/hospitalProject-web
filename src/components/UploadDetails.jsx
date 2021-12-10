@@ -30,6 +30,7 @@ import UploadUserUpdates from "./UploadUserUpdates";
 import UploadUserBilling from "./UploadUserBilling";
 import { useLocation } from "react-router-dom"
 import notifications from "./notifications";
+import ArrowIcon from "mdi-react/ArrowBackIcon";
 
 function UploadData() {
   const location = useLocation()
@@ -37,9 +38,18 @@ function UploadData() {
 
   if(location?.query?.hosp_id?.hospital_id){
     localStorage.setItem("hospital_id", location?.query?.hosp_id?.hospital_id);
+    localStorage.setItem("hospital_name", location?.query?.hosp_id?.hospital_name);
+    localStorage.setItem("hospital_type", location?.query?.hosp_id?.hospital_type);
   }
-  const hospitalId = localStorage.getItem("hospital_id") || location.query.hosp_id.hospital_id;
+  const hospitalId = localStorage.getItem("hospital_id") || location?.query?.hosp_id?.hospital_id;
+  const hospitalType = localStorage.getItem("hospital_type") || location?.query?.hosp_id?.hospital_type;
+  const hospitalName = localStorage.getItem("hospital_name") || location?.query?.hosp_id?.hospital_name;
+
   localStorage.setItem("hospital_id", hospitalId);
+  localStorage.setItem("hospital_type", hospitalType);
+  localStorage.setItem("hospital_name", hospitalName);
+
+
 
   const [show, setShow] = useState(false);
 
@@ -85,6 +95,8 @@ function UploadData() {
   const [sure1, setSure1] = useState(false);
 
   let hospital_type = localStorage.getItem("hospital_type");
+  let superUser = localStorage.getItem("is_superuser")||localStorage.getItem("isSuperuser");
+
 
   const patientName = userData?.first_name + " " + userData?.last_name;
 
@@ -130,6 +142,14 @@ function UploadData() {
           opacity: 1,
         }}
       >
+{superUser  == "true" && (
+<a href={`/user-details/${id}`} style={{ marginLeft: "-95%" }}>
+          <ArrowIcon />
+        </a>
+        )}
+
+<h1 style={{ color: 'blue' }}> {hospitalName}</h1>
+
         <h2 style={{ textDecoration: "underline" }}>Patient Details</h2>
         <div
           style={{

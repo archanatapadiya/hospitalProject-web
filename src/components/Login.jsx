@@ -68,6 +68,7 @@ export default function Login({ setToken, setSuperUser, setUserId }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     const token = await loginUser({
       username,
       password,
@@ -81,6 +82,7 @@ export default function Login({ setToken, setSuperUser, setUserId }) {
       localStorage.setItem("token", token.data.token);
       localStorage.setItem("hospital_id", token.data.user_id);
       localStorage.setItem("hospital_type", token.data.hospital_type);
+      localStorage.setItem("hospital_name", token.data.name);
       localStorage.setItem("username", token.data.username);
       localStorage.setItem("is_superuser", false);
     }
@@ -144,6 +146,8 @@ export default function Login({ setToken, setSuperUser, setUserId }) {
       setShowNewPassword(true);
       setHospital_id(token.data.user_id);
       localStorage.setItem("hospital_id", token.data.user_id);
+      localStorage.setItem("hospital_type", token.data.hospital_type);
+      localStorage.setItem("hospital_name", token.data.name);
     } else {
       alert('Invalid Username or Registration Number')
     }

@@ -50,6 +50,7 @@ export default function Login({ setToken, setSuperUser }) {
       localStorage.setItem('token', token.data.token);
       localStorage.setItem('hospital_id', token.data.user_id);
       localStorage.setItem('hospital_type', token.data.hospital_type);
+      localStorage.setItem('hospital_name', token.data.name);
       localStorage.setItem('username', token.data.username);
       localStorage.setItem('is_superuser', false);
     }
