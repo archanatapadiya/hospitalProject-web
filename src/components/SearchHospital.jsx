@@ -176,7 +176,6 @@ function FetchHospitalData() {
     };
     let success = await handlers.searchUserSuperuser(params);
 
-    console.log("success121212", success);
     if (success.data.user_id) {
       history.push(`/user-details/${success.data.user_id}`);
       window.location.reload();

@@ -84,6 +84,9 @@ function UploadData() {
     };
     let success = await handlers.admitUser(params);
 
+    if(!success.is_success){
+      alert("Patient is " + success.response_message)
+    }
     notifications.show({
       type: "info",
       message: "Saving Personal Details...",
@@ -96,7 +99,6 @@ function UploadData() {
 
   let hospital_type = localStorage.getItem("hospital_type");
   let superUser = localStorage.getItem("is_superuser")||localStorage.getItem("isSuperuser");
-
 
   const patientName = userData?.first_name + " " + userData?.last_name;
 
@@ -121,6 +123,7 @@ function UploadData() {
     
     let params = {
       user_id: id,
+      hospital_id: hospitalId,
     };
     const userDetails = fetchUserData(params);
   }, []);
