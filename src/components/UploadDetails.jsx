@@ -151,7 +151,7 @@ function UploadData() {
         </a>
         )}
 
-<h1 style={{ color: 'blue' }}> {hospitalName}</h1>
+<h1 style={{ color: 'blue' , fontWeight: 'bold'}}> {hospitalName}</h1>
 
         <h2 style={{ textDecoration: "underline" }}>Patient Details</h2>
         <div

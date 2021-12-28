@@ -7,6 +7,8 @@ import { Link, useParams } from "react-router-dom";
 import history from "./lib/history";
 import { Col, Container, Row, Card, CardBody, ButtonToolbar } from "reactstrap";
 import { Table, Input, Button, Popconfirm } from "antd";
+import logo from "./images/MyMedCordsTransparent.png";
+import axios from "axios";
 
 function FetchHospitalData() {
   const { id } = useParams();
@@ -17,6 +19,13 @@ function FetchHospitalData() {
   const [showSearchPatient, setShowSearchPatient] = useState(false);
   let tableData = userReportList;
   const [localToken1, setLocalToken1] = useState(localStorage.getItem("token"));
+  const localToken = localStorage.getItem("token");
+  const patients = localStorage.getItem("patients");
+  const hosp_active = localStorage.getItem("hosp_active");
+  const hosp_disabled = localStorage.getItem("hosp_disabled");
+  const clinic_active = localStorage.getItem("clinic_active");
+  const clinic_disabled = localStorage.getItem("clinic_disabled");
+
 
   useEffect(() => {
     const localTokenCalled = localStorage.getItem("token");
@@ -28,7 +37,7 @@ function FetchHospitalData() {
     }
   }, [localToken1]);
 
-  const handleDelete = async (id, is_active) => {
+  const handleDelete = async (id, is_active, type) => {
     try {
       let params = {
         id: id,
@@ -37,6 +46,18 @@ function FetchHospitalData() {
       };
       let res = await handlers.disableHospital(params);
       if (res.is_success == true) {
+        
+        let hosp_dis = type == 1 ? Number(clinic_disabled) : Number(hosp_disabled)
+        let hospi_set;
+        {is_active ? 
+         hospi_set = hosp_dis + 1
+        : 
+         hospi_set = hosp_dis - 1
+        }
+        {type == 1 ?  
+        localStorage.setItem("clinic_disabled", hospi_set) : 
+        localStorage.setItem("hosp_disabled", hospi_set);
+        }
         window.location.reload();
       }
       console.log("ConfirmDeleteModal-->handleConfirmErr---->");
@@ -61,12 +82,35 @@ function FetchHospitalData() {
     }
   };
 
+  const clickLogout = async (params) => {
+    let url = "http://3.110.35.199/user_logout/";
+    axios
+      .get(url, {
+        headers: {
+          "content-type": "multipart/form-data",
+          Authorization: localToken,
+        },
+      })
+      .then((res) => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("is_superuser");
+        localStorage.removeItem("isSuperuser");
+        localStorage.removeItem("user_id");
+        localStorage.removeItem("username");
+        localStorage.removeItem("hospital_id");
+        history.push(`/`);
+        window.location.reload();
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
   const HOSPITAL_TABLE_HEADER = [
     {
-      title: "Hospital Name",
+      title: "Health Center Name",
       dataIndex: "name",
       width: "200px",
-      align: "center",
+      // align: "center",
       render: (value, row, index) => {
         const obj = {
           children: value,
@@ -76,10 +120,36 @@ function FetchHospitalData() {
       },
     },
     {
+      title: "Health Center Type",
+      dataIndex: "hospital_type",
+      width: "200px",
+      align: "center",
+      render: (value, row, index) => {
+        console.log('value--->', value)
+       
+        let obj = {
+          children: value,
+          props: {},
+        };
+
+        if(value == 1){
+          obj = "OPD"
+        }
+        if(value == 2){
+          obj = "IPD"
+        }
+        if(value == 3){
+          obj = "OPD/IPD"
+        }
+
+        return obj;
+      },
+    },
+    {
       title: "Phone_Number",
       dataIndex: "phone_number",
       width: "200px",
-      align: "center",
+      // align: "center",
       render: (value, row, index) => {
         const obj = {
           children: value,
@@ -97,7 +167,7 @@ function FetchHospitalData() {
       title: "Email",
       dataIndex: "email",
       width: "200px",
-      align: "center",
+      // align: "center",
       render: (value, row, index) => {
         const obj = {
           children: value,
@@ -115,7 +185,7 @@ function FetchHospitalData() {
       title: "Address",
       dataIndex: "address",
       width: "200px",
-      align: "center",
+      // align: "center",
       render: (value, row, index) => {
         const obj = {
           children: value,
@@ -136,7 +206,7 @@ function FetchHospitalData() {
         <div>
           <Popconfirm
             title={record.is_active ? "Sure to disable?" : "Sure to enable?"}
-            onConfirm={() => handleDelete(record.id, record.is_active)}
+            onConfirm={() => handleDelete(record.id, record.is_active, record.hospital_type)}
           >
             <a
               style={!record.is_active ? { color: "red" } : { color: "green" }}
@@ -214,28 +284,77 @@ function FetchHospitalData() {
         opacity: 1,
       }}
     >
-      <div>
-        <h2>Hospital and User Details</h2>
+   
 
-        <Row>
-          <a href={`/add-hospital`}>
-            <button type="button" class="btn btn-success btn-sm">
-              Add New Hospital
-            </button>
-          </a>
+      <Row style={{width: '100%'}}>
 
-          <a>
-            <button
-              type="button"
-              onClick={() => setShowSearchPatient(!showSearchPatient)}
-              style={{ marginLeft: 60 }}
-              class="btn btn-success btn-sm"
-            >
-              Search Patient
-            </button>
-          </a>
+<span 
+ style={{fontSize: 50, fontWeight: 'bold', alignContent: 'flex-start', float: 'left'
+}}>  DASHBOARD </span>
+ <span style={{float: 'right'}}>
+  {" "}
+  <img src={logo} alt="Logo" width="100"  />  <br/><span style={{fontWeight: 'bold'}}>SUPER USER</span>
+
+</span>  
+
+</Row>
+
+<span style={{ width: '100%',float: 'right', alignContent: 'flex-end', textAlign:'right', marginTop: 10, textDecoration: 'underline'}}>
+<Link  onClick={clickLogout} >
+          Logout
+        </Link>
+        </span>
+   
+
+<br />
+             
+              <Row style={{width: '100%'}}>
+
+<span  style={{
+  color: "red",
+  fontSize: "20px",
+  fontWeight: "bold",
+  float: 'left',
+  paddingLeft: '14%'
+}}>  {patients ? patients : '--'} </span>
+ <span  style={{
+  color: "red",
+  fontSize: "20px",
+  fontWeight: "bold",
+}}>  {hosp_active} ({hosp_disabled}) </span>  
+<span  style={{
+  color: "red",
+  fontSize: "20px",
+  fontWeight: "bold",
+  float: 'right',
+  paddingRight: '11%'
+}}>  {clinic_active} ({clinic_disabled})</span>
+</Row>
+
+              <Row style={{width: '100%'}}>
+
+                <span  style={{
+                  // color: "#1b62ab",
+                  fontSize: "20px",
+                  fontWeight: "bold",
+                  float: 'left',
+                  paddingLeft: '10%'
+                }}>  PATIENTS </span>
+                 <span  style={{
+                  // color: "#1b62ab",
+                  fontSize: "20px",
+                  fontWeight: "bold",             
+                }}>  HOSPITALS </span>  
+                <span  style={{
+                  // color: "#1b62ab",
+                  fontSize: "20px",
+                  fontWeight: "bold",
+                  float: 'right',
+                  paddingRight: '10%'
+                }}>  CLINIC </span>
         </Row>
-      </div>
+    
+    <br/>
 
       {showSearchPatient && (
         <React.Fragment>
@@ -268,7 +387,7 @@ function FetchHospitalData() {
                 >
                   <Form className="formik-form">
                     <div className="col">
-                      <h3 className="form-group-label">Search patient</h3>
+                      <h3 className="form-group-label">Search Patient</h3>
 
                       <div className="form-group-field custom-input with-extention">
                         <Field
@@ -300,17 +419,38 @@ function FetchHospitalData() {
           <div className="farm-table">
             <div className="table-farms-wrapper">
               <br />
-              <span
-                style={{
+             
+
+              <Row>
+
+                <span  style={{
                   color: "#1b62ab",
-                  fontSize: "16px",
+                  fontSize: "30px",
                   fontWeight: "bold",
-                  marginTop: "20px",
-                }}
-              >
-                List of hospitals
-                <br />
-              </span>
+                  // marginTop: "20px",
+
+                  float: 'left'
+                }}>  List of Health Centers </span>
+                <span style={{float: 'right'}}>
+          <a href={`/add-hospital`}>
+            <button type="button" class="btn btn-success btn-sm">
+              Add New Health Center
+            </button>
+          </a>
+
+          <a>
+            <button
+              type="button"
+              onClick={() => setShowSearchPatient(!showSearchPatient)}
+              style={{ marginLeft: 60 }}
+              class="btn btn-success btn-sm"
+            >
+              Search Patient
+            </button>
+          </a>
+          </span>
+        </Row>
+        <br />
               <br />
 
               <Table
@@ -320,6 +460,7 @@ function FetchHospitalData() {
                 size="small"
                 pagination={false}
                 style={{
+                 
                   whiteSpace: "pre",
                   border: "1px solid grey",
                 }}

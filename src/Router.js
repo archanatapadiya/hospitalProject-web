@@ -19,6 +19,7 @@ import EditHospital from './components/EditHospital';
 import HospitalList from './components/HospitalList';
 import ForgotPassword from './components/ForgotPassword';
 import Login from './components/Login';
+import SuperUserLogin from './components/SuperAdminLogin';
 import Topbar from './components/layout/topbar';
 import Top from './components/topbar/topbar';
 
@@ -36,26 +37,33 @@ export default function BasicExample() {
 
 
   const [locuserId, setLocUserId] = useState(localUserId);
-
+  let loc = window.location.href;
 
   const userData = localStorage.getItem('user_data');
   const userData_parsed = JSON.parse(userData);
   const userId = userData_parsed?.user_id;
 
   if(!token) {
+     if (window.location.href.indexOf("superuser-login") > -1) {
+      return <SuperUserLogin setToken={setToken} setSuperUser={setSuperUser} setUserId={setLocUserId} />
+     }
     return <Login setToken={setToken} setSuperUser={setSuperUser} setUserId={setLocUserId} />
   }
  
   return (
-    <Router basename="/">
+    <Router basename="/dashboard">
      
       
-        <Top userId={userId} />
+       { window.location.href.indexOf("superuser-login") == -1  && ( <Top userId={userId} />)}
     
       <div style={{marginTop: 90}}>
         <Switch>
           <Route exact path="/">
-            {superUser ? < SearchHospital /> : <SearchUser />}
+             <SearchUser />
+          </Route> 
+      
+          <Route exact path="/superuser-login">
+           < SearchHospital />
           </Route> 
           <Route exact path="/forgot-password">
             <ForgotPassword />

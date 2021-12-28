@@ -135,7 +135,7 @@ zip_code: ''
           <ArrowIcon /> 
         </a>
 
-         <h2>Add New Clinic</h2>
+         <h2>Add New Health Center</h2>
       
       <div  >
         <form onSubmit={this.handleSubmit} style={{backgroundColor: 'white',  border: '2px solid grey',  marginTop: '20px', padding: '30px'}}>
@@ -180,7 +180,7 @@ zip_code: ''
           </div>
 
           <div className="col">
-                <h3 className="form-group-label">Medical Center Type</h3>
+                <h3 className="form-group-label">Health Center Type</h3>
 
                 <FormControl component="fieldset">
       {/* <FormLabel component="legend">Please select type of patient</FormLabel> */}

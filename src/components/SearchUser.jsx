@@ -50,7 +50,7 @@ function UploadData() {
         opacity: 1,
       }}
     >
-      <h2>Welcome to Hospital Data Upload System</h2>
+      <h2>Welcome to Health Center Data Upload System</h2>
 
       <a href="/add-new-user">
         <button type="button" class="btn btn-success btn-sm">
@@ -101,7 +101,7 @@ function UploadData() {
               >
                 <Form className="formik-form">
                   <div className="col">
-                    <h3 className="form-group-label">Search patient</h3>
+                    <h3 className="form-group-label">Search Patient</h3>
 
                     <div className="form-group-field custom-input with-extention">
                       <Field

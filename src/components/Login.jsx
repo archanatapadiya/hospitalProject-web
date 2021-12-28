@@ -89,17 +89,7 @@ export default function Login({ setToken, setSuperUser, setUserId }) {
 
     if (!token.is_success) {
       alert(token.response_message)
-      // Notification.newInstance({}, (notification) => {
-      //   notification.notice({
-      //     content: (
-      //       <span style={{ backgroundColor: "red", top: 65, left: "50%" }}>
-      //         {token.response_message}
-      //       </span>
-      //     ),
-      //     closable: true,
-      //     duration: null,
-      //   });
-      // });
+
     }
   };
 
@@ -117,19 +107,7 @@ export default function Login({ setToken, setSuperUser, setUserId }) {
     }
 
 
-    // if (!token.is_success) {
-    //   Notification.newInstance({}, (notification) => {
-    //     notification.notice({
-    //       content: (
-    //         <span style={{ backgroundColor: "red", top: 65, left: "50%" }}>
-    //           {token.response_message}
-    //         </span>
-    //       ),
-    //       closable: true,
-    //       duration: null,
-    //     });
-    //   });
-    // }
+ 
   };
 
 
@@ -211,20 +189,12 @@ export default function Login({ setToken, setSuperUser, setUserId }) {
       </div>
       <br />
 
-      <button
-        type="button"
-        class="btn btn-success btn-sm"
-        onClick={() => setAdminLogin(!adminLogin)}
-      >
-        {adminLogin ? 'Hospital Login' : 'Admin Login'}
-      </button>
+     
 
-      <h2>Welcome to Hospital Data Upload System</h2>
+      <h2>Welcome to Health Center Data Upload System</h2>
 
-      {!adminLogin && (
-        <h3>Please login with the hospital username and password </h3>
-      )}
-      {!adminLogin && (
+        <h3>Please login with the health center username and password </h3>
+    
         <form
           onSubmit={handleSubmit}
           style={{
@@ -249,16 +219,7 @@ export default function Login({ setToken, setSuperUser, setUserId }) {
           </label>
 
           <div>
-            {/* <div className="btn-wrapper">
-              <br />
-              <a
-                href={`/forgot-password`}
-                className="btn btn-primary"
-                style={{ color: "lightgrey" }}
-              >
-                Forgot Password
-              </a>
-            </div> */}
+        
 
             <div className="App">
 
@@ -272,45 +233,7 @@ export default function Login({ setToken, setSuperUser, setUserId }) {
             <button type="submit">Submit</button>
           </div>
         </form>
-      )}
-
-      {adminLogin && <h3>Please enter your Admin username and password </h3>}
-
-      {adminLogin && (
-        <form
-          onSubmit={handleAdminSubmit}
-          style={{
-            boxShadow: "0px 0px 10px #0000001a",
-            backgroundColor: "#0E53A5",
-            width: "30%",
-            border: "2px solid black",
-            marginTop: "20px",
-            padding: "20px",
-          }}
-        >
-          <label>
-            <p style={{ color: "white" }}>Admin Username</p>
-            <input
-              type="text"
-              onChange={(e) => setUserName(e.target.value)}
-              required
-            />
-          </label>
-          <label>
-            <p style={{ color: "white", marginTop: 20 }}>Admin Password</p>
-            <input
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </label>
-
-          <div>
-            <br />
-            <button type="submit">Submit</button>
-          </div>
-        </form>
-      )}
+      
 
       <Modal
         className="modal"

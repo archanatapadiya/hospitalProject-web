@@ -36,7 +36,7 @@ function UploadData() {
  
   return (
       <div>
-      <h2>Welcome to Hospital Data Upload System</h2>
+      <h2>Welcome to Health Center Data Upload System</h2>
 
       {searchUser === undefined && (
         <p>No record found, please register</p>

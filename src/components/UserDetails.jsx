@@ -107,7 +107,7 @@ function UploadData() {
           opacity: 1,
         }}
       >
-        <a href={`/`} style={{ marginLeft: "-95%" }}>
+        <a href={`/superuser-login`} style={{ marginLeft: "-95%" }}>
           <ArrowIcon />
         </a>
         <h2 style={{ textDecoration: "underline" }}>Patient Details</h2>
@@ -145,7 +145,7 @@ function UploadData() {
         <br />
 
         <h2 style={{ textDecoration: "underline" }}>
-          List of admitted hospitals
+          List Of Visited Health Centers 
         </h2>
 
         <br />
