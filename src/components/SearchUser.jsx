@@ -14,6 +14,7 @@ import {
   ButtonToolbar,
   Button,
 } from "reactstrap";
+import Background from '../components/images/background.jpeg';
 
 function UploadData() {
   const [searchUser, setSearchUser] = useState("");
@@ -48,9 +49,13 @@ function UploadData() {
         marginTop: 50,
         backgroundColor: "#F7FBF9",
         opacity: 1,
+        background: `url(${Background})`,
+        backgroundPosition: 'center',
+  backgroundSize: 'cover',
+  backgroundRepeat: 'no-repeat'
       }}
     >
-      <h2>Welcome to Health Center Data Upload System</h2>
+      <h2 style={{color: '#D3ECF9'}}>Welcome to Health Center Data Upload System</h2>
 
       <a href="/add-new-user">
         <button type="button" class="btn btn-success btn-sm">

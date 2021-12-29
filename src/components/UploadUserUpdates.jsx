@@ -3,6 +3,8 @@ import axios from 'axios';
 import history from './lib/history';
 import { Link, useParams } from 'react-router-dom';
 import DatePicker from "react-datepicker";
+import Background from '../components/images/background.jpeg';
+
 class App extends Component {
 
   state = {
@@ -93,9 +95,13 @@ class App extends Component {
         marginRight: 350,
         marginTop: 50,
         backgroundColor: '#F7FBF9',
-        opacity: 1
+        opacity: 1,
+        background: `url(${Background})`,
+        backgroundPosition: 'center',
+  backgroundSize: 'cover',
+  backgroundRepeat: 'no-repeat'
       }}>
-        <h2>Upload Patient Health Details</h2>
+        <h2 style={{color: '#D3ECF9'}}>Upload Patient Health Details</h2>
 
         <div>
           <form onSubmit={this.handleSubmit} style={{ backgroundColor: 'white', border: '2px solid black', marginTop: '20px', padding: '30px' }}>
@@ -135,7 +141,7 @@ class App extends Component {
               </p>
             </div>
 
-            <input type="submit" />
+            <input type="submit" style={{backgroundColor: '#38B6F7'}}/>
           </form>
         </div>
       </div>

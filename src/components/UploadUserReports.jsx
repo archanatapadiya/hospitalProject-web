@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import history from "./lib/history";
 import { Link, useParams } from "react-router-dom";
+import Background from '../components/images/background.jpeg';
 
 class App extends Component {
 
@@ -104,9 +105,13 @@ class App extends Component {
           marginTop: 50,
           backgroundColor: "#F7FBF9",
           opacity: 1,
+          background: `url(${Background})`,
+        backgroundPosition: 'center',
+  backgroundSize: 'cover',
+  backgroundRepeat: 'no-repeat'
         }}
       >
-        <h2>Upload Patient Report</h2>
+        <h2 style={{color: '#D3ECF9'}}>Upload Patient Report</h2>
         <div>
           <form
             onSubmit={this.handleSubmit}
@@ -188,7 +193,7 @@ class App extends Component {
 
           
             </div>
-            <input type="submit" />
+            <input type="submit" style={{backgroundColor: '#38B6F7'}} />
           </form>
         </div>
       </div>

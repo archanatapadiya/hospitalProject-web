@@ -10,6 +10,7 @@ import { Col, Container, Row, Card, CardBody, ButtonToolbar } from "reactstrap";
 import PDFView from "./PDFView";
 import AntTableActions from "./AntTableActions";
 import { Table, Input, Button, Popconfirm } from "antd";
+import Background from '../components/images/background.jpeg';
 
 function UploadReportData() {
   const { id } = useParams();
@@ -157,10 +158,14 @@ function UploadReportData() {
         marginTop: 50,
         backgroundColor: "#F7FBF9",
         opacity: 1,
+        background: `url(${Background})`,
+        backgroundPosition: 'center',
+  backgroundSize: 'cover',
+  backgroundRepeat: 'no-repeat'
       }}
     >
       <div>
-        <h2>Health updates for the user</h2>
+        <h2 style={{color: '#D3ECF9'}}>Health updates for the user</h2>
 
         <a href={`/upload-user-health/${id}`}>
           <button type="button" class="btn btn-success btn-sm">
@@ -179,7 +184,7 @@ function UploadReportData() {
                 <div className="table-farms-wrapper">
                   <span
                     style={{
-                      color: "#1b62ab",
+                      color: '#D3ECF9',
                       fontSize: "16px",
                       fontWeight: "bold",
                       marginTop: "10px",
@@ -214,7 +219,7 @@ function UploadReportData() {
         <div>
           <span
             style={{
-              color: "#1b62ab",
+              color: '#D3ECF9',
               fontSize: "16px",
               fontWeight: "bold",
               marginTop: "10px",
@@ -233,7 +238,7 @@ function UploadReportData() {
                     <br />
                     <span
                       style={{
-                        color: "#1b62ab",
+                        color: '#D3ECF9',
                         fontSize: "14px",
                         fontWeight: "bold",
                         marginTop: "10px",
@@ -267,7 +272,7 @@ function UploadReportData() {
                 <div className="table-farms-wrapper">
                   <span
                     style={{
-                      color: "#1b62ab",
+                      color: '#D3ECF9',
                       fontSize: "14px",
                       fontWeight: "bold",
                       marginTop: "10px",

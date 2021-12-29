@@ -25,6 +25,8 @@ import UploadUserBilling from "./UploadUserBilling";
 import { Table, Input, Popconfirm } from "antd";
 import notifications from "./notifications";
 import { setSourceMapRange } from "typescript";
+import Background from '../components/images/background.jpeg';
+
 
 function UploadData() {
   const { id } = useParams();
@@ -105,18 +107,23 @@ function UploadData() {
           marginTop: 50,
           backgroundColor: "#F7FBF9",
           opacity: 1,
+          background: `url(${Background})`,
+          backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat'
         }}
       >
-        <a href={`/superuser-login`} style={{ marginLeft: "-95%" }}>
+        <a href={`/superuser-login`} style={{ marginLeft: "-95%" , color: '#D3ECF9'}}>
           <ArrowIcon />
         </a>
-        <h2 style={{ textDecoration: "underline" }}>Patient Details</h2>
+        <h2 style={{ textDecoration: "underline", color: '#D3ECF9' }}>Patient Details</h2>
         <div
           style={{
             padding: 20,
             border: "2px solid grey",
             marginTop: "20px",
             backgroundColor: "white",
+            textAlign: 'left'
           }}
         >
           <p>
@@ -134,6 +141,19 @@ function UploadData() {
             <span style={{ fontWeight: "bold" }}>Phone Number: </span>
             {userData?.phone_number}
           </p>
+          <hr
+        style={{
+            color: "black",
+            backgroundColor: "black",
+            height: 1
+        }}
+    />
+          {userData.is_admit && (
+            <p>
+              <span style={{ fontWeight: "bold" }}>Current Admission:  </span>
+              {userData?.Hospital_name}
+            </p>
+          )}
           {userData.is_admit && (
             <p>
               <span style={{ fontWeight: "bold" }}>Room No.: </span>
@@ -144,7 +164,7 @@ function UploadData() {
 
         <br />
 
-        <h2 style={{ textDecoration: "underline" }}>
+        <h2 style={{ textDecoration: "underline", color: '#D3ECF9' }}>
           List Of Visited Health Centers 
         </h2>
 

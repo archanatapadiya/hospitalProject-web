@@ -9,6 +9,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import ArrowIcon from 'mdi-react/ArrowBackIcon';
+import Background from '../components/images/background.jpeg';
 
 class App extends Component {
 
@@ -127,15 +128,19 @@ zip_code: ''
       marginRight: 300,
       marginTop: 50,
       backgroundColor: '#F7FBF9',
+      background: `url(${Background})`,
+        backgroundPosition: 'center',
+  backgroundSize: 'cover',
+  backgroundRepeat: 'no-repeat',
       opacity: 1}}>
 
 
 
-        <a href={`/`} style={{marginLeft: '-95%'}}>     
+        <a href={`/superuser-login`} style={{marginLeft: '-95%', color: '#D3ECF9'}}>     
           <ArrowIcon /> 
         </a>
 
-         <h2>Add New Health Center</h2>
+         <h2 style={{color: '#D3ECF9'}}>Add New Health Center</h2>
       
       <div  >
         <form onSubmit={this.handleSubmit} style={{backgroundColor: 'white',  border: '2px solid grey',  marginTop: '20px', padding: '30px'}}>
@@ -230,7 +235,7 @@ zip_code: ''
           </p>
           </div>
 
-          <input type="submit"/>
+          <input type="submit" style={{backgroundColor: '#38B6F7'}}/>
         </form>
       </div>
      </div>

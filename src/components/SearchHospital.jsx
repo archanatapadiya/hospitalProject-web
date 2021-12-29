@@ -9,6 +9,7 @@ import { Col, Container, Row, Card, CardBody, ButtonToolbar } from "reactstrap";
 import { Table, Input, Button, Popconfirm } from "antd";
 import logo from "./images/MyMedCordsTransparent.png";
 import axios from "axios";
+import Background from '../components/images/background.jpeg';
 
 function FetchHospitalData() {
   const { id } = useParams();
@@ -25,7 +26,6 @@ function FetchHospitalData() {
   const hosp_disabled = localStorage.getItem("hosp_disabled");
   const clinic_active = localStorage.getItem("clinic_active");
   const clinic_disabled = localStorage.getItem("clinic_disabled");
-
 
   useEffect(() => {
     const localTokenCalled = localStorage.getItem("token");
@@ -282,6 +282,10 @@ function FetchHospitalData() {
         marginTop: 50,
         backgroundColor: "#F7FBF9",
         opacity: 1,
+        background: `url(${Background})`,
+        backgroundPosition: 'center',
+  backgroundSize: 'cover',
+  backgroundRepeat: 'no-repeat'
       }}
     >
    
@@ -289,7 +293,7 @@ function FetchHospitalData() {
       <Row style={{width: '100%'}}>
 
 <span 
- style={{fontSize: 50, fontWeight: 'bold', alignContent: 'flex-start', float: 'left'
+ style={{fontSize: 50, fontWeight: 'bold', alignContent: 'flex-start', float: 'left', color: '#D3ECF9'
 }}>  DASHBOARD </span>
  <span style={{float: 'right'}}>
   {" "}
@@ -300,7 +304,7 @@ function FetchHospitalData() {
 </Row>
 
 <span style={{ width: '100%',float: 'right', alignContent: 'flex-end', textAlign:'right', marginTop: 10, textDecoration: 'underline'}}>
-<Link  onClick={clickLogout} >
+<Link  onClick={clickLogout} style={{color: '#D3ECF9'}}>
           Logout
         </Link>
         </span>
@@ -311,27 +315,27 @@ function FetchHospitalData() {
               <Row style={{width: '100%'}}>
 
 <span  style={{
-  color: "red",
-  fontSize: "20px",
+  color: "white",
+  fontSize: "28px",
   fontWeight: "bold",
   float: 'left',
   paddingLeft: '14%'
 }}>  {patients ? patients : '--'} </span>
  <span  style={{
-  color: "red",
-  fontSize: "20px",
+  color: "white",
+  fontSize: "28px",
   fontWeight: "bold",
 }}>  {hosp_active} ({hosp_disabled}) </span>  
 <span  style={{
-  color: "red",
-  fontSize: "20px",
+  color: "white",
+  fontSize: "28px",
   fontWeight: "bold",
   float: 'right',
   paddingRight: '11%'
 }}>  {clinic_active} ({clinic_disabled})</span>
 </Row>
 
-              <Row style={{width: '100%'}}>
+              <Row style={{width: '100%', color: '#D3ECF9'}}>
 
                 <span  style={{
                   // color: "#1b62ab",
@@ -351,7 +355,7 @@ function FetchHospitalData() {
                   fontWeight: "bold",
                   float: 'right',
                   paddingRight: '10%'
-                }}>  CLINIC </span>
+                }}>  CLINICS </span>
         </Row>
     
     <br/>
@@ -424,11 +428,11 @@ function FetchHospitalData() {
               <Row>
 
                 <span  style={{
-                  color: "#1b62ab",
+                  // color: "#1b62ab",
                   fontSize: "30px",
                   fontWeight: "bold",
                   // marginTop: "20px",
-
+                  color: '#D3ECF9',
                   float: 'left'
                 }}>  List of Health Centers </span>
                 <span style={{float: 'right'}}>

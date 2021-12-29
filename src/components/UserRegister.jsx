@@ -15,6 +15,7 @@ import history from "./lib/history";
 import * as Yup from "yup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Background from '../components/images/background.jpeg';
 
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
@@ -69,17 +70,27 @@ function UploadReportData() {
 
           return (
             <Form
-              className="formik-form"
+              // className="formik-form"
+              className="login-wrapper"
               style={{
-                backgroundColor: "#F7FBF9",
-                width: "30%",
-                border: "2px solid grey",
-                marginLeft: "33%",
-                marginTop: "20px",
-                padding: "20px",
+                boxShadow: '0px 0px 10px #0000001a',
+                border: '1px solid #c9c9c9',
+                padding: 50,
+                marginLeft: 350,
+                marginRight: 350,
+                marginTop: 50,
+                backgroundColor: '#F7FBF9',
+                opacity: 1,
+                background: `url(${Background})`,
+                backgroundPosition: 'center',
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat'
               }}
             >
-              <div className="col">
+                <h2 style={{color: '#D3ECF9'}}>Add New User</h2>
+
+              <div style={{ backgroundColor: 'white', border: '2px solid black', marginTop: '20px', padding: '30px', width: '50%'}}>
+              <div className="col" >
                 <h3 className="form-group-label">First Name</h3>
 
                 <div className="form-group-field custom-input with-extention">
@@ -165,6 +176,7 @@ function UploadReportData() {
                 <Button color="primary" type="submit" disabled={isSubmitting}>
                   Submit
                 </Button>
+              </div>
               </div>
             </Form>
           );

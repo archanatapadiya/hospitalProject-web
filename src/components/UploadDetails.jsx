@@ -31,6 +31,7 @@ import UploadUserBilling from "./UploadUserBilling";
 import { useLocation } from "react-router-dom"
 import notifications from "./notifications";
 import ArrowIcon from "mdi-react/ArrowBackIcon";
+import Background from '../components/images/background.jpeg';
 
 function UploadData() {
   const location = useLocation()
@@ -143,17 +144,21 @@ function UploadData() {
           marginTop: 50,
           backgroundColor: "#F7FBF9",
           opacity: 1,
+          background: `url(${Background})`,
+          backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat'
         }}
       >
 {superUser  == "true" && (
-<a href={`/user-details/${id}`} style={{ marginLeft: "-95%" }}>
+<a href={`/user-details/${id}`} style={{ marginLeft: "-95%", color: '#D3ECF9' }}>
           <ArrowIcon />
         </a>
         )}
 
 <h1 style={{ color: 'blue' , fontWeight: 'bold'}}> {hospitalName}</h1>
 
-        <h2 style={{ textDecoration: "underline" }}>Patient Details</h2>
+        <h2 style={{ textDecoration: "underline", color: '#D3ECF9' }}>Patient Details</h2>
         <div
           style={{
             // width: "30%",
@@ -162,6 +167,7 @@ function UploadData() {
             // marginLeft: "35%",
             marginTop: "20px",
             backgroundColor: "white",
+            textAlign: 'left'
           }}
         >
           <p>
@@ -179,6 +185,7 @@ function UploadData() {
             <span style={{ fontWeight: "bold" }}>Phone Number: </span>
             {userData?.phone_number}
           </p>
+         
           {userData.is_admit && (
             <p>
               <span style={{ fontWeight: "bold" }}>Room No.: </span>
@@ -195,7 +202,7 @@ function UploadData() {
             <div className="col" style={{ marginBottom: -10 }}>
               <h3
                 className="form-group-label"
-                style={{ fontSize: 14, marginTop: 10 }}
+                style={{ fontSize: 14, marginTop: 10 , color: '#D3ECF9'}}
               >
                 Enter Room Number
               </h3>
@@ -233,7 +240,7 @@ function UploadData() {
               {sure1 && (
                 <Link
                   className="topbar__link"
-                  style={{ marginLeft: 15 }}
+                  style={{ marginLeft: 15, color: '#D3ECF9' }}
                   onClick={admitUser}
                 >
                   Sure?
@@ -245,20 +252,20 @@ function UploadData() {
 
         <br />
 
-        <div>
+        <div >
           <ul>
             <li>
-              <NavLink to={`/fetch-user-reports/${id}`}>Fetch Reports</NavLink>
+              <NavLink to={`/fetch-user-reports/${id}`} style={{color: '#D3ECF9'}}> View Reports</NavLink>
             </li>
 
             <li>
-              <NavLink to={`/fetch-user-health/${id}`}>
-                Fetch Health Details
+              <NavLink to={`/fetch-user-health/${id}`} style={{color: '#D3ECF9'}}>
+                View Health Details
               </NavLink>
             </li>
 
             <li>
-              <NavLink to={`/fetch-user-billing/${id}`}>Fetch Billings</NavLink>
+              <NavLink to={`/fetch-user-billing/${id}`} style={{color: '#D3ECF9'}}>View Billings</NavLink>
             </li>
           </ul>
         </div>
@@ -266,19 +273,19 @@ function UploadData() {
         <div>
           <ul>
             <li>
-                <NavLink to={`/upload-user-reports/${id}`}>
+                <NavLink to={`/upload-user-reports/${id}`} style={{color: '#D3ECF9'}}>
                   Upload Reports
                 </NavLink>
             </li>
 
             <li>
-              <NavLink to={`/upload-user-health/${id}`}>
+              <NavLink to={`/upload-user-health/${id}`} style={{color: '#D3ECF9'}}>
                 Upload Health Details
               </NavLink>
             </li>
 
             <li>
-              <NavLink to={`/upload-user-billing/${id}`}>
+              <NavLink to={`/upload-user-billing/${id}`} style={{color: '#D3ECF9'}}>
                 Upload Billings
               </NavLink>
             </li>

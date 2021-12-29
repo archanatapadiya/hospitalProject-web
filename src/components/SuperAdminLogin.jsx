@@ -6,6 +6,8 @@ import logo from "./images/logo.jpeg";
 import { Link, useParams } from "react-router-dom";
 import "./modal.css";
 import Modal from "react-modal";
+import Background from '../components/images/background.jpeg';
+import logo1 from "./images/MyMedCordsTransparent.png";
 
 async function loginAdmin(credentials) {
   return fetch("http://3.110.35.199/super_admin_login/", {
@@ -61,34 +63,41 @@ export default function Login({ setToken, setSuperUser, setUserId }) {
         marginTop: 50,
         backgroundColor: "#F7FBF9",
         opacity: 1,
+        background: `url(${Background})`,
+        backgroundPosition: 'center',
+  backgroundSize: 'cover',
+  backgroundRepeat: 'no-repeat'
       }}
     >
       <br />
 
-      <div style={{ padding: 20, border: "10px solid", borderRadius: 10 }}>
+      <img src={logo1} alt="Logo" width="100"  />  <br/><span style={{fontWeight: 'bold', marginTop: -20, }}>MYMEDCORDS</span>
+
+      {/* <div style={{ padding: 20, border: "10px solid", borderRadius: 10 }}>
         <h1>
           {" "}
           <img src={logo} alt="Logo" width="40" /> MyMedCords
         </h1>
-      </div>
+      </div> */}
       <br /> 
-      <h2>Welcome to Health Center Data Upload System</h2>
+      <h2 style={{ color: '#D3ECF9'}}>Welcome to Health Center Data Upload System</h2>
     
-      <h3>Please enter your Admin username and password </h3>
+      <h3 style={{ color: '#D3ECF9'}}>Please enter your Admin username and password </h3>
 
         <form
           onSubmit={handleAdminSubmit}
           style={{
             boxShadow: "0px 0px 10px #0000001a",
-            backgroundColor: "#0E53A5",
+            backgroundColor: "white",
             width: "30%",
             border: "2px solid black",
             marginTop: "20px",
             padding: "20px",
+           
           }}
         >
           <label>
-            <p style={{ color: "white" }}>Admin Username</p>
+            <p >Admin Username</p>
             <input
               type="text"
               onChange={(e) => setUserName(e.target.value)}
@@ -96,7 +105,7 @@ export default function Login({ setToken, setSuperUser, setUserId }) {
             />
           </label>
           <label>
-            <p style={{ color: "white", marginTop: 20 }}>Admin Password</p>
+            <p style={{ marginTop: 20 }}>Admin Password</p>
             <input
               type="password"
               onChange={(e) => setPassword(e.target.value)}
