@@ -16,6 +16,8 @@ import * as Yup from "yup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Background from '../components/images/background.jpeg';
+import NameAndLogo from './NameAndLogo';
+import ArrowIcon from "mdi-react/ArrowBackIcon";
 
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
@@ -87,6 +89,12 @@ function UploadReportData() {
           backgroundRepeat: 'no-repeat'
               }}
             >
+              <NameAndLogo/>
+
+              <a href={`/`} style={{ marginLeft: "-95%", color: '#D3ECF9' }}>
+          <ArrowIcon />
+        </a>
+
                 <h2 style={{color: '#D3ECF9'}}>Add New User</h2>
 
               <div style={{ backgroundColor: 'white', border: '2px solid black', marginTop: '20px', padding: '30px', width: '50%'}}>

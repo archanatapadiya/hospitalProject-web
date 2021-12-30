@@ -26,12 +26,13 @@ import { Table, Input, Popconfirm } from "antd";
 import notifications from "./notifications";
 import { setSourceMapRange } from "typescript";
 import Background from '../components/images/background.jpeg';
+import NameAndLogo from './NameAndLogo';
 
 
 function UploadData() {
   const { id } = useParams();
   const hospitalId = localStorage.getItem("hospital_id");
-  const searchedUserData = localStorage.getItem("searched_user_data");
+  const searchedUserData = localStorage.getItem("searched_user_details");
   const searchedUserData_parsed = JSON.parse(searchedUserData);
   localStorage.setItem("user_data", JSON.stringify(searchedUserData_parsed));
   const [show, setShow] = useState(false);
@@ -50,7 +51,7 @@ function UploadData() {
 
   const BILL_TABLE_HEADER = [
     {
-      title: "Hospital Name",
+      title: "Health Center Name",
       dataIndex: "hospital_name",
       width: "200px",
       align: "center",
@@ -113,6 +114,7 @@ function UploadData() {
     backgroundRepeat: 'no-repeat'
         }}
       >
+        <NameAndLogo />
         <a href={`/superuser-login`} style={{ marginLeft: "-95%" , color: '#D3ECF9'}}>
           <ArrowIcon />
         </a>
@@ -141,6 +143,7 @@ function UploadData() {
             <span style={{ fontWeight: "bold" }}>Phone Number: </span>
             {userData?.phone_number}
           </p>
+          {userData.is_admit && (
           <hr
         style={{
             color: "black",
@@ -148,6 +151,7 @@ function UploadData() {
             height: 1
         }}
     />
+          )}
           {userData.is_admit && (
             <p>
               <span style={{ fontWeight: "bold" }}>Current Admission:  </span>

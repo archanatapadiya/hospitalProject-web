@@ -20,6 +20,7 @@ import {
 import PDFView from "./PDFView";
 import { Table, Input, Button, Popconfirm } from 'antd';
 import Background from '../components/images/background.jpeg';
+import NameAndLogo from './NameAndLogo';
 
 function UploadReportData() {
   const { id } = useParams();
@@ -146,6 +147,11 @@ function UploadReportData() {
     const userDetail = fetchUserData(params);
   }, []);
 
+  const isSuperuser = localStorage.getItem("isSuperuser");
+
+  const searchedUserData = localStorage.getItem("searched_user_data");
+  const searchedUserData_parsed = JSON.parse(searchedUserData);
+
   return (
     <div className="login-wrapper" style={{   boxShadow: '0px 0px 10px #0000001a',
     border: '1px solid #c9c9c9',
@@ -159,6 +165,15 @@ function UploadReportData() {
     backgroundPosition: 'center',
 backgroundSize: 'cover',
 backgroundRepeat: 'no-repeat'}}>
+  <NameAndLogo />
+  <div style={{width: '100%',  textAlign:'right'}}>
+        <a href={isSuperuser == "true" ? `/superuser-login`:`/`}  >
+      <button style={{marginRight: 10}} type="button" class="btn btn-success btn-sm">Search Patient</button>
+   </a> 
+   <a href={`/upload-details/${searchedUserData_parsed.user_id}`}  >
+      <button type="button" class="btn btn-success btn-sm">Patient Details</button>
+   </a> 
+   </div>
       <div>
         <h2 style={{color: '#D3ECF9'}}>Uploaded bills for the user</h2>
 

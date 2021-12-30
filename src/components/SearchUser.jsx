@@ -15,17 +15,49 @@ import {
   Button,
 } from "reactstrap";
 import Background from '../components/images/background.jpeg';
+import logo from "./images/MyMedCordsTransparent.png";
+import axios from "axios";
+import NameAndLogo from './NameAndLogo';
 
 function UploadData() {
   const [searchUser, setSearchUser] = useState("");
   const [localToken1, setLocalToken1] = useState("");
+  const [hospName, setHospName] = useState("");
 
   const [userId, setUserId] = useState(0);
 
+  const clickLogout = async (params) => {
+    let url = "http://3.110.35.199/user_logout/";
+    axios
+      .get(url, {
+        headers: {
+          "content-type": "multipart/form-data",
+          Authorization: localToken1,
+        },
+      })
+      .then((res) => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("is_superuser");
+        localStorage.removeItem("isSuperuser");
+        localStorage.removeItem("user_id");
+        localStorage.removeItem("username");
+        localStorage.removeItem("hospital_id");
+        history.push(`/`);
+        window.location.reload();
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
     const localTokenCalled = localStorage.getItem("token");
+    const loggedInHospital = localStorage.getItem("hospital_name");
+
     if (localTokenCalled != null) {
       setLocalToken1(localTokenCalled);
+    }
+    if (loggedInHospital != null) {
+      setHospName(loggedInHospital);
     }
     if (localTokenCalled == null) {
       window.location.reload();
@@ -55,7 +87,10 @@ function UploadData() {
   backgroundRepeat: 'no-repeat'
       }}
     >
-      <h2 style={{color: '#D3ECF9'}}>Welcome to Health Center Data Upload System</h2>
+
+<NameAndLogo/>
+
+      <h2 style={{color: '#D3ECF9'}}>Health Center Data Upload System</h2>
 
       <a href="/add-new-user">
         <button type="button" class="btn btn-success btn-sm">

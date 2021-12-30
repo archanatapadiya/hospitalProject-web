@@ -3,6 +3,8 @@ import axios from "axios";
 import history from "./lib/history";
 import { Link, useParams } from "react-router-dom";
 import Background from '../components/images/background.jpeg';
+import NameAndLogo from './NameAndLogo';
+import ArrowIcon from 'mdi-react/ArrowBackIcon';
 
 class App extends Component {
 
@@ -49,7 +51,9 @@ class App extends Component {
     console.log(this.state);
     const localToken = localStorage.getItem("token");
     const userData = localStorage.getItem("user_data");
+
     const userData_parsed = JSON.parse(userData);
+
     const hospitalId = localStorage.getItem("hospital_id");
     
     let hospital_type = localStorage.getItem("hospital_type");
@@ -92,6 +96,10 @@ class App extends Component {
 
   render() {
     let hospital_type = localStorage.getItem("hospital_type");
+    const searchedUserData = localStorage.getItem("searched_user_data");
+    const searchedUserData_parsed = JSON.parse(searchedUserData);
+    const isSuperuser = localStorage.getItem("isSuperuser");
+
 
     return (
       <div
@@ -111,6 +119,19 @@ class App extends Component {
   backgroundRepeat: 'no-repeat'
         }}
       >
+        <NameAndLogo/>
+
+
+<div style={{width: '100%',  textAlign:'right'}}>
+<a href={isSuperuser == "true" ? `/superuser-login`:`/`}  >
+      <button style={{marginRight: 10}} type="button" class="btn btn-success btn-sm">Search Patient</button>
+   </a> 
+   <a href={`/upload-details/${searchedUserData_parsed.user_id}`}  >
+      <button type="button" class="btn btn-success btn-sm">Patient Details</button>
+   </a> 
+   </div>
+
+     
         <h2 style={{color: '#D3ECF9'}}>Upload Patient Report</h2>
         <div>
           <form

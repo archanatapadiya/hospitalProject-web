@@ -54,9 +54,9 @@ export default function BasicExample() {
     <Router basename="/dashboard">
      
       
-       { window.location.href.indexOf("superuser-login") == -1  && ( <Top userId={userId} />)}
+       {/* { window.location.href.indexOf("superuser-login") == -1  && ( <Top userId={userId} />)} */}
     
-      <div style={{marginTop: 90}}>
+      <div style={{marginTop: 0}}>
         <Switch>
           <Route exact path="/">
              <SearchUser />

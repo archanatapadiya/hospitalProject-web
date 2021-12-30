@@ -10,6 +10,8 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import ArrowIcon from 'mdi-react/ArrowBackIcon';
 import Background from '../components/images/background.jpeg';
+import logo from "./images/MyMedCordsTransparent.png";
+import NameAndLogo from './NameAndLogo';
 
 class App extends Component {
 
@@ -120,6 +122,28 @@ zip_code: ''
   };
 
   render() {
+    const clickLogout = async (params) => {
+      let url = "http://3.110.35.199/user_logout/";
+      axios
+        .get(url, {
+          headers: {
+            "content-type": "multipart/form-data",
+            // Authorization: localToken,
+          },
+        })
+        .then((res) => {
+          localStorage.removeItem("token");
+          localStorage.removeItem("is_superuser");
+          localStorage.removeItem("isSuperuser");
+          localStorage.removeItem("user_id");
+          localStorage.removeItem("username");
+          localStorage.removeItem("hospital_id");
+          history.push(`/`);
+          window.location.reload();
+          console.log(res.data);
+        })
+        .catch((err) => console.log(err));
+    };
     return (
       <div className="login-wrapper" style={{   boxShadow: '0px 0px 10px #0000001a',
       border: '1px solid #c9c9c9',
@@ -134,7 +158,18 @@ zip_code: ''
   backgroundRepeat: 'no-repeat',
       opacity: 1}}>
 
+{/* <div style={{float: 'right', width: '100%', textAlign: 'right'}}>
+  {" "}
+  <img src={logo} alt="Logo" width="100"  />  <br/><span style={{fontWeight: 'bold'}}>MYMEDCORDS</span>
 
+  <span style={{ width: '100%',float: 'right', alignContent: 'flex-end', textAlign:'right', marginTop: 10, textDecoration: 'underline'}}>
+<Link  onClick={clickLogout} style={{color: '#D3ECF9'}}>
+          Logout
+        </Link>
+        </span>
+        
+</div>   */}
+      <NameAndLogo />
 
         <a href={`/superuser-login`} style={{marginLeft: '-95%', color: '#D3ECF9'}}>     
           <ArrowIcon /> 

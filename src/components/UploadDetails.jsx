@@ -32,6 +32,7 @@ import { useLocation } from "react-router-dom"
 import notifications from "./notifications";
 import ArrowIcon from "mdi-react/ArrowBackIcon";
 import Background from '../components/images/background.jpeg';
+import NameAndLogo from './NameAndLogo';
 
 function UploadData() {
   const location = useLocation()
@@ -107,6 +108,10 @@ function UploadData() {
     const userReports = await handlers.fetchUserDetails(params);
     let reportsData = userReports?.data;
 
+    if (reportsData) {
+      localStorage.setItem("searched_user_data", JSON.stringify(reportsData));
+    }
+
     setUserData(reportsData);
     return reportsData;
   };
@@ -150,13 +155,22 @@ function UploadData() {
     backgroundRepeat: 'no-repeat'
         }}
       >
+
+<NameAndLogo/>
+
+
 {superUser  == "true" && (
 <a href={`/user-details/${id}`} style={{ marginLeft: "-95%", color: '#D3ECF9' }}>
           <ArrowIcon />
         </a>
         )}
+{superUser  == "false" && (
+<a href={`/`} style={{ marginLeft: "-95%", color: '#D3ECF9' }}>
+          <ArrowIcon />
+        </a>
+)}
 
-<h1 style={{ color: 'blue' , fontWeight: 'bold'}}> {hospitalName}</h1>
+{/* <h1 style={{ color: '#D3ECF9' , fontWeight: 'bold'}}> {hospitalName}</h1> */}
 
         <h2 style={{ textDecoration: "underline", color: '#D3ECF9' }}>Patient Details</h2>
         <div

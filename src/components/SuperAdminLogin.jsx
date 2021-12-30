@@ -80,9 +80,8 @@ export default function Login({ setToken, setSuperUser, setUserId }) {
         </h1>
       </div> */}
       <br /> 
-      <h2 style={{ color: '#D3ECF9'}}>Welcome to Health Center Data Upload System</h2>
+      <h2 style={{ color: '#D3ECF9'}}>Health Center Data Upload System</h2>
     
-      <h3 style={{ color: '#D3ECF9'}}>Please enter your Admin username and password </h3>
 
         <form
           onSubmit={handleAdminSubmit}

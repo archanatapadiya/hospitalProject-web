@@ -146,7 +146,7 @@ function FetchHospitalData() {
       },
     },
     {
-      title: "Phone_Number",
+      title: "Phone Number",
       dataIndex: "phone_number",
       width: "200px",
       // align: "center",
@@ -252,7 +252,7 @@ function FetchHospitalData() {
     }
 
     if (success) {
-      localStorage.setItem("searched_user_data", JSON.stringify(success.data));
+      localStorage.setItem("searched_user_details", JSON.stringify(success.data));
     }
   };
 
@@ -446,7 +446,7 @@ function FetchHospitalData() {
             <button
               type="button"
               onClick={() => setShowSearchPatient(!showSearchPatient)}
-              style={{ marginLeft: 60 }}
+              style={{ marginLeft: 10 }}
               class="btn btn-success btn-sm"
             >
               Search Patient

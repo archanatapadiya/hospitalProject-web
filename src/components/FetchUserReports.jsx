@@ -12,6 +12,7 @@ import { Col, Container, Row, Card, CardBody, ButtonToolbar } from "reactstrap";
 import PDFView from "./PDFView";
 import { Table, Input, Button, Popconfirm } from "antd";
 import Background from '../components/images/background.jpeg';
+import NameAndLogo from './NameAndLogo';
 
 function UploadReportData(props) {
   console.log("hospital_type in fetch reports", props.hospitalType);
@@ -144,6 +145,10 @@ function UploadReportData(props) {
     const userDetail = fetchUserData(params);
   }, []);
 
+  const searchedUserData = localStorage.getItem("searched_user_data");
+  const searchedUserData_parsed = JSON.parse(searchedUserData);
+  const isSuperuser = localStorage.getItem("isSuperuser");
+
   return (
     <div
       className="login-wrapper"
@@ -162,6 +167,16 @@ function UploadReportData(props) {
   backgroundRepeat: 'no-repeat'
       }}
     >
+      <NameAndLogo/>
+      <div style={{width: '100%',  textAlign:'right'}}>
+      <a href={isSuperuser == "true" ? `/superuser-login`:`/`}  >
+      <button style={{marginRight: 10}} type="button" class="btn btn-success btn-sm">Search Patient</button>
+   </a> 
+   <a href={`/upload-details/${searchedUserData_parsed.user_id}`}  >
+      <button type="button" class="btn btn-success btn-sm">Patient Details</button>
+   </a> 
+   </div>
+
       <div>
         <h2 style={{color: '#D3ECF9'}}>Uploaded reports for the user</h2>
 

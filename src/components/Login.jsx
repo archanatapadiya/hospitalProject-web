@@ -199,9 +199,8 @@ export default function Login({ setToken, setSuperUser, setUserId }) {
 
      
 
-      <h2 style={{ color: '#D3ECF9'}}>Welcome to Health Center Data Upload System</h2>
+      <h2 style={{ color: '#D3ECF9'}}>Health Center Data Upload System</h2>
 
-        <h3 style={{ color: '#D3ECF9'}}>Please login with the health center username and password </h3>
     
         <form
           onSubmit={handleSubmit}
