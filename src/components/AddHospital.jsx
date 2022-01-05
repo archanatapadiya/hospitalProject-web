@@ -85,7 +85,7 @@ zip_code: ''
       }
     })
         .then(res => {
-          history.push(`/`);
+          history.push(`/superuser-login`);
           window.location.reload();
           console.log(res.data);
         })
@@ -138,7 +138,7 @@ zip_code: ''
           localStorage.removeItem("user_id");
           localStorage.removeItem("username");
           localStorage.removeItem("hospital_id");
-          history.push(`/`);
+          history.push(`/superuser-login`);
           window.location.reload();
           console.log(res.data);
         })

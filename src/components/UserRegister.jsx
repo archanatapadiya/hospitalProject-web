@@ -54,6 +54,7 @@ function UploadReportData() {
           let success = await handlers.registerUser(values, formikBag);
 
           if (success.is_success == true) {
+            alert("Patient added successfully")
             history.push(`/`);
             window.location.reload();
           }

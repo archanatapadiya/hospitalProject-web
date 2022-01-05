@@ -79,13 +79,15 @@ export const registerUser = async (values, formikBag) => {
     const res = await api.registerUser(values);
 
     if(!res.is_success){
-      Notification.newInstance({}, notification => {
-        notification.notice({
-          content: <span style={{backgroundColor: 'red', top: 65, left: '50%'}}>{res.response_message}</span>,
-          closable: true,
-          duration: null,
-        });
-      });
+      alert("User already exist")
+
+      // Notification.newInstance({}, notification => {
+      //   notification.notice({
+      //     content: <span style={{backgroundColor: 'red', top: 65, left: '50%'}}>{res.response_message}</span>,
+      //     closable: true,
+      //     duration: null,
+      //   });
+      // });
     }
 
     return res;

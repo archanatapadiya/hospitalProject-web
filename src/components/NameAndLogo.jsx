@@ -33,7 +33,7 @@ function NameAndLogo() {
         localStorage.removeItem("searched_user_data");
         localStorage.removeItem("user_data");
         localStorage.removeItem("hospital_id");
-        history.push(`/`);
+        isSuperuser ? history.push(`/superuser-login`) : history.push(`/`) ;
         window.location.reload();
         console.log(res.data);
       })

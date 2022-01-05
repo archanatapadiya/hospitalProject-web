@@ -180,6 +180,43 @@ function UploadReportData(props) {
       <div>
         <h2 style={{color: '#D3ECF9'}}>Uploaded reports for the user</h2>
 
+        <h2 style={{ textDecoration: "underline", color: '#D3ECF9' }}>Patient Details</h2>
+        <div
+          style={{
+            // width: "30%",
+            padding: 20,
+            border: "2px solid grey",
+            // marginLeft: "35%",
+            marginTop: "20px",
+            backgroundColor: "white",
+            textAlign: 'left'
+          }}
+        >
+          <p>
+            <span style={{ fontWeight: "bold" }}>Patient Name:</span>{" "}
+            {searchedUserData_parsed?.first_name}{ ' '}{searchedUserData_parsed?.last_name}
+          </p>
+          <p>
+            <span style={{ fontWeight: "bold" }}>Email:</span> {searchedUserData_parsed?.email}
+          </p>
+          <p>
+            <span style={{ fontWeight: "bold" }}>Address: </span>
+            {searchedUserData_parsed?.address}
+          </p>
+          <p>
+            <span style={{ fontWeight: "bold" }}>Phone Number: </span>
+            {searchedUserData_parsed?.phone_number}
+          </p>
+         
+          {searchedUserData_parsed?.is_admit && (
+            <p>
+              <span style={{ fontWeight: "bold" }}>Room No.: </span>
+              {searchedUserData_parsed?.room_number}
+            </p>
+          )}
+        </div>
+        <br />
+
         <a href={`/upload-user-reports/${id}`}>
           <button type="button" class="btn btn-success btn-sm">
             Add New Report

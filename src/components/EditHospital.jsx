@@ -103,7 +103,7 @@ class App extends Component {
       }
     })
         .then(res => {
-          history.push(`/`);
+          history.push(`/superuser-login`);
           window.location.reload();
           console.log(res.data);
         })

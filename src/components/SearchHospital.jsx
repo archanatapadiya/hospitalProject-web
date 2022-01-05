@@ -36,6 +36,7 @@ function FetchHospitalData() {
       window.location.reload();
     }
   }, [localToken1]);
+  
 
   const handleDelete = async (id, is_active, type) => {
     try {
@@ -98,7 +99,7 @@ function FetchHospitalData() {
         localStorage.removeItem("user_id");
         localStorage.removeItem("username");
         localStorage.removeItem("hospital_id");
-        history.push(`/`);
+        history.push(`/superuser-login`);
         window.location.reload();
         console.log(res.data);
       })
@@ -316,19 +317,20 @@ function FetchHospitalData() {
 
 <span  style={{
   color: "white",
-  fontSize: "28px",
+  fontSize: "32px",
   fontWeight: "bold",
   float: 'left',
   paddingLeft: '14%'
 }}>  {patients ? patients : '--'} </span>
  <span  style={{
   color: "white",
-  fontSize: "28px",
+  fontSize: "32px",
   fontWeight: "bold",
+  paddingLeft: '2%'
 }}>  {hosp_active} ({hosp_disabled}) </span>  
 <span  style={{
   color: "white",
-  fontSize: "28px",
+  fontSize: "32px",
   fontWeight: "bold",
   float: 'right',
   paddingRight: '11%'
