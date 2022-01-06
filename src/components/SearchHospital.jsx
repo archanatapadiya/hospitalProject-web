@@ -6,10 +6,11 @@ import _ from "lodash";
 import { Link, useParams } from "react-router-dom";
 import history from "./lib/history";
 import { Col, Container, Row, Card, CardBody, ButtonToolbar } from "reactstrap";
-import { Table, Input, Button, Popconfirm } from "antd";
+import { Table, Input,Tooltip, Button, Popconfirm } from "antd";
 import logo from "./images/MyMedCordsTransparent.png";
 import axios from "axios";
 import Background from '../components/images/background.jpeg';
+import 'antd/dist/antd.css';
 
 function FetchHospitalData() {
   const { id } = useParams();
@@ -17,15 +18,19 @@ function FetchHospitalData() {
   const userIdLocal = localStorage.getItem("user_id");
   const userData_parsed = JSON.parse(userData);
   const [userReportList, setUserReportList] = useState([]);
+
+  const [patients, setpatients] = useState();
+  const [hosp_active, sethosp_active] = useState();
+  const [hosp_disabled, sethosp_disabled] = useState();
+  const [clinic_active, setclinic_active] = useState();
+  const [clinic_disabled, setclinic_disabled] = useState();
+
+
   const [showSearchPatient, setShowSearchPatient] = useState(false);
   let tableData = userReportList;
   const [localToken1, setLocalToken1] = useState(localStorage.getItem("token"));
   const localToken = localStorage.getItem("token");
-  const patients = localStorage.getItem("patients");
-  const hosp_active = localStorage.getItem("hosp_active");
-  const hosp_disabled = localStorage.getItem("hosp_disabled");
-  const clinic_active = localStorage.getItem("clinic_active");
-  const clinic_disabled = localStorage.getItem("clinic_disabled");
+
 
   useEffect(() => {
     const localTokenCalled = localStorage.getItem("token");
@@ -47,18 +52,6 @@ function FetchHospitalData() {
       };
       let res = await handlers.disableHospital(params);
       if (res.is_success == true) {
-        
-        let hosp_dis = type == 1 ? Number(clinic_disabled) : Number(hosp_disabled)
-        let hospi_set;
-        {is_active ? 
-         hospi_set = hosp_dis + 1
-        : 
-         hospi_set = hosp_dis - 1
-        }
-        {type == 1 ?  
-        localStorage.setItem("clinic_disabled", hospi_set) : 
-        localStorage.setItem("hosp_disabled", hospi_set);
-        }
         window.location.reload();
       }
       console.log("ConfirmDeleteModal-->handleConfirmErr---->");
@@ -107,23 +100,20 @@ function FetchHospitalData() {
   };
 
   const HOSPITAL_TABLE_HEADER = [
+    
     {
+ 
+      
       title: "Health Center Name",
       dataIndex: "name",
-      width: "200px",
-      // align: "center",
-      render: (value, row, index) => {
-        const obj = {
-          children: value,
-          props: {},
-        };
-        return obj;
-      },
+      key: 'name',
+      width: 150,
+     
     },
     {
       title: "Health Center Type",
       dataIndex: "hospital_type",
-      width: "200px",
+      width: 110,
       align: "center",
       render: (value, row, index) => {
         console.log('value--->', value)
@@ -149,7 +139,7 @@ function FetchHospitalData() {
     {
       title: "Phone Number",
       dataIndex: "phone_number",
-      width: "200px",
+      // width: 20,
       // align: "center",
       render: (value, row, index) => {
         const obj = {
@@ -167,7 +157,7 @@ function FetchHospitalData() {
     {
       title: "Email",
       dataIndex: "email",
-      width: "200px",
+      // width: "200px",
       // align: "center",
       render: (value, row, index) => {
         const obj = {
@@ -185,7 +175,8 @@ function FetchHospitalData() {
     {
       title: "Address",
       dataIndex: "address",
-      width: "200px",
+      // width: "10%",
+      // maxwidth: "10%",
       // align: "center",
       render: (value, row, index) => {
         const obj = {
@@ -262,8 +253,15 @@ function FetchHospitalData() {
     if (localToken1) {
       userReports = await handlers.fetchHospitalList(localToken1, userIdLocal);
     }
-    let reportsData = userReports?.response_message;
+    let reportsData = userReports?.response_message.hospital_list;
     setUserReportList(reportsData);
+
+    setpatients(userReports?.response_message.patients);
+    sethosp_active(userReports?.response_message.hospital_act);
+    sethosp_disabled(userReports?.response_message.hospital_des);
+    setclinic_active(userReports?.response_message.clinic_act);
+    setclinic_disabled(userReports?.response_message.clinic_des);
+
     return reportsData;
   };
 
@@ -463,11 +461,9 @@ function FetchHospitalData() {
                 columns={HOSPITAL_TABLE_HEADER}
                 dataSource={tableData}
                 bordered
-                size="small"
                 pagination={false}
                 style={{
-                 
-                  whiteSpace: "pre",
+              
                   border: "1px solid grey",
                 }}
               />
