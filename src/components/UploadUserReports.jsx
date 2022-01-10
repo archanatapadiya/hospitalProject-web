@@ -16,6 +16,7 @@ class App extends Component {
     report_type: '',
     is_opd: true,
     dr_name: "",
+    testdate: "",
   };
 
   handleChange = (e) => {
@@ -77,6 +78,7 @@ class App extends Component {
     form_data.append("hospital_id", hospitalId);
     form_data.append("is_opd", opdFlag);
     form_data.append("dr_name", this.state.dr_name);
+    form_data.append('testdate', this.state.testdate);
 
     let url = "http://3.110.35.199/report_upload/";
     axios
@@ -224,6 +226,14 @@ class App extends Component {
             </div>
 
             <div className="col">
+              <h3 className="form-group-label">Test Date</h3>
+              <p>
+                <input type="date" id="testdate" name="testdate" value={this.state.testdate} onChange={this.handleChange} required />
+              </p>
+            </div>
+
+
+            <div className="col">
               <h3 className="form-group-label">Dr. Name</h3>
 
               <p>
@@ -232,7 +242,7 @@ class App extends Component {
                   id="dr_name"
                   value={this.state.dr_name}
                   onChange={this.handleChange}
-                  
+                  required
                 />
               </p>
             </div>
@@ -244,7 +254,7 @@ class App extends Component {
                 <input
                   type="file"
                   id="file"
-                  accept="image/png, image/jpeg"
+                  accept="image/png, image/jpeg, .pdf"
                   onChange={this.handleImageChange}
                   required
                 />

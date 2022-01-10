@@ -170,7 +170,9 @@ function UploadData() {
         </a>
 )}
 
-{/* <h1 style={{ color: '#D3ECF9' , fontWeight: 'bold'}}> {hospitalName}</h1> */}
+{superUser == "true" && (
+<h1 style={{ color: '#D3ECF9' , fontWeight: 'bold'}}> {hospitalName}</h1>
+)}
 
         <h2 style={{ textDecoration: "underline", color: '#D3ECF9' }}>Patient Details</h2>
         <div

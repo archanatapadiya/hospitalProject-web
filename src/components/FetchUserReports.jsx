@@ -81,6 +81,19 @@ function UploadReportData(props) {
       },
     },
     {
+      title: "Test Date",
+      dataIndex: "testdate",
+      width: "200px",
+      align: "center",
+      render: (value, row, index) => {
+        const obj = {
+          children: value,
+          props: {},
+        };
+        return obj;
+      },
+    },
+    {
       title: "Upload Date",
       dataIndex: "event_time",
       width: "200px",

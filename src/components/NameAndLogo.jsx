@@ -40,6 +40,11 @@ function NameAndLogo() {
       .catch((err) => console.log(err));
   };
 
+  const clickDashboard = async (params) => {
+    history.push(`/superuser-login`);
+    window.location.reload();
+  };
+
   useEffect(() => {
     const localTokenCalled = localStorage.getItem("token");
     const loggedInHospital = localStorage.getItem("hospital_name");
@@ -73,9 +78,15 @@ function NameAndLogo() {
 </Row>
 
 <span style={{ width: '100%',float: 'right', alignContent: 'flex-end', textAlign:'right', marginTop: 10, textDecoration: 'underline'}}>
-<Link  onClick={clickLogout} style={{color: '#D3ECF9'}}>
+{isSuperuser && (
+<Link  onClick={clickDashboard} style={{color: '#D3ECF9', marginRight: 20}}>
+          Dashboard
+        </Link>
+)}
+        <Link  onClick={clickLogout} style={{color: '#D3ECF9'}}>
           Logout
         </Link>
+        
         </span>
         <span>  <hr
         style={{
