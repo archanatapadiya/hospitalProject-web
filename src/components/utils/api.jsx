@@ -8,7 +8,7 @@ const userData = localStorage.getItem('user_data');
 const userData_parsed = JSON.parse(userData);
 
 const hospitalId = localStorage.getItem('hospital_id');
-const baseUrl = "http://3.110.35.199";
+const baseUrl = "http://3.109.71.28";
 
 export const searchUser = async (params) => {
 

@@ -10,7 +10,7 @@ import Background from '../components/images/background.jpeg';
 import logo1 from "./images/MyMedCordsTransparent.png";
 
 async function loginUser(credentials) {
-  return fetch("http://3.110.35.199/hospital_login/", {
+  return fetch("http://3.109.71.28/hospital_login/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -20,7 +20,7 @@ async function loginUser(credentials) {
 }
 
 async function forgotPassword(credentials) {
-  return fetch("http://3.110.35.199/check_hospital_username/", {
+  return fetch("http://3.109.71.28/check_hospital_username/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -30,7 +30,7 @@ async function forgotPassword(credentials) {
 }
 
 async function setNewPasswordCall(credentials) {
-  return fetch("http://3.110.35.199/hospital_forgot_password/", {
+  return fetch("http://3.109.71.28/hospital_forgot_password/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -40,7 +40,7 @@ async function setNewPasswordCall(credentials) {
 }
 
 async function loginAdmin(credentials) {
-  return fetch("http://3.110.35.199/super_admin_login/", {
+  return fetch("http://3.109.71.28/super_admin_login/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -70,7 +70,7 @@ export default function Login({ setToken, setSuperUser, setUserId }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     const token = await loginUser({
       username,
       password,
@@ -109,13 +109,13 @@ export default function Login({ setToken, setSuperUser, setUserId }) {
     }
 
 
- 
+
   };
 
 
 
   const handleForgotPasswordSubmit = async (e) => {
-    
+
     e.preventDefault();
     const token = await forgotPassword({
       Username,
@@ -181,13 +181,13 @@ export default function Login({ setToken, setSuperUser, setUserId }) {
         opacity: 1,
         background: `url(${Background})`,
         backgroundPosition: 'center',
-  backgroundSize: 'cover',
-  backgroundRepeat: 'no-repeat'
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat'
       }}
     >
       <br />
 
-      <img src={logo1} alt="Logo" width="100"  />  <br/><span style={{fontWeight: 'bold', marginTop: -20, }}>MYMEDCORDS</span>
+      <img src={logo1} alt="Logo" width="100" />  <br /><span style={{ fontWeight: 'bold', marginTop: -20, }}>MYMEDCORDS</span>
 
       {/* <div style={{ padding: 20, border: "10px solid", borderRadius: 10 }}>
         <h1>
@@ -197,50 +197,50 @@ export default function Login({ setToken, setSuperUser, setUserId }) {
       </div> */}
       <br />
 
-     
-
-      <h2 style={{ color: '#D3ECF9'}}>Health Center Data Upload System</h2>
-
-    
-        <form
-          onSubmit={handleSubmit}
-          style={{
-            boxShadow: "0px 0px 10px #0000001a",
-            backgroundColor: "white",
-            width: "30%",
-            border: "2px solid black",
-            marginTop: "20px",
-            padding: "20px",
-          }}
-        >
-          <label>
-            <p >Username</p>
-            <input type="text" onChange={(e) => setUserName(e.target.value)} />
-          </label>
-          <label>
-            <p style={{  marginTop: 20 }}>Password</p>
-            <input
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </label>
-
-          <div>
-        
-
-            <div className="App">
 
 
-              <span style={{ cursor: 'pointer' }} onClick={toggleModal}>
-                Forgot Password
-              </span>
-            </div>
+      <h2 style={{ color: '#D3ECF9' }}>Health Center Data Upload System</h2>
 
-            <br />
-            <button type="submit">Submit</button>
+
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          boxShadow: "0px 0px 10px #0000001a",
+          backgroundColor: "white",
+          width: "30%",
+          border: "2px solid black",
+          marginTop: "20px",
+          padding: "20px",
+        }}
+      >
+        <label>
+          <p >Username</p>
+          <input type="text" onChange={(e) => setUserName(e.target.value)} />
+        </label>
+        <label>
+          <p style={{ marginTop: 20 }}>Password</p>
+          <input
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </label>
+
+        <div>
+
+
+          <div className="App">
+
+
+            <span style={{ cursor: 'pointer' }} onClick={toggleModal}>
+              Forgot Password
+            </span>
           </div>
-        </form>
-      
+
+          <br />
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+
 
       <Modal
         className="modal"

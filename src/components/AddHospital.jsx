@@ -20,15 +20,15 @@ class App extends Component {
     phone_number: '',
     logo: null,
     email: '',
-  password: '',
-  registration_no: '',
-  hospital_type:'1',
-  contact_number: '',
-address: '',
+    password: '',
+    registration_no: '',
+    hospital_type: '1',
+    contact_number: '',
+    address: '',
 
-description: '',
-// image: null,
-zip_code: ''
+    description: '',
+    // image: null,
+    zip_code: ''
   };
 
   handleChange = (e) => {
@@ -43,24 +43,25 @@ zip_code: ''
     })
   };
 
-   handleHospiTypeChange = (e) => {
+  handleHospiTypeChange = (e) => {
     this.setState({
       hospital_type: e.target.value
-    })  };
+    })
+  };
 
 
   handleSubmit = (e) => {
-    
+
     e.preventDefault();
     console.log(this.state);
     const localToken = localStorage.getItem('token');
 
-   
+
     const userData = localStorage.getItem('user_data');
     const userData_parsed = JSON.parse(userData);
 
     const hospitalId = localStorage.getItem('hospital_id');
- 
+
     let form_data = new FormData();
 
     form_data.append('logo', this.state.logo, this.state.logo.name);
@@ -72,58 +73,58 @@ zip_code: ''
     form_data.append('hospital_type', this.state.hospital_type);
     form_data.append('contact_number', this.state.contact_number);
     form_data.append('address', this.state.address);
-  
+
     form_data.append('description', this.state.description);
     // form_data.append('image', this.state.image, this.state.image.name);
     form_data.append('zip_code', this.state.zip_code);
 
-    let url = 'http://3.110.35.199/add_hospital/';
+    let url = 'http://3.109.71.28/add_hospital/';
     axios.post(url, form_data, {
       headers: {
         'content-type': 'multipart/form-data',
         Authorization: localToken,
       }
     })
-        .then(res => {
-          history.push(`/superuser-login`);
-          window.location.reload();
-          console.log(res.data);
-        })
-        // .catch(res => {console.log(res)})
+      .then(res => {
+        history.push(`/superuser-login`);
+        window.location.reload();
+        console.log(res.data);
+      })
+      // .catch(res => {console.log(res)})
 
-        .catch(function (error) {
-          if (error.response) {
-            // Request made and server responded
-            console.log(error.response.data);
-           
-            Notification.newInstance({}, (notification) => {
-              notification.notice({
-                content: (
-                  <span style={{ backgroundColor: "red", top: 65, left: "50%" }}>
-                    {error?.response?.data?.response_message?.registration_no ? 
+      .catch(function (error) {
+        if (error.response) {
+          // Request made and server responded
+          console.log(error.response.data);
+
+          Notification.newInstance({}, (notification) => {
+            notification.notice({
+              content: (
+                <span style={{ backgroundColor: "red", top: 65, left: "50%" }}>
+                  {error?.response?.data?.response_message?.registration_no ?
                     'Registration Number -- ' + error?.response?.data?.response_message?.registration_no[0] :
-                     error?.response?.data?.response_message }
-                  </span>
-                ),
-                closable: true,
-                duration: null,
-              });
+                    error?.response?.data?.response_message}
+                </span>
+              ),
+              closable: true,
+              duration: null,
             });
+          });
 
-          } else if (error.request) {
-            // The request was made but no response was received
-            console.log(error.request);
-          } else {
-            // Something happened in setting up the request that triggered an Error
-            console.log('Error', error.message);
-          }
-      
-        });
+        } else if (error.request) {
+          // The request was made but no response was received
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('Error', error.message);
+        }
+
+      });
   };
 
   render() {
     const clickLogout = async (params) => {
-      let url = "http://3.110.35.199/user_logout/";
+      let url = "http://3.109.71.28/user_logout/";
       axios
         .get(url, {
           headers: {
@@ -145,20 +146,22 @@ zip_code: ''
         .catch((err) => console.log(err));
     };
     return (
-      <div className="login-wrapper" style={{   boxShadow: '0px 0px 10px #0000001a',
-      border: '1px solid #c9c9c9',
-      padding: 50,
-      marginLeft: 300,
-      marginRight: 300,
-      marginTop: 50,
-      backgroundColor: '#F7FBF9',
-      background: `url(${Background})`,
+      <div className="login-wrapper" style={{
+        boxShadow: '0px 0px 10px #0000001a',
+        border: '1px solid #c9c9c9',
+        padding: 50,
+        marginLeft: 300,
+        marginRight: 300,
+        marginTop: 50,
+        backgroundColor: '#F7FBF9',
+        background: `url(${Background})`,
         backgroundPosition: 'center',
-  backgroundSize: 'cover',
-  backgroundRepeat: 'no-repeat',
-      opacity: 1}}>
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        opacity: 1
+      }}>
 
-{/* <div style={{float: 'right', width: '100%', textAlign: 'right'}}>
+        {/* <div style={{float: 'right', width: '100%', textAlign: 'right'}}>
   {" "}
   <img src={logo} alt="Logo" width="100"  />  <br/><span style={{fontWeight: 'bold'}}>MYMEDCORDS</span>
 
@@ -169,111 +172,111 @@ zip_code: ''
         </span>
         
 </div>   */}
-      <NameAndLogo />
+        <NameAndLogo />
 
-        <a href={`/superuser-login`} style={{marginLeft: '-95%', color: '#D3ECF9'}}>     
-          <ArrowIcon /> 
+        <a href={`/superuser-login`} style={{ marginLeft: '-95%', color: '#D3ECF9' }}>
+          <ArrowIcon />
         </a>
 
-         <h2 style={{color: '#D3ECF9'}}>Add New Health Center</h2>
-      
-      <div  >
-        <form onSubmit={this.handleSubmit} style={{backgroundColor: 'white',  border: '2px solid grey',  marginTop: '20px', padding: '30px'}}>
-        <div className="col">
-                <h3 className="form-group-label">Name</h3>
+        <h2 style={{ color: '#D3ECF9' }}>Add New Health Center</h2>
 
-          <p>
-            <input type="name"  id='name' value={this.state.name} onChange={this.handleChange} required/>
-          </p>
-          </div>
+        <div  >
+          <form onSubmit={this.handleSubmit} style={{ backgroundColor: 'white', border: '2px solid grey', marginTop: '20px', padding: '30px' }}>
+            <div className="col">
+              <h3 className="form-group-label">Name</h3>
 
-          <div className="col">
-                <h3 className="form-group-label">Phone Number</h3>
+              <p>
+                <input type="name" id='name' value={this.state.name} onChange={this.handleChange} required />
+              </p>
+            </div>
 
-          <p>
-            <input type="phone_number"  id='phone_number' value={this.state.phone_number} onChange={this.handleChange} required/>
-          </p>
-          </div>
+            <div className="col">
+              <h3 className="form-group-label">Phone Number</h3>
 
-          <div className="col">
-                <h3 className="form-group-label">Email</h3>
+              <p>
+                <input type="phone_number" id='phone_number' value={this.state.phone_number} onChange={this.handleChange} required />
+              </p>
+            </div>
 
-          <p>
-            <input type="email"  id='email' value={this.state.email} onChange={this.handleChange} required/>
-          </p>
-          </div>
+            <div className="col">
+              <h3 className="form-group-label">Email</h3>
 
-          <div className="col">
-                <h3 className="form-group-label">Password</h3>
+              <p>
+                <input type="email" id='email' value={this.state.email} onChange={this.handleChange} required />
+              </p>
+            </div>
 
-          <p>
-            <input type="password"  id='password' value={this.state.password} onChange={this.handleChange} required/>
-          </p>
-          </div>
+            <div className="col">
+              <h3 className="form-group-label">Password</h3>
 
-       <div className="col">
-                <h3 className="form-group-label">Registration Number</h3>
+              <p>
+                <input type="password" id='password' value={this.state.password} onChange={this.handleChange} required />
+              </p>
+            </div>
 
-          <p>
-          <input type="registration_no"  id='registration_no' value={this.state.registration_no} onChange={this.handleChange} required/>
-          </p>
-          </div>
+            <div className="col">
+              <h3 className="form-group-label">Registration Number</h3>
 
-          <div className="col">
-                <h3 className="form-group-label">Health Center Type</h3>
+              <p>
+                <input type="registration_no" id='registration_no' value={this.state.registration_no} onChange={this.handleChange} required />
+              </p>
+            </div>
 
-                <FormControl component="fieldset">
-      {/* <FormLabel component="legend">Please select type of patient</FormLabel> */}
-      <RadioGroup row aria-label="gender" defaultValue="1" name="row-radio-buttons-group" 
-      value={this.state.hospital_type}
-        onChange={this.handleHospiTypeChange}>
-        <FormControlLabel value="1" control={<Radio />} label="OPD" />
-        <FormControlLabel value="2" control={<Radio />} label="IPD" />
-        <FormControlLabel value="3" control={<Radio />} label="OPD / IPD" />
-      </RadioGroup>
-    </FormControl>
+            <div className="col">
+              <h3 className="form-group-label">Health Center Type</h3>
 
-          </div>       
-          <div className="col">
-                <h3 className="form-group-label">Address</h3>
-          <p>
-            <input type="address"  id='address' value={this.state.address} onChange={this.handleChange} required/>
-          </p>
-          </div>
+              <FormControl component="fieldset">
+                {/* <FormLabel component="legend">Please select type of patient</FormLabel> */}
+                <RadioGroup row aria-label="gender" defaultValue="1" name="row-radio-buttons-group"
+                  value={this.state.hospital_type}
+                  onChange={this.handleHospiTypeChange}>
+                  <FormControlLabel value="1" control={<Radio />} label="OPD" />
+                  <FormControlLabel value="2" control={<Radio />} label="IPD" />
+                  <FormControlLabel value="3" control={<Radio />} label="OPD / IPD" />
+                </RadioGroup>
+              </FormControl>
 
-          <div className="col">
-                <h3 className="form-group-label">Zip Code</h3>
+            </div>
+            <div className="col">
+              <h3 className="form-group-label">Address</h3>
+              <p>
+                <input type="address" id='address' value={this.state.address} onChange={this.handleChange} required />
+              </p>
+            </div>
 
-          <p>
-            <input type="zip_code"  id='zip_code' value={this.state.zip_code} onChange={this.handleChange} required/>
-          </p>
-          </div>
+            <div className="col">
+              <h3 className="form-group-label">Zip Code</h3>
 
-
-          <div className="col">
-                <h3 className="form-group-label">Description</h3>
-
-          <p>
-            <input type="description"  id='description' value={this.state.description} onChange={this.handleChange} required/>
-          </p>
-          </div>
-
-      
+              <p>
+                <input type="zip_code" id='zip_code' value={this.state.zip_code} onChange={this.handleChange} required />
+              </p>
+            </div>
 
 
-          <div className="col">
-                <h3 className="form-group-label">Upload Logo</h3>
-          <p style={{marginLeft: '80px'}}>
-            <input type="file"
-                   id="logo"
-                   accept="image/png, image/jpeg"  onChange={this.handleLogoChange} required />
-          </p>
-          </div>
+            <div className="col">
+              <h3 className="form-group-label">Description</h3>
 
-          <input type="submit" style={{backgroundColor: '#38B6F7'}}/>
-        </form>
+              <p>
+                <input type="description" id='description' value={this.state.description} onChange={this.handleChange} required />
+              </p>
+            </div>
+
+
+
+
+            <div className="col">
+              <h3 className="form-group-label">Upload Logo</h3>
+              <p style={{ marginLeft: '80px' }}>
+                <input type="file"
+                  id="logo"
+                  accept="image/png, image/jpeg" onChange={this.handleLogoChange} required />
+              </p>
+            </div>
+
+            <input type="submit" style={{ backgroundColor: '#38B6F7' }} />
+          </form>
+        </div>
       </div>
-     </div>
     );
   }
 }

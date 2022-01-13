@@ -18,7 +18,7 @@ const Topbar = (props) => {
   const user_data = localStorage.getItem("user_data");
 
   const clickLogout = async (params) => {
-    let url = "http://3.110.35.199/user_logout/";
+    let url = "http://3.109.71.28/user_logout/";
     axios
       .get(url, {
         headers: {

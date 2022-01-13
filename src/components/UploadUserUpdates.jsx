@@ -26,12 +26,12 @@ class App extends Component {
     this.setState({
       report_type: event.target.value,
     });
-    if(event.target.value == 2){
+    if (event.target.value == 2) {
       this.setState({
         is_opd: false
       })
     }
-    if(event.target.value == 1){
+    if (event.target.value == 1) {
       this.setState({
         is_opd: true
       })
@@ -50,14 +50,14 @@ class App extends Component {
     let hospital_type = localStorage.getItem("hospital_type");
 
     let opdFlag = null;
-    if(hospital_type == 1){
-      opdFlag= true
+    if (hospital_type == 1) {
+      opdFlag = true
     }
-    if(hospital_type == 2){
-      opdFlag= false
+    if (hospital_type == 2) {
+      opdFlag = false
     }
-    if(hospital_type == 3){
-      opdFlag= this.state.is_opd
+    if (hospital_type == 3) {
+      opdFlag = this.state.is_opd
     }
 
     let form_data = new FormData();
@@ -69,7 +69,7 @@ class App extends Component {
     form_data.append('dr_name', this.state.dr_name);
     form_data.append("is_opd", opdFlag);
 
-    let url = 'http://3.110.35.199/user_health_update/';
+    let url = 'http://3.109.71.28/user_health_update/';
     axios.post(url, form_data, {
       headers: {
         'content-type': 'multipart/form-data',
@@ -104,20 +104,20 @@ class App extends Component {
         opacity: 1,
         background: `url(${Background})`,
         backgroundPosition: 'center',
-  backgroundSize: 'cover',
-  backgroundRepeat: 'no-repeat'
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat'
       }}>
-        <NameAndLogo/>
+        <NameAndLogo />
 
-        <div style={{width: '100%',  textAlign:'right'}}>
-        <a href={isSuperuser == "true" ? `/superuser-login`:`/`}  >
-      <button style={{marginRight: 10}} type="button" class="btn btn-success btn-sm">Search Patient</button>
-   </a> 
-   <a href={`/upload-details/${searchedUserData_parsed.user_id}`}  >
-      <button type="button" class="btn btn-success btn-sm">Patient Details</button>
-   </a> 
-   </div>
-        <h2 style={{color: '#D3ECF9'}}>Upload Patient Health Details</h2>
+        <div style={{ width: '100%', textAlign: 'right' }}>
+          <a href={isSuperuser == "true" ? `/superuser-login` : `/`}  >
+            <button style={{ marginRight: 10 }} type="button" class="btn btn-success btn-sm">Search Patient</button>
+          </a>
+          <a href={`/upload-details/${searchedUserData_parsed.user_id}`}  >
+            <button type="button" class="btn btn-success btn-sm">Patient Details</button>
+          </a>
+        </div>
+        <h2 style={{ color: '#D3ECF9' }}>Upload Patient Health Details</h2>
 
         <h2 style={{ textDecoration: "underline", color: '#D3ECF9' }}>Patient Details</h2>
         <div
@@ -133,7 +133,7 @@ class App extends Component {
         >
           <p>
             <span style={{ fontWeight: "bold" }}>Patient Name:</span>{" "}
-            {searchedUserData_parsed?.first_name}{ ' '}{searchedUserData_parsed?.last_name}
+            {searchedUserData_parsed?.first_name}{' '}{searchedUserData_parsed?.last_name}
           </p>
           <p>
             <span style={{ fontWeight: "bold" }}>Email:</span> {searchedUserData_parsed?.email}
@@ -146,7 +146,7 @@ class App extends Component {
             <span style={{ fontWeight: "bold" }}>Phone Number: </span>
             {searchedUserData_parsed?.phone_number}
           </p>
-         
+
           {searchedUserData_parsed?.is_admit && (
             <p>
               <span style={{ fontWeight: "bold" }}>Room No.: </span>
@@ -158,9 +158,9 @@ class App extends Component {
         <div>
           <form onSubmit={this.handleSubmit} style={{ backgroundColor: 'white', border: '2px solid black', marginTop: '20px', padding: '30px' }}>
 
-          {hospital_type == 3 && (
+            {hospital_type == 3 && (
               <div onChange={this.onChangeValue}>
-                <input type="radio" value="1" name="report_type" defaultChecked/> OPD
+                <input type="radio" value="1" name="report_type" defaultChecked /> OPD
                 <input
                   style={{ marginLeft: 10 }}
                   type="radio"
@@ -193,7 +193,7 @@ class App extends Component {
               </p>
             </div>
 
-            <input type="submit" style={{backgroundColor: '#38B6F7'}}/>
+            <input type="submit" style={{ backgroundColor: '#38B6F7' }} />
           </form>
         </div>
       </div>

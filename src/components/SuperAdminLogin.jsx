@@ -10,7 +10,7 @@ import Background from '../components/images/background.jpeg';
 import logo1 from "./images/MyMedCordsTransparent.png";
 
 async function loginAdmin(credentials) {
-  return fetch("http://3.110.35.199/super_admin_login/", {
+  return fetch("http://3.109.71.28/super_admin_login/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -20,7 +20,7 @@ async function loginAdmin(credentials) {
 }
 
 export default function Login({ setToken, setSuperUser, setUserId }) {
- 
+
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
 
@@ -65,13 +65,13 @@ export default function Login({ setToken, setSuperUser, setUserId }) {
         opacity: 1,
         background: `url(${Background})`,
         backgroundPosition: 'center',
-  backgroundSize: 'cover',
-  backgroundRepeat: 'no-repeat'
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat'
       }}
     >
       <br />
 
-      <img src={logo1} alt="Logo" width="100"  />  <br/><span style={{fontWeight: 'bold', marginTop: -20, }}>MYMEDCORDS</span>
+      <img src={logo1} alt="Logo" width="100" />  <br /><span style={{ fontWeight: 'bold', marginTop: -20, }}>MYMEDCORDS</span>
 
       {/* <div style={{ padding: 20, border: "10px solid", borderRadius: 10 }}>
         <h1>
@@ -79,44 +79,44 @@ export default function Login({ setToken, setSuperUser, setUserId }) {
           <img src={logo} alt="Logo" width="40" /> MyMedCords
         </h1>
       </div> */}
-      <br /> 
-      <h2 style={{ color: '#D3ECF9'}}>Health Center Data Upload System</h2>
-    
+      <br />
+      <h2 style={{ color: '#D3ECF9' }}>Health Center Data Upload System</h2>
 
-        <form
-          onSubmit={handleAdminSubmit}
-          style={{
-            boxShadow: "0px 0px 10px #0000001a",
-            backgroundColor: "white",
-            width: "30%",
-            border: "2px solid black",
-            marginTop: "20px",
-            padding: "20px",
-           
-          }}
-        >
-          <label>
-            <p >Admin Username</p>
-            <input
-              type="text"
-              onChange={(e) => setUserName(e.target.value)}
-              required
-            />
-          </label>
-          <label>
-            <p style={{ marginTop: 20 }}>Admin Password</p>
-            <input
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </label>
 
-          <div>
-            <br />
-            <button type="submit">Submit</button>
-          </div>
-        </form>
+      <form
+        onSubmit={handleAdminSubmit}
+        style={{
+          boxShadow: "0px 0px 10px #0000001a",
+          backgroundColor: "white",
+          width: "30%",
+          border: "2px solid black",
+          marginTop: "20px",
+          padding: "20px",
+
+        }}
+      >
+        <label>
+          <p >Admin Username</p>
+          <input
+            type="text"
+            onChange={(e) => setUserName(e.target.value)}
+            required
+          />
+        </label>
+        <label>
+          <p style={{ marginTop: 20 }}>Admin Password</p>
+          <input
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </label>
+
+        <div>
+          <br />
+          <button type="submit">Submit</button>
+        </div>
+      </form>
     </div>
   );
 }

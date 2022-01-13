@@ -80,7 +80,7 @@ class App extends Component {
     form_data.append("dr_name", this.state.dr_name);
     form_data.append('testdate', this.state.testdate);
 
-    let url = "http://3.110.35.199/report_upload/";
+    let url = "http://3.109.71.28/report_upload/";
     axios
       .post(url, form_data, {
         headers: {

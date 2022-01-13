@@ -6,7 +6,7 @@ import _ from "lodash";
 import { Link, useParams } from "react-router-dom";
 import history from "./lib/history";
 import { Col, Container, Row, Card, CardBody, ButtonToolbar } from "reactstrap";
-import { Table, Input,Tooltip, Button, Popconfirm } from "antd";
+import { Table, Input, Tooltip, Button, Popconfirm } from "antd";
 import logo from "./images/MyMedCordsTransparent.png";
 import axios from "axios";
 import Background from '../components/images/background.jpeg';
@@ -41,7 +41,7 @@ function FetchHospitalData() {
       window.location.reload();
     }
   }, [localToken1]);
-  
+
 
   const handleDelete = async (id, is_active, type) => {
     try {
@@ -77,7 +77,7 @@ function FetchHospitalData() {
   };
 
   const clickLogout = async (params) => {
-    let url = "http://3.110.35.199/user_logout/";
+    let url = "http://3.109.71.28/user_logout/";
     axios
       .get(url, {
         headers: {
@@ -100,15 +100,15 @@ function FetchHospitalData() {
   };
 
   const HOSPITAL_TABLE_HEADER = [
-    
+
     {
- 
-      
+
+
       title: "Health Center Name",
       dataIndex: "name",
       key: 'name',
       width: 150,
-     
+
     },
     {
       title: "Health Center Type",
@@ -117,19 +117,19 @@ function FetchHospitalData() {
       align: "center",
       render: (value, row, index) => {
         console.log('value--->', value)
-       
+
         let obj = {
           children: value,
           props: {},
         };
 
-        if(value == 1){
+        if (value == 1) {
           obj = "OPD"
         }
-        if(value == 2){
+        if (value == 2) {
           obj = "IPD"
         }
-        if(value == 3){
+        if (value == 3) {
           obj = "OPD/IPD"
         }
 
@@ -283,82 +283,83 @@ function FetchHospitalData() {
         opacity: 1,
         background: `url(${Background})`,
         backgroundPosition: 'center',
-  backgroundSize: 'cover',
-  backgroundRepeat: 'no-repeat'
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat'
       }}
     >
-   
 
-      <Row style={{width: '100%'}}>
 
-<span 
- style={{fontSize: 50, fontWeight: 'bold', alignContent: 'flex-start', float: 'left', color: '#D3ECF9'
-}}>  DASHBOARD </span>
- <span style={{float: 'right'}}>
-  {" "}
-  <img src={logo} alt="Logo" width="100"  />  <br/><span style={{fontWeight: 'bold'}}>SUPER USER</span>
+      <Row style={{ width: '100%' }}>
 
-</span>  
+        <span
+          style={{
+            fontSize: 50, fontWeight: 'bold', alignContent: 'flex-start', float: 'left', color: '#D3ECF9'
+          }}>  DASHBOARD </span>
+        <span style={{ float: 'right' }}>
+          {" "}
+          <img src={logo} alt="Logo" width="100" />  <br /><span style={{ fontWeight: 'bold' }}>SUPER USER</span>
 
-</Row>
+        </span>
 
-<span style={{ width: '100%',float: 'right', alignContent: 'flex-end', textAlign:'right', marginTop: 10, textDecoration: 'underline'}}>
-<Link  onClick={clickLogout} style={{color: '#D3ECF9'}}>
+      </Row>
+
+      <span style={{ width: '100%', float: 'right', alignContent: 'flex-end', textAlign: 'right', marginTop: 10, textDecoration: 'underline' }}>
+        <Link onClick={clickLogout} style={{ color: '#D3ECF9' }}>
           Logout
         </Link>
-        </span>
-   
+      </span>
 
-<br />
-             
-              <Row style={{width: '100%'}}>
 
-<span  style={{
-  color: "white",
-  fontSize: "32px",
-  fontWeight: "bold",
-  float: 'left',
-  paddingLeft: '14%'
-}}>  {patients ? patients : '--'} </span>
- <span  style={{
-  color: "white",
-  fontSize: "32px",
-  fontWeight: "bold",
-  paddingLeft: '2%'
-}}>  {hosp_active} ({hosp_disabled}) </span>  
-<span  style={{
-  color: "white",
-  fontSize: "32px",
-  fontWeight: "bold",
-  float: 'right',
-  paddingRight: '11%'
-}}>  {clinic_active} ({clinic_disabled})</span>
-</Row>
+      <br />
 
-              <Row style={{width: '100%', color: '#D3ECF9'}}>
+      <Row style={{ width: '100%' }}>
 
-                <span  style={{
-                  // color: "#1b62ab",
-                  fontSize: "20px",
-                  fontWeight: "bold",
-                  float: 'left',
-                  paddingLeft: '10%'
-                }}>  PATIENTS </span>
-                 <span  style={{
-                  // color: "#1b62ab",
-                  fontSize: "20px",
-                  fontWeight: "bold",             
-                }}>  HOSPITALS </span>  
-                <span  style={{
-                  // color: "#1b62ab",
-                  fontSize: "20px",
-                  fontWeight: "bold",
-                  float: 'right',
-                  paddingRight: '10%'
-                }}>  CLINICS </span>
-        </Row>
-    
-    <br/>
+        <span style={{
+          color: "white",
+          fontSize: "32px",
+          fontWeight: "bold",
+          float: 'left',
+          paddingLeft: '14%'
+        }}>  {patients ? patients : '--'} </span>
+        <span style={{
+          color: "white",
+          fontSize: "32px",
+          fontWeight: "bold",
+          paddingLeft: '2%'
+        }}>  {hosp_active} ({hosp_disabled}) </span>
+        <span style={{
+          color: "white",
+          fontSize: "32px",
+          fontWeight: "bold",
+          float: 'right',
+          paddingRight: '11%'
+        }}>  {clinic_active} ({clinic_disabled})</span>
+      </Row>
+
+      <Row style={{ width: '100%', color: '#D3ECF9' }}>
+
+        <span style={{
+          // color: "#1b62ab",
+          fontSize: "20px",
+          fontWeight: "bold",
+          float: 'left',
+          paddingLeft: '10%'
+        }}>  PATIENTS </span>
+        <span style={{
+          // color: "#1b62ab",
+          fontSize: "20px",
+          fontWeight: "bold",
+        }}>  HOSPITALS </span>
+        <span style={{
+          // color: "#1b62ab",
+          fontSize: "20px",
+          fontWeight: "bold",
+          float: 'right',
+          paddingRight: '10%'
+        }}>  CLINICS </span>
+      </Row>
+
+      <br />
 
       {showSearchPatient && (
         <React.Fragment>
@@ -423,11 +424,11 @@ function FetchHospitalData() {
           <div className="farm-table">
             <div className="table-farms-wrapper">
               <br />
-             
+
 
               <Row>
 
-                <span  style={{
+                <span style={{
                   // color: "#1b62ab",
                   fontSize: "30px",
                   fontWeight: "bold",
@@ -435,26 +436,26 @@ function FetchHospitalData() {
                   color: '#D3ECF9',
                   float: 'left'
                 }}>  List of Health Centers </span>
-                <span style={{float: 'right'}}>
-          <a href={`/add-hospital`}>
-            <button type="button" class="btn btn-success btn-sm">
-              Add New Health Center
-            </button>
-          </a>
+                <span style={{ float: 'right' }}>
+                  <a href={`/add-hospital`}>
+                    <button type="button" class="btn btn-success btn-sm">
+                      Add New Health Center
+                    </button>
+                  </a>
 
-          <a>
-            <button
-              type="button"
-              onClick={() => setShowSearchPatient(!showSearchPatient)}
-              style={{ marginLeft: 10 }}
-              class="btn btn-success btn-sm"
-            >
-              Search Patient
-            </button>
-          </a>
-          </span>
-        </Row>
-        <br />
+                  <a>
+                    <button
+                      type="button"
+                      onClick={() => setShowSearchPatient(!showSearchPatient)}
+                      style={{ marginLeft: 10 }}
+                      class="btn btn-success btn-sm"
+                    >
+                      Search Patient
+                    </button>
+                  </a>
+                </span>
+              </Row>
+              <br />
               <br />
 
               <Table
@@ -463,7 +464,7 @@ function FetchHospitalData() {
                 bordered
                 pagination={false}
                 style={{
-              
+
                   border: "1px solid grey",
                 }}
               />

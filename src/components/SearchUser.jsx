@@ -27,7 +27,7 @@ function UploadData() {
   const [userId, setUserId] = useState(0);
 
   const clickLogout = async (params) => {
-    let url = "http://3.110.35.199/user_logout/";
+    let url = "http://3.109.71.28/user_logout/";
     axios
       .get(url, {
         headers: {
@@ -83,14 +83,14 @@ function UploadData() {
         opacity: 1,
         background: `url(${Background})`,
         backgroundPosition: 'center',
-  backgroundSize: 'cover',
-  backgroundRepeat: 'no-repeat'
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat'
       }}
     >
 
-<NameAndLogo/>
+      <NameAndLogo />
 
-      <h2 style={{color: '#D3ECF9'}}>Health Center Data Upload System</h2>
+      <h2 style={{ color: '#D3ECF9' }}>Health Center Data Upload System</h2>
 
       <a href="/add-new-user">
         <button type="button" class="btn btn-success btn-sm">
