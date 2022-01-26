@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import SearchUser from  './components/SearchUser';
 import SearchHospital from  './components/SearchHospital';
-
+import Support from  './components/Support';
 import UploadDetails from './components/UploadDetails';
 import UserRegister from './components/UserRegister';
 import FetchUserReports from './components/FetchUserReports';
@@ -44,6 +44,9 @@ export default function BasicExample() {
   const userId = userData_parsed?.user_id;
 
   if(!token) {
+    if (window.location.href.indexOf("support") > -1) {
+      return <Support />
+     }
      if (window.location.href.indexOf("superuser-login") > -1) {
       return <SuperUserLogin setToken={setToken} setSuperUser={setSuperUser} setUserId={setLocUserId} />
      }
