@@ -22,9 +22,24 @@ class App extends Component {
   };
 
   handleImageChange = (e) => {
-    this.setState({
-      file: e.target.files[0]
-    })
+
+    {
+      e.target.files[0]?.size < 500000 && (this.setState({
+        file: e.target.files[0]
+      }));
+    }
+    {
+      e.target.files[0]?.size > 500000 &&
+        alert(
+          `Max file size exceeded (500 KB). 
+Your file size is` +
+          (Math.round((e.target.files[0]?.size / 1000) * 100) / 100).toFixed(2) +
+          ' KB',
+        );
+    }
+
+
+
   };
 
   onChangeValue = (event) => {
@@ -75,7 +90,7 @@ class App extends Component {
     form_data.append('hospital_id', hospitalId);
     form_data.append("is_opd", opdFlag);
 
-    let url = 'http://3.109.71.28/bill_upload/';
+    let url = 'http://43.205.89.142/bill_upload/';
     axios.post(url, form_data, {
       headers: {
         'content-type': 'multipart/form-data',
@@ -180,7 +195,7 @@ class App extends Component {
             <br />
 
             <div className="col">
-              <h3 className="form-group-label">Bill File Name</h3>
+              <h3 className="form-group-label">Bill Type/Modality</h3>
 
               <p>
                 <input type="bill_file_name" id='bill_file_name' value={this.state.bill_file_name} onChange={this.handleChange} required />

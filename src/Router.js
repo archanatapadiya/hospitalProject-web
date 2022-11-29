@@ -16,12 +16,21 @@ import UploadUserBilling from './components/UploadUserBilling';
 import UserDetails from './components/UserDetails';
 import AddHospital from './components/AddHospital';
 import EditHospital from './components/EditHospital';
+import EditPatient from './components/EditPatient';
 import HospitalList from './components/HospitalList';
 import ForgotPassword from './components/ForgotPassword';
 import Login from './components/Login';
 import SuperUserLogin from './components/SuperAdminLogin';
 import Topbar from './components/layout/topbar';
 import Top from './components/topbar/topbar';
+import HealthTip from './components/AddHealthTip';
+import Offer from './components/AddOffer';
+import ViewHealthTip from './components/ViewHealthTip';
+import ViewOffer from './components/View Offer';
+import AddCommercialPlans from './components/AddCommercialPlans';
+import ViewCommercialPlans from './components/ViewCommercialPlans';
+import EditCommercialPlans from './components/EditCommercialPlans';
+import EditIndividualPlans from './components/EditIndividualPlans';
 
 export default function BasicExample() {
 
@@ -77,6 +86,9 @@ export default function BasicExample() {
           <Route exact path="/edit-hospital">
             <EditHospital />
           </Route>
+          <Route exact path="/edit-patient-details/:id(\d*)">
+            <EditPatient />
+          </Route>
           <Route exact path="/upload-details/:id(\d*)">
             <UploadDetails />
           </Route>
@@ -103,6 +115,30 @@ export default function BasicExample() {
           </Route>
           <Route exact path="/add-new-user">
             <UserRegister />
+          </Route>
+          <Route exact path="/add-health-tip">
+            <HealthTip />
+          </Route>
+          <Route exact path="/add-offer">
+            <Offer />
+          </Route>
+          <Route exact path="/view-health-tip">
+            <ViewHealthTip />
+          </Route>
+          <Route exact path="/view-offer">
+            <ViewOffer />
+          </Route>
+          <Route exact path="/add-plans">
+            <AddCommercialPlans />
+          </Route>
+          <Route exact path="/view-plans">
+            <ViewCommercialPlans />
+          </Route>
+          <Route exact path="/edit-plans">
+            <EditCommercialPlans />
+          </Route>
+          <Route exact path="/edit-individual-plans">
+            <EditIndividualPlans />
           </Route>
         </Switch>
         </div>

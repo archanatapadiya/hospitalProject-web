@@ -26,21 +26,37 @@ class App extends Component {
   };
 
   handleImageChange = (e) => {
-    this.setState({
-      file: e.target.files[0],
-    });
+    console.log('eeeee', e.target.files[0].size);
+
+    {
+      e.target.files[0]?.size < 1000000 && (this.setState({
+        file: e.target.files[0],
+      }));
+    }
+    {
+      e.target.files[0]?.size > 1000000 &&
+        (alert(
+          `Max file size exceeded (1 MB). 
+Your file size is ` +
+          (Math.round((e.target.files[0]?.size / 1000000) * 100) / 100).toFixed(2) +
+          ' MB',
+        )
+        )
+    }
+
+
   };
 
   onChangeValue = (event) => {
     this.setState({
       report_type: event.target.value,
     });
-    if(event.target.value == 2){
+    if (event.target.value == 2) {
       this.setState({
         is_opd: false
       })
     }
-    if(event.target.value == 1){
+    if (event.target.value == 1) {
       this.setState({
         is_opd: true
       })
@@ -49,27 +65,27 @@ class App extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state);
+    console.log('state in submit', this.state);
     const localToken = localStorage.getItem("token");
     const userData = localStorage.getItem("user_data");
 
     const userData_parsed = JSON.parse(userData);
 
     const hospitalId = localStorage.getItem("hospital_id");
-    
+
     let hospital_type = localStorage.getItem("hospital_type");
 
     let opdFlag = null;
-    if(hospital_type == 1){
-      opdFlag= true
+    if (hospital_type == 1) {
+      opdFlag = true
     }
-    if(hospital_type == 2){
-      opdFlag= false
+    if (hospital_type == 2) {
+      opdFlag = false
     }
-    if(hospital_type == 3){
-      opdFlag= this.state.is_opd
+    if (hospital_type == 3) {
+      opdFlag = this.state.is_opd
     }
-  
+
     let form_data = new FormData();
     form_data.append("file", this.state.file, this.state.file.name);
     form_data.append("file_name", this.state.file_name);
@@ -80,7 +96,9 @@ class App extends Component {
     form_data.append("dr_name", this.state.dr_name);
     form_data.append('testdate', this.state.testdate);
 
-    let url = "http://3.109.71.28/report_upload/";
+
+    console.log('form_data in upload report', this.state.file.size)
+    let url = "http://43.205.89.142/report_upload/";
     axios
       .post(url, form_data, {
         headers: {
@@ -116,25 +134,25 @@ class App extends Component {
           backgroundColor: "#F7FBF9",
           opacity: 1,
           background: `url(${Background})`,
-        backgroundPosition: 'center',
-  backgroundSize: 'cover',
-  backgroundRepeat: 'no-repeat'
+          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat'
         }}
       >
-        <NameAndLogo/>
+        <NameAndLogo />
 
 
-<div style={{width: '100%',  textAlign:'right'}}>
-<a href={isSuperuser == "true" ? `/superuser-login`:`/`}  >
-      <button style={{marginRight: 10}} type="button" class="btn btn-success btn-sm">Search Patient</button>
-   </a> 
-   <a href={`/upload-details/${searchedUserData_parsed.user_id}`}  >
-      <button type="button" class="btn btn-success btn-sm">Patient Details</button>
-   </a> 
-   </div>
+        <div style={{ width: '100%', textAlign: 'right' }}>
+          <a href={isSuperuser == "true" ? `/superuser-login` : `/`}  >
+            <button style={{ marginRight: 10 }} type="button" class="btn btn-success btn-sm">Search Patient</button>
+          </a>
+          <a href={`/upload-details/${searchedUserData_parsed.user_id}`}  >
+            <button type="button" class="btn btn-success btn-sm">Patient Details</button>
+          </a>
+        </div>
 
-     
-        <h2 style={{color: '#D3ECF9'}}>Upload Patient Report</h2>
+
+        <h2 style={{ color: '#D3ECF9' }}>Upload Patient Report</h2>
 
         <h2 style={{ textDecoration: "underline", color: '#D3ECF9' }}>Patient Details</h2>
         <div
@@ -150,7 +168,7 @@ class App extends Component {
         >
           <p>
             <span style={{ fontWeight: "bold" }}>Patient Name:</span>{" "}
-            {searchedUserData_parsed?.first_name}{ ' '}{searchedUserData_parsed?.last_name}
+            {searchedUserData_parsed?.first_name}{' '}{searchedUserData_parsed?.last_name}
           </p>
           <p>
             <span style={{ fontWeight: "bold" }}>Email:</span> {searchedUserData_parsed?.email}
@@ -163,7 +181,7 @@ class App extends Component {
             <span style={{ fontWeight: "bold" }}>Phone Number: </span>
             {searchedUserData_parsed?.phone_number}
           </p>
-         
+
           {searchedUserData_parsed?.is_admit && (
             <p>
               <span style={{ fontWeight: "bold" }}>Room No.: </span>
@@ -172,7 +190,7 @@ class App extends Component {
           )}
         </div>
         <br />
-        
+
         <div>
           <form
             onSubmit={this.handleSubmit}
@@ -183,10 +201,10 @@ class App extends Component {
               padding: "30px",
             }}
           >
-           
-           {hospital_type == 3 && (
+
+            {hospital_type == 3 && (
               <div onChange={this.onChangeValue}>
-                <input type="radio" value="1" name="report_type" defaultChecked/> OPD
+                <input type="radio" value="1" name="report_type" defaultChecked /> OPD
                 <input
                   style={{ marginLeft: 10 }}
                   type="radio"
@@ -198,7 +216,7 @@ class App extends Component {
             )}
             <br />
             <div className="col">
-              <h3 className="form-group-label">File Name</h3>
+              <h3 className="form-group-label">Type/Modality</h3>
 
               <p>
                 <input
@@ -260,9 +278,9 @@ class App extends Component {
                 />
               </p>
 
-          
+
             </div>
-            <input type="submit" style={{backgroundColor: '#38B6F7'}} />
+            <input type="submit" style={{ backgroundColor: '#38B6F7' }} />
           </form>
         </div>
       </div>

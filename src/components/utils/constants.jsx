@@ -1,5 +1,5 @@
 
 export const API = {
-  SERVER_URL: 'http://3.109.71.28/',
+  SERVER_URL: 'http://43.205.89.142/',
   CONTENT_TYPE: 'application/x-www-form-urlencoded; charset=UTF-8',
 }

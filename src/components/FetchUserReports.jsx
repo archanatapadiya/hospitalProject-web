@@ -46,7 +46,7 @@ function UploadReportData(props) {
 
   const REPORT_TABLE_HEADER = [
     {
-      title: "File Name",
+      title: "Type/Modality",
       dataIndex: "file_name",
       width: "200px",
       align: "center",
@@ -154,6 +154,7 @@ function UploadReportData(props) {
   useEffect(() => {
     let params = {
       user_id: id,
+      hospital_id: hospitalId,
     };
     const userDetail = fetchUserData(params);
   }, []);

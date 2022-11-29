@@ -41,7 +41,7 @@ class App extends Component {
   handleSubmit = (e) => {
 
     e.preventDefault();
-    console.log(this.state);
+    console.log('state in update', this.state);
     const localToken = localStorage.getItem('token');
     const userData = localStorage.getItem('user_data');
     const userData_parsed = JSON.parse(userData);
@@ -69,7 +69,7 @@ class App extends Component {
     form_data.append('dr_name', this.state.dr_name);
     form_data.append("is_opd", opdFlag);
 
-    let url = 'http://3.109.71.28/user_health_update/';
+    let url = 'http://43.205.89.142/user_health_update/';
     axios.post(url, form_data, {
       headers: {
         'content-type': 'multipart/form-data',

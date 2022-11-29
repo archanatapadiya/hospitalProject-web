@@ -64,6 +64,9 @@ function UploadData() {
     setRadioValue(event.target.value);
   };
 
+  const editPatient = async () => {
+
+  }
   const admitUser = async () => {
     let isAdmit = false;
     if (!userData.is_admit) {
@@ -175,6 +178,13 @@ function UploadData() {
 )}
 
         <h2 style={{ textDecoration: "underline", color: '#D3ECF9' }}>Patient Details</h2>
+
+        <button class="btn btn-success btn-sm">
+        <a href={`/edit-patient-details/${id}`} >
+        Edit Patient Details
+        </a>
+                 
+        </button>
         <div
           style={{
             // width: "30%",

@@ -53,7 +53,7 @@ function UploadReportData() {
 
   const BILL_TABLE_HEADER = [
     {
-      title: "File Name",
+      title: "Type/Modality",
       dataIndex: "bill_file_name",
       width: "200px",
       align: "center",

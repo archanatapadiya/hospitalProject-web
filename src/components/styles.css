@@ -22,7 +22,10 @@ a {
     padding-bottom: 5px !important;
 }
 
-
+.read-more-less--more,
+.read-more-less--less {
+  color: #999;
+}
  
   .table {
     border: 1px solid #ddd;

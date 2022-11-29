@@ -41,13 +41,58 @@ function UploadData() {
   const patientName = userData?.first_name + " " + userData?.last_name;
   const fetchUserData = async (params) => {
     const userReports = await handlers.fetchUserDetails(params);
+
     let reportsData = userReports?.data;
+
+    if (reportsData) {
+      localStorage.setItem("searched_user_data", JSON.stringify(reportsData));
+    }
+
     setUserData(reportsData);
     return reportsData;
   };
 
   let tableData = {};
-  tableData = _.get(searchedUserData_parsed, "hospital_list");
+  let tableData1 = {};
+
+  tableData1 = _.get(searchedUserData_parsed, "hospital_list");
+
+   tableData = tableData1.filter(function (item) {
+    return item.hospital_id != null;
+  });
+
+  console.log('tableDatatableData', tableData)
+
+  let searchedUserId = _.get(searchedUserData_parsed, "user_id");
+  let searchedUserUsername = _.get(searchedUserData_parsed, "username");
+
+  const handleRemove = async (id) => {
+
+    let params = {
+      user_id: searchedUserId,
+      hospital_id: id
+    }
+    let res = await handlers.deletePatientFromHosp(params); 
+
+    if(res.is_success == true){
+      // window.location.reload();
+
+      let params = {
+        username: searchedUserUsername,
+      };
+      let success = await handlers.searchUserSuperuser(params);
+  
+      if (success.data.user_id) {
+        // history.push(`/user-details/${success.data.user_id}`);
+        window.location.reload();
+      }
+  
+      if (success) {
+        localStorage.setItem("searched_user_details", JSON.stringify(success.data));
+      }
+
+    }
+  };
 
   const BILL_TABLE_HEADER = [
     {
@@ -84,6 +129,21 @@ function UploadData() {
         return obj;
       },
     },
+    {
+      title: "Operation",
+      dataIndex: "operation",
+      render: (text, record) => (
+        <div>
+          <Popconfirm
+          title= "Sure to delete?"
+          onConfirm={() => handleRemove(record.hospital_id)}
+        >
+          <a style={{color: 'red', marginLeft: 15}}>Delete</a>
+        </Popconfirm>
+        </div>
+      ),
+    },
+
   ];
 
   useEffect(() => {
@@ -119,6 +179,14 @@ function UploadData() {
           <ArrowIcon />
         </a>
         <h2 style={{ textDecoration: "underline", color: '#D3ECF9' }}>Patient Details</h2>
+
+        <button class="btn btn-success btn-sm">
+        <a href={`/edit-patient-details/${id}`} >
+        Edit Patient Details
+        </a>
+                 
+        </button>
+        
         <div
           style={{
             padding: 20,

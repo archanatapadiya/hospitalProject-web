@@ -78,7 +78,7 @@ class App extends Component {
     // form_data.append('image', this.state.image, this.state.image.name);
     form_data.append('zip_code', this.state.zip_code);
 
-    let url = 'http://3.109.71.28/add_hospital/';
+    let url = 'http://43.205.89.142/add_hospital/';
     axios.post(url, form_data, {
       headers: {
         'content-type': 'multipart/form-data',
@@ -124,7 +124,7 @@ class App extends Component {
 
   render() {
     const clickLogout = async (params) => {
-      let url = "http://3.109.71.28/user_logout/";
+      let url = "http://43.205.89.142/user_logout/";
       axios
         .get(url, {
           headers: {

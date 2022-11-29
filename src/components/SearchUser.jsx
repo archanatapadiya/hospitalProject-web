@@ -27,7 +27,7 @@ function UploadData() {
   const [userId, setUserId] = useState(0);
 
   const clickLogout = async (params) => {
-    let url = "http://3.109.71.28/user_logout/";
+    let url = "http://43.205.89.142/user_logout/";
     axios
       .get(url, {
         headers: {

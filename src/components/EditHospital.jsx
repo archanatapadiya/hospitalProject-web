@@ -96,7 +96,7 @@ class App extends Component {
     form_data.append('zip_code', this.state.zip_code);
     form_data.append('hospital_id', this.state.id);
 
-    let url = 'http://3.109.71.28/hospital_details/';
+    let url = 'http://43.205.89.142/hospital_details/';
     axios.post(url, form_data, {
       headers: {
         'content-type': 'multipart/form-data',

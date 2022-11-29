@@ -18,7 +18,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import Background from '../components/images/background.jpeg';
 import NameAndLogo from './NameAndLogo';
 import ArrowIcon from "mdi-react/ArrowBackIcon";
-
+import Terms from "../components/pdf/terms.pdf";
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
@@ -36,6 +36,13 @@ const SignupSchema = Yup.object().shape({
 });
 
 function UploadReportData() {
+  const isSuperuser = localStorage.getItem("isSuperuser");
+
+  const [agree, setAgree] = useState(false);
+  const checkboxHandler = () => {
+    setAgree(!agree);
+  }
+
   return (
     <React.Fragment>
       <Formik
@@ -48,16 +55,23 @@ function UploadReportData() {
           phone_number: "",
           address: "",
           zip_code: "",
+          blood_pressure:null,
+          blood_group:null,
+          height:null,
+          weight:null,
+          // bmi:null,
+          pulse:null,
+          health_id: null
         }}
         validationSchema={SignupSchema}
         onSubmit={async (values, formikBag) => {
           let success = await handlers.registerUser(values, formikBag);
 
-          if (success.is_success == true) {
-            alert("Patient added successfully")
-            history.push(`/`);
-            window.location.reload();
-          }
+          // if (success.is_success == true) {
+          //   alert("Patient added successfully")
+          //   history.push(isSuperuser == "true" ? `/superuser-login`:`/`);
+          //   window.location.reload();
+          // }
         }}
       >
         {(formikBag) => {
@@ -92,7 +106,7 @@ function UploadReportData() {
             >
               <NameAndLogo/>
 
-              <a href={`/`} style={{ marginLeft: "-95%", color: '#D3ECF9' }}>
+              <a href={isSuperuser == "true" ? `/superuser-login`:`/`}  style={{ marginLeft: "-95%", color: '#D3ECF9' }}>
           <ArrowIcon />
         </a>
 
@@ -100,7 +114,7 @@ function UploadReportData() {
 
               <div style={{ backgroundColor: 'white', border: '2px solid black', marginTop: '20px', padding: '30px', width: '50%'}}>
               <div className="col" >
-                <h3 className="form-group-label">First Name</h3>
+                <h3 className="form-group-label">First Name*</h3>
 
                 <div className="form-group-field custom-input with-extention">
                   <Field
@@ -111,7 +125,7 @@ function UploadReportData() {
               </div>
 
               <div className="col">
-                <h3 className="form-group-label">Last Name</h3>
+                <h3 className="form-group-label">Last Name*</h3>
 
                 <div className="form-group-field custom-input with-extention">
                   <Field name="last_name" component={FormikMaterialTextField} />
@@ -119,7 +133,7 @@ function UploadReportData() {
               </div>
 
               <div className="col">
-                <h3 className="form-group-label">Date of Birth</h3>
+                <h3 className="form-group-label">Date of Birth*</h3>
 
                 <div className="form-group-field custom-input with-extention">
                   <DatePicker
@@ -133,7 +147,7 @@ function UploadReportData() {
               </div>
 
               <div className="col">
-                <h3 className="form-group-label">Email</h3>
+                <h3 className="form-group-label">Email*</h3>
 
                 <div className="form-group-field custom-input with-extention">
                   <Field name="email" component={FormikMaterialTextField} />
@@ -141,7 +155,7 @@ function UploadReportData() {
               </div>
 
               <div className="col">
-                <h3 className="form-group-label">Password</h3>
+                <h3 className="form-group-label">Password*</h3>
 
                 <div className="form-group-field custom-input with-extention">
                   <Field
@@ -153,7 +167,7 @@ function UploadReportData() {
               </div>
 
               <div className="col">
-                <h3 className="form-group-label">Phone Number</h3>
+                <h3 className="form-group-label">Phone Number*</h3>
 
                 <div className="form-group-field custom-input with-extention">
                   <Field
@@ -164,7 +178,7 @@ function UploadReportData() {
               </div>
 
               <div className="col">
-                <h3 className="form-group-label">Address</h3>
+                <h3 className="form-group-label">Address*</h3>
 
                 <div className="form-group-field custom-input with-extention">
                   <Field name="address" component={FormikMaterialTextField} />
@@ -172,17 +186,85 @@ function UploadReportData() {
               </div>
 
               <div className="col">
-                <h3 className="form-group-label">Zip Code</h3>
+                <h3 className="form-group-label">Zip Code*</h3>
 
                 <div className="form-group-field custom-input with-extention">
                   <Field name="zip_code" component={FormikMaterialTextField} />
                 </div>
               </div>
 
+
+<br />
+              <div className="col">
+                <h3 className="form-group-label" style={{fontWeight: 'bold', textDecoration: 'underline'}}>HEALTH DETAILS</h3>
+              </div>
+
+              <div className="col">
+                <h3 className="form-group-label">Health ID</h3>
+
+                <div className="form-group-field custom-input with-extention">
+                  <Field name="health_id" component={FormikMaterialTextField} />
+                </div>
+              </div>
+
+              <div className="col">
+                <h3 className="form-group-label">Blood Group</h3>
+
+                <div className="form-group-field custom-input with-extention">
+                  <Field name="blood_group" component={FormikMaterialTextField} />
+                </div>
+              </div>
+
+              <div className="col">
+                <h3 className="form-group-label">Blood Pressure</h3>
+
+                <div className="form-group-field custom-input with-extention">
+                  <Field name="blood_pressure" component={FormikMaterialTextField} />
+                </div>
+              </div>
+
+              <div className="col">
+                <h3 className="form-group-label">Height (kg)</h3>
+
+                <div className="form-group-field custom-input with-extention">
+                  <Field name="height" component={FormikMaterialTextField} />
+                </div>
+              </div>
+
+              <div className="col">
+                <h3 className="form-group-label">Weight (cm)</h3>
+
+                <div className="form-group-field custom-input with-extention">
+                  <Field name="weight" component={FormikMaterialTextField} />
+                </div>
+              </div>
+
+              {/* <div className="col">
+                <h3 className="form-group-label">BMI</h3>
+
+                <div className="form-group-field custom-input with-extention">
+                  <Field name="bmi" component={FormikMaterialTextField} />
+                </div>
+              </div> */}
+
+              <div className="col">
+                <h3 className="form-group-label">Pulse</h3>
+
+                <div className="form-group-field custom-input with-extention">
+                  <Field name="pulse" component={FormikMaterialTextField} />
+                </div>
+              </div>
               <br />
 
-              <div className="btn-wrapper">
-                <Button color="primary" type="submit" disabled={isSubmitting}>
+              <div>
+          <input type="checkbox" id="agree" onChange={checkboxHandler} />
+          <label htmlFor="agree"> I agree to the 
+          <a href={Terms} target='_blank' rel='noopener noreferrer'>  terms and conditions</a>
+          </label>
+        </div>
+        
+                      <div className="btn-wrapper">
+                <Button color="primary" type="submit" disabled={!agree}>
                   Submit
                 </Button>
               </div>

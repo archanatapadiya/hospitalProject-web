@@ -7,8 +7,6 @@ export const searchUser = async (values, formikBag) => {
   try {
     
     const res = await api.searchUser(values);
-
-
     return res;
   } catch (err) {
     console.log("handleSearch--->error---->");
@@ -21,14 +19,21 @@ export const searchUser = async (values, formikBag) => {
 
 export const searchUserSuperuser = async (values) => {
   try {
-    
     const res = await api.searchUserSuperuser(values);
-
-
     return res;
   } catch (err) {
     console.log("handleSearch--->error---->");
+    throw err;
+  }
+};
 
+export const deletePatientFromHosp = async (params) => {
+  try {
+    console.log('params in handler', params)
+    const res = await api.deletePatientFromHosp(params);
+    return res;
+  } catch (err) {
+    console.log("deletePatientFromHosp--->error---->");
     throw err;
   }
 };
@@ -73,6 +78,19 @@ export const fetchUserDetails = async (params) => {
   }
 };
 
+export const fetchSpaceUtilization = async (params) => {
+  try {
+    
+    const res = await api.fetchSpaceUtilization(params);
+
+    return res;
+  } catch (err) {
+    console.log("handleSearch--->error---->");
+
+    throw err;
+  }
+};
+
 
 export const registerUser = async (values, formikBag) => {
   try {
@@ -98,6 +116,73 @@ export const registerUser = async (values, formikBag) => {
   }
 };
 
+export const addHealthTip = async (values, formikBag) => {
+  try {
+    const res = await api.addhealthTip(values);
+
+    return res;
+  } catch (err) {
+    console.log("handleSearch--->error---->");
+
+    throw err;
+  }
+};
+
+export const fetchHealthTip = async (id) => {
+  try {
+    const res = await api.fetchHealthTip(id);
+    return res;
+  } catch (err) {
+    console.log("fetchHealthTip--->error---->");
+
+    throw err;
+  }
+};
+
+export const deleteHealthTip = async (id) => {
+  try {
+    const res = await api.deleteHealthTip(id);
+    return res;
+  } catch (err) {
+    console.log("deleteHealthTip--->error---->");
+
+    throw err;
+  }
+};
+
+export const addOffer = async (values, formikBag) => {
+  try {
+    const res = await api.addOffer(values);
+
+    return res;
+  } catch (err) {
+    console.log("handleSearch--->error---->");
+
+    throw err;
+  }
+};
+
+export const fetchOffer = async () => {
+  try {
+    const res = await api.fetchOffer();
+    return res;
+  } catch (err) {
+    console.log("fetchOffer--->error---->");
+
+    throw err;
+  }
+};
+
+export const deleteOffer = async (id) => {
+  try {
+    const res = await api.deleteOffer(id);
+    return res;
+  } catch (err) {
+    console.log("deleteOffer--->error---->");
+
+    throw err;
+  }
+};
 
 export const uploadUserUpdates = async (values, formikBag) => {
   try {
@@ -226,6 +311,70 @@ export const deleteHospital = async (params) => {
     return res;
   } catch (err) {
     console.log("deleteHosp--->error---->");
+    throw err;
+  }
+};
+
+export const addHospitalPlan = async (superUserId, reportLimit, reportPrice, updatesLimit, updatesPrice, billsLimit, billsPrice) => {
+  try {
+    const res = await api.addHospitalPlan(superUserId, reportLimit, reportPrice, updatesLimit, updatesPrice, billsLimit, billsPrice);
+    return res;
+  } catch (err) {
+    console.log("addHospitalPlan--->error---->");
+    throw err;
+  }
+};
+
+export const addIndividualPlan = async (superUserId, documentLimit, documentPrice) => {
+  try {
+    const res = await api.addIndividualPlan(superUserId, documentLimit, documentPrice);
+    return res;
+  } catch (err) {
+    console.log("addHospitalPlan--->error---->");
+    throw err;
+  }
+};
+
+export const viewHospitalPlan = async () => {
+  try {
+    const res = await api.viewHospitalPlan();
+    return res;
+  } catch (err) {
+    console.log("viewHospitalPlan--->error---->");
+    throw err;
+  }
+};
+
+export const viewIndividualPlan = async () => {
+  try {
+    const res = await api.viewIndividualPlan();
+    return res;
+  } catch (err) {
+    console.log("viewIndividualPlan--->error---->");
+    throw err;
+  }
+};
+
+export const disableHospitalPlan = async (params) => {
+  try {
+   
+    const res = await api.disableHospitalPlan(params);
+    return res;
+  } catch (err) {
+    console.log("handleSearch--->error---->");
+
+    throw err;
+  }
+};
+
+export const disableIndividualPlan = async (params) => {
+  try {
+   
+    const res = await api.disableIndividualPlan(params);
+    return res;
+  } catch (err) {
+    console.log("handleSearch--->error---->");
+
     throw err;
   }
 };

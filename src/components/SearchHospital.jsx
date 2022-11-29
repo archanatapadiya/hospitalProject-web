@@ -24,8 +24,9 @@ function FetchHospitalData() {
   const [hosp_disabled, sethosp_disabled] = useState();
   const [clinic_active, setclinic_active] = useState();
   const [clinic_disabled, setclinic_disabled] = useState();
+  const [searchUser, setSearchUser] = useState("");
 
-
+  console.log('searchUser---------->', searchUser)
   const [showSearchPatient, setShowSearchPatient] = useState(false);
   let tableData = userReportList;
   const [localToken1, setLocalToken1] = useState(localStorage.getItem("token"));
@@ -77,7 +78,7 @@ function FetchHospitalData() {
   };
 
   const clickLogout = async (params) => {
-    let url = "http://3.109.71.28/user_logout/";
+    let url = "http://43.205.89.142/user_logout/";
     axios
       .get(url, {
         headers: {
@@ -192,6 +193,19 @@ function FetchHospitalData() {
       },
     },
     {
+      title: "No. of Patients",
+      dataIndex: "total_users",
+      // width: 180,
+      // align: "center",
+      render: (value, row, index) => {
+        const obj = {
+          children: value,
+          props: {},
+        };
+        return obj;
+      },
+    },
+    {
       title: "Operation",
       dataIndex: "operation",
       render: (text, record) => (
@@ -241,6 +255,10 @@ function FetchHospitalData() {
     if (success.data.user_id) {
       history.push(`/user-details/${success.data.user_id}`);
       window.location.reload();
+    }
+
+    if (!success.is_success) {
+      setSearchUser(undefined);
     }
 
     if (success) {
@@ -403,6 +421,9 @@ function FetchHospitalData() {
                       </div>
                     </div>
                     <br />
+                    {searchUser === undefined && (
+                      <p>No record found, please register</p>
+                    )}
                     <div className="btn-wrapper">
                       <Button
                         type="button"
@@ -443,6 +464,12 @@ function FetchHospitalData() {
                     </button>
                   </a>
 
+                  <a href={`/add-new-user`}>
+                    <button type="button" style={{ marginLeft: 10 }} class="btn btn-success btn-sm">
+                      Add New Patient
+                    </button>
+                  </a>
+
                   <a>
                     <button
                       type="button"
@@ -468,6 +495,55 @@ function FetchHospitalData() {
                   border: "1px solid grey",
                 }}
               />
+
+
+              <Row>
+                <span style={{ float: 'right', marginTop: 10 }}>
+
+                  <a href={`/view-health-tip`}>
+                    <button type="button" class="btn btn-success btn-sm">
+                      View All Health Tips
+                    </button>
+                  </a>
+
+                  <a href={`/view-offer`}>
+                    <button type="button" style={{ marginLeft: 10 }} class="btn btn-success btn-sm">
+                      View All Offers
+                    </button>
+                  </a>
+
+                  <a href={`/add-health-tip`}>
+                    <button type="button" style={{ marginLeft: 10 }} class="btn btn-success btn-sm">
+                      Add New Health Tip
+                    </button>
+                  </a>
+
+                  <a href={`/add-offer`}>
+                    <button type="button" style={{ marginLeft: 10 }} class="btn btn-success btn-sm">
+                      Add New Offer
+                    </button>
+                  </a>
+
+
+                </span>
+              </Row>
+              <Row>
+                <span style={{ float: 'right', marginTop: 5 }}>
+
+                  <a href={`/add-plans`}>
+                    <button type="button" class="btn btn-success btn-sm">
+                      Add New Plan
+                    </button>
+                  </a>
+
+                  <a href={`/view-plans`}>
+                    <button type="button" style={{ marginLeft: 10 }} class="btn btn-success btn-sm">
+                      View All Plans
+                    </button>
+                  </a>
+
+                </span>
+              </Row>
             </div>
           </div>
         </div>

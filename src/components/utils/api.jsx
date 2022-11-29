@@ -8,7 +8,7 @@ const userData = localStorage.getItem('user_data');
 const userData_parsed = JSON.parse(userData);
 
 const hospitalId = localStorage.getItem('hospital_id');
-const baseUrl = "http://3.109.71.28";
+const baseUrl = "http://43.205.89.142";
 
 export const searchUser = async (params) => {
 
@@ -24,7 +24,6 @@ export const searchUser = async (params) => {
 }
 
 export const searchUserSuperuser = async (params) => {
-
   return fetch(`${baseUrl}/find_user_super_admin/`, {
     method: 'POST',
     headers: {
@@ -37,6 +36,18 @@ export const searchUserSuperuser = async (params) => {
 }
 
 
+
+export const deletePatientFromHosp = async (params) => {
+  return fetch(`${baseUrl}/delete_patient_from_hospital/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: localToken,
+    },
+    body: JSON.stringify(params)
+  })
+    .then(data => data.json())
+}
 
 export const admitUser = async (params) => {
 
@@ -64,6 +75,19 @@ export const fetchUserDetails = async (params) => {
     .then(data => data.json())
 }
 
+export const fetchSpaceUtilization = async (params) => {
+
+  return fetch(`${baseUrl}/check_space/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: localToken,
+    },
+    body: JSON.stringify(params)
+  })
+    .then(data => data.json())
+}
+
 export const registerUser = async (params) => {
 
   let dateOfBirth = dayjs(params.dob).format('YYYY-MM-DD');
@@ -77,7 +101,14 @@ export const registerUser = async (params) => {
     "address": params.address,
     "phone_number": params.phone_number,
     "zip_code": params.zip_code,
-    "dob": dateOfBirth
+    "dob": dateOfBirth,
+    "blood_pressure": params.blood_pressure,
+    "blood_group": params.blood_group,
+    "height": params.height,
+    "weight": params.weight,
+    // "bmi":params.bmi,
+    "pulse": params.pulse,
+    "health_id": params.health_id
   }
   return fetch(`${baseUrl}/user_register/`, {
     method: 'POST',
@@ -89,6 +120,105 @@ export const registerUser = async (params) => {
   })
     .then(data => data.json())
 }
+
+export const addhealthTip = async (params) => {
+
+  let bodyparams = {
+    "title": params.title,
+    "description": params.description,
+
+  }
+  return fetch(`${baseUrl}/add_health_tip/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: localToken,
+    },
+    body: JSON.stringify(bodyparams)
+
+  })
+    .then(data => data.json())
+}
+
+export const fetchHealthTip = async () => {
+  let bodyparams = {}
+  return fetch(`${baseUrl}/view_health_tip/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: localToken,
+    },
+    body: JSON.stringify(bodyparams)
+  })
+    .then(data => data.json())
+}
+
+
+export const deleteHealthTip = async (id) => {
+  let bodyparams = {
+    "id": id
+  }
+  return fetch(`${baseUrl}/delete_health_tip/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: localToken,
+    },
+    body: JSON.stringify(bodyparams)
+  })
+    .then(data => data.json())
+}
+
+
+export const addOffer = async (params) => {
+  let start_date = dayjs(params.start_date).format('YYYY-MM-DD');
+  let end_date = dayjs(params.end_date).format('YYYY-MM-DD');
+
+  let bodyparams = {
+    "title": params.title,
+    "description": params.description,
+    "start_date": start_date,
+    "end_date": end_date
+  }
+  return fetch(`${baseUrl}/add_offers/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: localToken,
+    },
+    body: JSON.stringify(bodyparams)
+  })
+    .then(data => data.json())
+}
+
+export const fetchOffer = async () => {
+  let bodyparams = {}
+  return fetch(`${baseUrl}/view_offers/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: localToken,
+    },
+    body: JSON.stringify(bodyparams)
+  })
+    .then(data => data.json())
+}
+
+export const deleteOffer = async (id) => {
+  let bodyparams = {
+    "id": id
+  }
+  return fetch(`${baseUrl}/delete_offers/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: localToken,
+    },
+    body: JSON.stringify(bodyparams)
+  })
+    .then(data => data.json())
+}
+
 
 export const uploadUserUpdates = async (params) => {
   try {
@@ -261,6 +391,105 @@ export const deleteHospital = async (params) => {
     "delete": true
   }
   return fetch(`${baseUrl}/remove_hospital/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: localToken,
+    },
+    body: JSON.stringify(bodyparams)
+  })
+    .then(data => data.json())
+}
+
+export const addHospitalPlan = async (superUserId, reportLimit, reportPrice, updatesLimit, updatesPrice, billsLimit, billsPrice) => {
+
+  let bodyparams = {
+    "user_id": superUserId,
+  "report_limit": reportLimit,
+  "report_price": reportPrice ,
+  "bill_limit": billsLimit,
+  "bill_price": billsPrice,
+  "health_limit": updatesLimit,
+  "health_price": updatesPrice,
+  "name": null
+  }
+  return fetch(`${baseUrl}/hospital_space_plan/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: localToken,
+    },
+    body: JSON.stringify(bodyparams)
+
+  })
+    .then(data => data.json())
+}
+
+export const addIndividualPlan = async (superUserId, documentLimit, documentPrice) => {
+
+  let bodyparams = {
+    "user_id": superUserId,
+  "report_limit": documentLimit,
+  "report_price": documentPrice ,
+  "name": null
+  }
+  return fetch(`${baseUrl}/user_space_plan/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: localToken,
+    },
+    body: JSON.stringify(bodyparams)
+
+  })
+    .then(data => data.json())
+}
+
+export const viewHospitalPlan = async () => {
+  return fetch(`${baseUrl}/hospital_space_view/`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: localToken,
+    },
+
+  })
+    .then(data => data.json())
+}
+
+export const viewIndividualPlan = async () => {
+  return fetch(`${baseUrl}/user_space_view/`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: localToken,
+    },
+  })
+    .then(data => data.json())
+}
+
+export const disableHospitalPlan = async (params) => {
+  let bodyparams = {
+    "id": params['id'],
+    "is_active": params['is_active'],
+  }
+  return fetch(`${baseUrl}/hospital_space_disable/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: localToken,
+    },
+    body: JSON.stringify(bodyparams)
+  })
+    .then(data => data.json())
+}
+
+export const disableIndividualPlan = async (params) => {
+  let bodyparams = {
+    "id": params['id'],
+    "is_active": params['is_active'],
+  }
+  return fetch(`${baseUrl}/user_space_disable/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
